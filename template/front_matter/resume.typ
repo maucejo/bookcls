@@ -1,4 +1,4 @@
-#import "@preview/thesistemplate:0.2.0": *
+#import "@preview/thesistemplate:0.2.1": *
 
 #chapter("Résumé", toc: false)[
   #lorem(500)

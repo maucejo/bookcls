@@ -84,7 +84,7 @@ Le modèle #cmd("thesistemplate") possède un certain nombre de paramètres perm
   specialty: "Mécanique",
   commity: (),
   lang: "fr",
-  logo: "images/logo_cnam.png",
+  logo: "assets/logo_cnam.png",
   body-font: "Lato",
   math-font: "Lete Sans Math",
 	[body]))[

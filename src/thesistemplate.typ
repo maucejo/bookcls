@@ -213,7 +213,7 @@ long }}
   set align(horizon)
   grid(columns : 2,
     column-gutter: 1fr,
-    [#align(left)[#image("assets/devise_cnam.svg", width: 45%)]],   [#align(right)[#image("assets/logo_cnam.png", width: 45%)]],
+    [#align(left)[#image("assets/devise_cnam.svg", width: 45%)]],   [#align(right)[#image("assets/logo_cnam.png", width: 50%)]],
   )
 
   context{
