@@ -1,4 +1,4 @@
-#import "@preview/thesistemplate:0.2.1": *
+#import "../../src/book.typ": *
 
 #chapter("Introduction", abstract: lorem(50), numbered: false)[
 

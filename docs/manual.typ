@@ -46,7 +46,7 @@ Pour utiliser le modèle, il faut l'importer dans votre fichier principal `typ` 
 
 #codesnippet[
 	```typ
-	#import "./template/thesistemplate.typ": *
+	#import "./src/book.typ": *
 	```
 ]
 
@@ -58,19 +58,19 @@ Pour utiliser le modèle, il faut l'importer dans votre fichier principal `typ` 
 
 == Initilisation du modèle
 
-Après avoir importé le modèle, celui doit être initialisé en appliquant une règle d'affichage (`show` rule) avec la commande #cmd("thesistemplate") en passant les options nécessaires avec l'instruction `with` dans votre fichier principal `typ` :
+Après avoir importé le modèle, celui doit être initialisé en appliquant une règle d'affichage (`show` rule) avec la commande #cmd("book") en passant les options nécessaires avec l'instruction `with` dans votre fichier principal `typ` :
 
 #codesnippet(
 	```typ
-	#show thesistemplate.with(
+	#show book.with(
 	  ...
 	)
 	```
 )
 
-Le modèle #cmd("thesistemplate") possède un certain nombre de paramètres permettant de personnaliser le document. Voici la liste des paramètres disponibles :
+Le modèle #cmd("book") possède un certain nombre de paramètres permettant de personnaliser le document. Voici la liste des paramètres disponibles :
 
-#command("thesistemplate", ..args(
+#command("book", ..args(
 	title: "Titre de la thèse",
   author: "Nom du candidat",
   type: "these",
@@ -89,6 +89,8 @@ Le modèle #cmd("thesistemplate") possède un certain nombre de paramètres perm
   math-font: "Lete Sans Math",
 	[body]))[
 		#argument("title", default: "Titre de la thèse", types: "string")[Titre du mémoire de thèse ou de HDR.]
+
+		#colbreak()
 
 		#argument("author", default: "Nom du candidat", types: "string")[Nom de l'auteur du mémoire.]
 
@@ -115,7 +117,6 @@ Le modèle #cmd("thesistemplate") possède un certain nombre de paramètres perm
 
 		#argument("discipline", default: "Mécanique, Génie Mécanique, Génie Civil", types: "string")[Discipline dans laquelle s'inscrit le mémoire.]
 
-		#v(2em)
 		#argument("specialty", default: "Mécanique", types: "string")[Spécialité dans laquelle s'inscrit mémoire.]
 
 		#argument("commity", default: (), types: "array")[Liste des membres du jury de soutenance. Chaque membre du jury est défini par un dictionnaire, de type #dtype((:)), contenant les champs suivant :
@@ -158,6 +159,8 @@ Le modèle #cmd("thesistemplate") possède un certain nombre de paramètres perm
 		]
 
 		#argument("body-font", default: "Lato", types: "string")[Nom de la police de caractère du corps du texte.]
+
+		#colbreak()
 
 		#argument("math-font", default: "Lete Sans Math", types: "string")[Nom de la police de caractère des équations mathématiques.]
 

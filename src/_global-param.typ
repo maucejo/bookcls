@@ -1,0 +1,11 @@
+#let primary-color = rgb("#c1002a")
+#let secondary-color = rgb("#dddddd").darken(15%)
+#let slang = state("slang", "fr")
+#let in-outline = state("in-outline", false)
+#let num-pattern = state("num-pattern", "1.1")
+#let isappendix = state("isappendix", false)
+#let thesis-author = state("thesis-author", none)
+#let thesis-title = state("thesis-title", none)
+#let fig-supplement = [Figure]
+#let text-size = 11pt
+#let paper-size = "a4"

@@ -1,6 +1,6 @@
-#import "@preview/thesistemplate:0.2.1": *
+#import "../src/book.typ": *
 
-#show: thesistemplate.with(
+#show: book.with(
   author: "Mathieu Aucejo",
   commity: (
     (
