@@ -4,7 +4,7 @@
 
   #lorem(100)
 
-  La @fig:A illustre le cas d'industriels utilisant des absorbants.
+  La Figure @fig:A illustre le cas d'industriels utilisant des absorbants.
 
   #figure(
   image("../images/chapitre1/cnam_region.png", width: 75%),

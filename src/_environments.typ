@@ -3,7 +3,7 @@
 #let front-matter(body) = {
   set heading(numbering: none)
   set page(numbering: "i")
-  num-pattern.update(none)
+  states.num-pattern.update(none)
   counter(page).update(1)
 
   body
@@ -12,7 +12,7 @@
 // Main matter
 #let main-matter(body) = {
   set page(numbering: "1/1")
-  num-pattern.update("1.1")
+  states.num-pattern.update("1.1")
   counter(page).update(1)
 
   body
@@ -33,8 +33,8 @@
   counter(heading.where(level: 1)).update(0)
   // Reset heading counter for the table of contents
   counter(heading).update(0)
-  num-pattern.update("A.1")
-  isappendix.update(true)
+  states.num-pattern.update("A.1")
+  states.isappendix.update(true)
 
   body
 }

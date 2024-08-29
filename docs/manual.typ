@@ -3,7 +3,7 @@
 
 #show: manual-template.with(
 	abstract : [Ce package Typst est une proposition de modèle pour la rédaction de mémoire thèse ou de HDR pour les personnels du Laboratoire de Mécanique des Structures et des Systèmes Couplés du Conservatoire National des Arts et Métiers.],
-	version: "Template 0.2.1",
+	version: "Template 0.3.0",
 	typst-version: "Typst 0.11.1"
 )
 

@@ -8,14 +8,14 @@
   counter(figure.where(kind: table)).update(0)
 
   context{
-    let numbering-heading = num-pattern.get()
+    let numbering-heading = states.num-pattern.get()
     let numbering-fig = n => {
       let h1 = counter(heading).get().first()
       numbering(numbering-heading, h1, n)
     }
 
     let num-pattern-eq = "(1.1)"
-    if isappendix.get() {
+    if states.isappendix.get() {
       num-pattern-eq = "(A.1)"
     }
     let numbering-eq = n => {
@@ -49,6 +49,7 @@
       gap: 1.5em
     )
 
+    let toc-header = states.localization.get().toc
     if toc {
       set align(horizon)
       heading(title)
@@ -57,19 +58,20 @@
         abstract
       }
 
+
       block(above: 3.5em)[
-          #if slang.get() == "fr" {
-            text([*Table des matières*])
-            v(-0.25em)
-          } else {
-            text([*Table of contents*])
-            v(-0.25em)
-          }
+          // #if slang.get() == "fr" {
+            #text([*#toc-header*])
+            #v(-0.25em)
+          // } else {
+          //   text([*Table of contents*])
+          //   v(-0.25em)
+          // }
       ]
 
-      line(stroke: 2pt + secondary-color, length: 100%)
+      line(stroke: 2pt + colors.gray, length: 100%)
       minitoc(target: heading.where(outlined: true, level: 2))
-      line(stroke: 2pt + secondary-color, length: 100%)
+      line(stroke: 2pt + colors.gray, length: 100%)
       pagebreak()
 
     } else {
@@ -88,15 +90,15 @@
   set align(horizon)
   grid(columns : 2,
     column-gutter: 1fr,
-    [#align(left)[#image("assets/devise_cnam.svg", width: 45%)]],   [#align(right)[#image("assets/logo_cnam.png", width: 50%)]],
+    [#align(left)[#image("resources/images/devise_cnam.svg", width: 45%)]],   [#align(right)[#image("resources/images/logo_cnam.png", width: 50%)]],
   )
 
   context{
     v(2em)
     align(center)[
-      #text([*#thesis-author.get()*], size: 1.5em, fill: primary-color)
+      #text([*#states.author.get()*], size: 1.5em, fill: colors.red)
 
-      #text([*#thesis-title.get()*], size: 1.25em)
+      #text([*#states.title.get()*], size: 1.25em)
 
       #v(1em)
     ]
@@ -104,7 +106,7 @@
   if resume != none {
     block(
       width: 100%,
-      stroke: 1pt + primary-color,
+      stroke: 1pt + colors.red,
       inset: 1em,
       radius: 0.5em,
       below: 2em
@@ -116,7 +118,7 @@
   if abstract != none {
     block(
       width: 100%,
-      stroke: 1pt + primary-color,
+      stroke: 1pt + colors.red,
       inset: 1em,
       radius: 0.5em,
       )[

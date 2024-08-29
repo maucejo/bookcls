@@ -20,7 +20,7 @@
   specialty: "Mécanique",
   commity: (),
   lang: "fr",
-  logo: "assets/logo_cnam.png",
+  logo: image("resources/images/logo_cnam.png"),
   body-font: "Lato",
   math-font: "Lete Sans Math",
   body
@@ -32,7 +32,6 @@
   set text(font: body-font, lang: lang, size: text-size)
 
   // Math font
-
   let math-fonts = (math-font, "New Computer Modern Math")
   show math.equation: set text(font: math-fonts, stylistic-set: 1)
 
@@ -42,6 +41,13 @@
   // Paragraphs
   set par(justify: true)
 
+  // Localization
+  let localization = json("resources/i18n/fr.json")
+  if lang == "en" {
+    localization = json("resources/i18n/en.json")
+  }
+  states.localization.update(localization)
+
   // Headings
   set heading(numbering: "1.1")
 
@@ -50,11 +56,11 @@
     pagebreak(to: "odd")
     // Title body
     set align(right)
-    set underline(stroke: 2pt + secondary-color, offset: 8pt)
+    set underline(stroke: 2pt + colors.gray, offset: 8pt)
     if it.numbering != none {
       v(5em)
       block[
-        #text(counter(heading).display(it.numbering), size: 4em, fill: primary-color)
+        #text(counter(heading).display(it.numbering), size: 4em, fill: colors.red)
 
         #text(underline(it.body), size: 1.5em)
       ]
@@ -69,16 +75,16 @@
   show heading.where(level: 2): it => {
     if it.numbering != none {
       block[
-        #text(counter(heading).display(it.numbering), fill: primary-color)
+        #text(counter(heading).display(it.numbering), fill: colors.red)
         #text(it.body)
         #v(-0.5em)
-        #line(stroke: 2pt + secondary-color, length: 100%)
+        #line(stroke: 2pt + colors.gray, length: 100%)
       ]
     } else {
       block[
         #text(it.body)
         #v(-0.5em)
-        #line(stroke: 2pt + secondary-color, length: 100%)
+        #line(stroke: 2pt + colors.gray, length: 100%)
       ]
     }
     v(1em)
@@ -87,7 +93,7 @@
   show heading.where(level: 3): it => {
     if it.numbering != none {
       block[
-        #text(counter(heading).display(it.numbering), fill: primary-color)
+        #text(counter(heading).display(it.numbering), fill: red-color)
         #text(it.body)
       ]
     } else {
@@ -98,14 +104,8 @@
     v(1em)
   }
 
-  // Outline
-  show outline: it => {
-    in-outline.update(true)
-    // Show table of contents, list of figures, list of tables, etc. in the table of contents
-    set heading(outlined: true)
-    it
-    in-outline.update(false)
-  }
+  // References
+  set ref(supplement: it => none)
 
   // Outline entries
   show outline.entry: it => {
@@ -116,12 +116,11 @@
         let item-number = box(width: 1fr, it.fill) + h(0.25em) + it.page
         if it.level == 1 {
           block(above: 1.5em, below: 0em)
-          item = [#text([*#number*], fill: primary-color) #h(0.15em) #strong(body) #h(0.15em)]
+          item = [#text([*#number*], fill: colors.red) #h(0.15em) #strong(body) #h(0.15em)]
         } else {
-          item = [#text([#number], fill: primary-color) #h(0.15em) #body #h(0.15em)]
+          item = [#text([#number], fill: colors.red) #h(0.15em) #body #h(0.15em)]
         }
         link(it.element.location(), item + item-number)
-
       } else {
         let item = none
         if it.level == 1 {
@@ -135,7 +134,7 @@
     } else if it.element.func() == figure {
         block(above: 1.25em, below: 0em)
         let (type, _, counter, ..body) = it.body.children
-        link(it.element.location(), [#type #text(counter, fill: primary-color) #body.join()])
+        link(it.element.location(), [#type #text(counter, fill: colors.red) #body.join()])
     } else {
       it
     }
@@ -147,12 +146,12 @@
   // Table customizations
   show table.cell.where(y: 0): set text(weight: "bold", fill: white)
     set table(
-    fill: (_, y) => if y == 0 {primary-color} else if calc.odd(y) { secondary-color.lighten(60%)},
+    fill: (_, y) => if y == 0 {colors.red} else if calc.odd(y) { colors.gray.lighten(60%)},
     stroke: (x, y) => (
-      left: if x == 0 or y > 0 { (thickness: 1pt, paint: secondary-color) } else { (thickness: 1pt, paint: primary-color) },
-      right: (thickness: 1pt, paint: secondary-color),
-      top: if y <= 1 { (thickness: 1pt, paint: secondary-color) } else { 0pt },
-      bottom: (thickness: 1pt, paint: secondary-color),
+      left: if x == 0 or y > 0 { (thickness: 1pt, paint: colors.gray) } else { (thickness: 1pt, paint: colors.red) },
+      right: (thickness: 1pt, paint: colors.gray),
+      top: if y <= 1 { (thickness: 1pt, paint: colors.gray) } else { 0pt },
+      bottom: (thickness: 1pt, paint: colors.gray),
     )
   )
 
@@ -163,18 +162,18 @@
   }
 
   // Lists
-  set list(marker: [#text(fill:primary-color, size: 1.75em)[#sym.bullet]])
-  set enum(numbering: n => text(fill:primary-color)[#n.])
+  set list(marker: [#text(fill:colors.red, size: 1.75em)[#sym.bullet]])
+  set enum(numbering: n => text(fill:red-color)[#n.])
 
   // Title page
   place(top + left, dx: -16%, dy: -10%,
-      rect(fill: primary-color, height: 121%, width: 20%)
+      rect(fill: colors.red, height: 121%, width: 20%)
   )
 
   let title-page = {
     if logo != none {
     set image(width: 35%)
-    place(top + right, dx: 0%, dy: -15%, image(logo))
+    place(top + right, dx: 0%, dy: -15%, logo)
     }
     text([ÉCOLE DOCTORALE #h(0.25em) #doctoral-school], size: 1.25em)
     v(0.25em)
@@ -196,9 +195,9 @@
     v(0.15em)
     text([_Spécialité_ : *#specialty*], size: 1.1em)
     v(2em)
-    line(stroke: 1.75pt + primary-color, length: 104%)
+    line(stroke: 1.75pt + colors.red, length: 104%)
     align(center)[#text(strong(title), size: 2em)]
-    line(stroke: 1.75pt + primary-color, length: 104%)
+    line(stroke: 1.75pt + colors.red, length: 104%)
     v(1em)
     let n = 0
     for director in supervisor {
@@ -251,8 +250,8 @@
     )
   )
 
-  thesis-author.update(author)
-  thesis-title.update(title)
+  states.author.update(author)
+  states.title.update(title)
 
   body
 }

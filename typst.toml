@@ -1,10 +1,10 @@
 [package]
-name = "thesistemplate"
-version = "0.2.1"
+name = "book"
+version = "0.3.0"
 authors = ["Mathieu Aucejo"]
 license = "MIT"
 description = "Modèle de thèse pour le Cnam"
-entrypoint = "src/thesistemplate.typ"
+entrypoint = "src/book.typ"
 categories = ["report"]
 repository = "https://github.com/maucejo/Cnam_thesis_template"
 

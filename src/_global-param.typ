@@ -1,11 +1,19 @@
-#let primary-color = rgb("#c1002a")
-#let secondary-color = rgb("#dddddd").darken(15%)
-#let slang = state("slang", "fr")
-#let in-outline = state("in-outline", false)
-#let num-pattern = state("num-pattern", "1.1")
-#let isappendix = state("isappendix", false)
-#let thesis-author = state("thesis-author", none)
-#let thesis-title = state("thesis-title", none)
+#let colors = (
+  red: rgb("#c1002a"),
+  gray: rgb("#dddddd").darken(15%)
+)
+
+#let states = (
+  localization: state("localization"),
+  in-outline: state("in-outline", false),
+  num-pattern: state("num-pattern", "1.1"),
+  isappendix: state("isappendix", false),
+  author: state("author", none),
+  title: state("title", none),
+)
+
+// #let thesis-author = state("thesis-author", none)
+// #let thesis-title = state("thesis-title", none)
 #let fig-supplement = [Figure]
-#let text-size = 11pt
+#let text-size = 12pt
 #let paper-size = "a4"

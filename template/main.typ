@@ -27,7 +27,8 @@
       affiliation: "Caladan University",
       role: "Examinateur"
     ),
-  )
+  ),
+  lang: "fr"
 )
 
 #show: front-matter

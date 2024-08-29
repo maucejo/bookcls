@@ -12,14 +12,14 @@ $
 y(x) = f(x)
 $)
 
-La @fig:B
+La Figure @fig:B
 
 #figure(
 image("../images/chapitre1/cnam_region.png", width: 75%),
 caption: [#lorem(10)],
 ) <fig:B>
 
-La @b3 présente la carte du Cnam.
+La Figure @b3 présente la carte du Cnam.
 
 #subfigure(
 figure(image("../images/chapitre1/cnam_region.png"), caption: []),

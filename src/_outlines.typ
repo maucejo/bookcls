@@ -3,32 +3,23 @@
 // Table of contents
 #let tableofcontents() = {
   context{
-    if slang.get() == "fr" {
-      outline(title: "Table des matières", indent: 1em)
-    } else {
-      outline(title: "Table of contents", indent: 1em)
-    }
+    let localization = states.localization.get()
+      outline(title: localization.toc, indent: 1em)
   }
 }
 
 // List of figures
 #let listoffigures() = {
   context{
-    if slang.get() == "fr" {
-      outline(title: "Table des figures", target: figure.where(kind: image))
-    } else {
-      outline(title: "List of figures", target: figure.where(kind: image))
-    }
+    let localization = states.localization.get()
+    outline(title: localization.tof, target: figure.where(kind: image))
   }
 }
 
 // List of tables
 #let listoftables() = {
   context{
-    if slang.get() == "fr" {
-      outline(title: "Table des tableaux", target: figure.where(kind: table))
-    } else {
-      outline(title: "List of tables", target: figure.where(kind: table))
-    }
+    let localization = states.localization.get()
+    outline(title: localization.tot, target: figure.where(kind: table))
   }
 }

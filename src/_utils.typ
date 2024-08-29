@@ -5,10 +5,10 @@
 #let boxeq(body) = {
   set align(center)
   box(
-    stroke: 1pt + secondary-color,
+    stroke: 1pt + colors.gray,
     radius: 5pt,
     inset: 0.5em,
-    fill: secondary-color.lighten(60%),
+    fill: colors.gray.lighten(60%),
   )[#body]
 }
 
@@ -20,11 +20,11 @@
 // Subfigure
 #let subfigure = {
   subpar.grid.with(
-    numbering: n => if isappendix.get() {numbering("A.1", counter(heading).get().first(), n)
+    numbering: n => if states.isappendix.get() {numbering("A.1", counter(heading).get().first(), n)
       } else {
         numbering("1.1", counter(heading).get().first() , n)
       },
-    numbering-sub-ref: (m, n) => if isappendix.get() {numbering("A.1a", counter(heading).get().first(), m, n)
+    numbering-sub-ref: (m, n) => if states.isappendix.get() {numbering("A.1a", counter(heading).get().first(), m, n)
       } else {
         numbering("1.1a", counter(heading).get().first(), m, n)
       },
@@ -33,7 +33,7 @@
 }
 
 // Long and short captions for figures or tables
-#let ls-caption(long, short) = context { if in-outline.get() { short } else {
+#let ls-caption(long, short) = context { if states.in-outline.get() { short } else {
 long }}
 
 // Font exists ?

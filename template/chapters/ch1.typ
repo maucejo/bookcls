@@ -5,7 +5,7 @@
 == Objectifs
 #lorem(100)
 
-l'@eq:1 et l'@eq:2 sont des équations très importantes.
+Les équations @eq:1 et @eq:2 sont des équations très importantes.
 $
 integral_0^1 f(x) dif x = F(1) - F(0) "et voilà"
 $ <eq:1>
@@ -14,14 +14,14 @@ $
 integral_0^1 f(x) dif x = F(1) - F(0) "et voilà"
 $ <eq:2>
 
-La @fig:1 illustre le cas d'industriels utilisant des absorbants.
+La Figure @fig:1 illustre le cas d'industriels utilisant des absorbants.
 
 #figure(
 image("../images/chapitre1/cas_indus_absorbants.png", width: 75%),
 caption: [#ls-caption([#lorem(10)], [#lorem(2)])],
 ) <fig:1>
 
-La @fig:subfig présente la carte du Cnam. La @b illustre la région du Cnam @Smi21.
+La Figure @fig:subfig présente la carte du Cnam. La Figure @b illustre la région du Cnam @Smi21.
 
 #subfigure(
 figure(image("../images/chapitre1/cnam_region.png"), caption: []),
