@@ -1,4 +1,5 @@
 #import "@preview/minitoc:0.1.0": *
+#import "@preview/hydra:0.5.1": hydra
 #import "_global-param.typ" : *
 
 // Chapter
@@ -6,6 +7,18 @@
   counter(math.equation).update(0)
   counter(figure.where(kind: image)).update(0)
   counter(figure.where(kind: table)).update(0)
+
+  // Header
+  set page(paper: paper-size, header: context {
+  set text(style: "italic", fill: colors.gray)
+  if calc.odd(here().page()) {
+    align(right, hydra(2))
+  } else {
+    align(left, hydra(1, book: false))
+  }
+  // v(-0.5em)
+  // line(length: 100%, stroke: 0.5pt + colors.red)
+})
 
   context{
     let numbering-heading = states.num-pattern.get()
@@ -69,9 +82,9 @@
           // }
       ]
 
-      line(stroke: 2pt + colors.gray, length: 100%)
+      line(stroke: 1.5pt + colors.gray, length: 100%)
       minitoc(target: heading.where(outlined: true, level: 2))
-      line(stroke: 2pt + colors.gray, length: 100%)
+      line(stroke: 1.5pt + colors.gray, length: 100%)
       pagebreak()
 
     } else {

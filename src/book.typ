@@ -78,7 +78,7 @@
         #text(counter(heading).display(it.numbering), fill: colors.red)
         #text(it.body)
         #v(-0.5em)
-        #line(stroke: 2pt + colors.gray, length: 100%)
+        #line(stroke: 1.5pt + colors.gray, length: 100%)
       ]
     } else {
       block[
