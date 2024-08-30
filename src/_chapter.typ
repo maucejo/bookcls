@@ -9,7 +9,7 @@
   counter(figure.where(kind: table)).update(0)
 
   // Header
-  set page(paper: paper-size, header: context {
+  set page(header: context {
   set text(style: "italic", fill: colors.gray)
   if calc.odd(here().page()) {
     align(right, hydra(2))
