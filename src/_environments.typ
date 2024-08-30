@@ -38,3 +38,5 @@
 
   body
 }
+
+// #let empty-page = page([], header: "", footer: "")

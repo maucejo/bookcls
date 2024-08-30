@@ -54,6 +54,7 @@
   show heading.where(level: 1): it => {
     // Clear page if necessary
     pagebreak(to: "odd")
+
     // Title body
     set align(right)
     set underline(stroke: 2pt + colors.gray, offset: 8pt)
@@ -74,33 +75,21 @@
 
   show heading.where(level: 2): it => {
     if it.numbering != none {
-      block[
-        #text(counter(heading).display(it.numbering), fill: colors.red)
-        #text(it.body)
-        #v(-0.5em)
-        #line(stroke: 1.5pt + colors.gray, length: 100%)
-      ]
-    } else {
-      block[
-        #text(it.body)
-        #v(-0.5em)
-        #line(stroke: 2pt + colors.gray, length: 100%)
-      ]
+      text(counter(heading).display(it.numbering), fill: colors.red)
+      h(0.25em)
     }
+    text(it.body)
+    v(-0.5em)
+    line(stroke: 1.5pt + colors.gray, length: 100%)
     v(1em)
   }
 
   show heading.where(level: 3): it => {
     if it.numbering != none {
-      block[
-        #text(counter(heading).display(it.numbering), fill: red-color)
-        #text(it.body)
-      ]
-    } else {
-      block[
-        #text(it.body)
-      ]
+      text(counter(heading).display(it.numbering), fill: colors.red)
+      h(0.25em)
     }
+    text(it.body)
     v(1em)
   }
 
@@ -246,7 +235,7 @@
       height: 100%,
       width: 100%,
       breakable: false,
-      {title-page}
+      title-page
     )
   )
 

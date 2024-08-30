@@ -16,8 +16,6 @@
   } else {
     align(left, hydra(1, book: false))
   }
-  // v(-0.5em)
-  // line(length: 100%, stroke: 0.5pt + colors.red)
 })
 
   context{
@@ -71,15 +69,9 @@
         abstract
       }
 
-
       block(above: 3.5em)[
-          // #if slang.get() == "fr" {
-            #text([*#toc-header*])
-            #v(-0.25em)
-          // } else {
-          //   text([*Table of contents*])
-          //   v(-0.25em)
-          // }
+        #text([*#toc-header*])
+        #v(-0.25em)
       ]
 
       line(stroke: 1.5pt + colors.gray, length: 100%)

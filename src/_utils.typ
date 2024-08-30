@@ -49,3 +49,12 @@ long }}
 
 		return res
 }
+
+#let pagebreak-to-odd = context {
+  let n = here().page()
+  if calc.odd(n) {
+    page(header: [], footer: [])[]
+  } else if calc.even(n) {
+    v(100%, weak: true)
+  }
+}
