@@ -154,89 +154,18 @@
   set list(marker: [#text(fill:colors.red, size: 1.75em)[#sym.bullet]])
   set enum(numbering: n => text(fill:red-color)[#n.])
 
-  // Title page
-  place(top + left, dx: -16%, dy: -10%,
-      rect(fill: colors.red, height: 121%, width: 20%)
-  )
-
-  let title-page = {
-    if logo != none {
-    set image(width: 35%)
-    place(top + right, dx: 0%, dy: -15%, logo)
-    }
-    text([ÉCOLE DOCTORALE #h(0.25em) #doctoral-school], size: 1.25em)
-    v(0.25em)
-    text(laboratory, size: 1.25em)
-    v(2em)
-    if type == "these" {
-      text([*Thèse de doctorat*], size: 1.5em)
-    } else {
-      text([*Habilitation à diriger des recherches*], size: 1.5em)
-    }
-    v(0.25em)
-    text([_présentée par_ *#author*], size: 1.15em)
-    v(0.25em)
-    text([_soutenue le_ *#defense-date*], size: 1.15em)
-    v(0.25em)
-    text([_préparée au_ *#school*], size: 1.15em)
-    v(0.25em)
-    text([_Discipline_ : *#discipline*], size: 1.1em)
-    v(0.15em)
-    text([_Spécialité_ : *#specialty*], size: 1.1em)
-    v(2em)
-    line(stroke: 1.75pt + colors.red, length: 104%)
-    align(center)[#text(strong(title), size: 2em)]
-    line(stroke: 1.75pt + colors.red, length: 104%)
-    v(1em)
-    let n = 0
-    for director in supervisor {
-      if n == 0 {
-        if type == "these" {
-          text([Directeur de thèse : *#director*], size: 1.15em)
-        } else {
-          text([Garant : *#director*], size: 1.15em)
-          break
-        }
-        v(0.05em)
-        n += 1
-      } else {
-        text([Co-directeur de thèse : *#director*], size: 1.15em)
-        v(0.05em)
-      }
-    }
-    if cosupervisor != none {
-      for codirector in cosupervisor {
-        text([Co-encadrant : *#codirector*], size: 1.15em)
-        v(0.05em)
-      }
-    }
-    v(1fr)
-    align(center)[
-      #text([*Composition du jury*])
-      #v(0.5em)
-      #set text(size: 0.9em)
-      #grid(
-        columns: 4,
-        column-gutter: 1.5em,
-        row-gutter: 1em,
-        align: left,
-        stroke: none,
-        ..for (name, position, affiliation, role) in commity {
-          ([*#name*], position, affiliation, role)
-        },
-      )
-    ]
-
-    v(1fr)
-  }
-
-  place(dx: 8%, dy: 11%,
-    block(
-      height: 100%,
-      width: 100%,
-      breakable: false,
-      title-page
-    )
+  title-page(
+    title: title,
+    author: author,
+    type: type,
+    defense-date: defense-date,
+    school: school,
+    discipline: discipline,
+    specialty: specialty,
+    supervisor: supervisor,
+    cosupervisor: cosupervisor,
+    commity: commity,
+    logo: logo
   )
 
   states.author.update(author)
