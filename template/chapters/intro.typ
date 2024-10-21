@@ -1,29 +1,35 @@
 #import "../../src/book.typ": *
 
-#chapter("Introduction", abstract: lorem(50), numbered: false)[
+// #chapter("Introduction", abstract: lorem(50), numbered: false)[
 
-  == Objectifs
+#show: chapter.with(
+  title: "Introduction",
+  abstract: [#lorem(50)],
+  numbered: false
+)
 
-  #lorem(100)
+== Objectifs
 
-  #lorem(25)
+#lorem(100)
 
-  $
-  y = f(x)
-  $
+#lorem(25)
 
-  #v(1.25em)
-  === Sous-objectifs
+$
+y = f(x)
+$
 
-  #figure(
-  image("../images/chapitre1/cas_indus_absorbants.png", width: 75%),
-  caption: [#ls-caption([#lorem(10)], [#lorem(2)])],
-  ) <fig:intro>
+#v(1.25em)
+=== Sous-objectifs
 
-  #lorem(50)
+#figure(
+image("../images/chapitre1/cas_indus_absorbants.png", width: 75%),
+caption: [#ls-caption([#lorem(10)], [#lorem(2)])],
+) <fig:intro>
 
-  #v(1.25em)
-  == Méthodologie
+#lorem(50)
 
-  #lorem(100)
-]
+#v(1.25em)
+== Méthodologie
+
+#lorem(100)
+// ]

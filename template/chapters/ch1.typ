@@ -1,6 +1,6 @@
 #import "../../src/book.typ": *
 
-#chapter("Premier chapitre")[
+#show: chapter.with(title: "Premier chapitre")
 
 == Objectifs
 #lorem(100)

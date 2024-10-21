@@ -103,7 +103,7 @@
 }
 
 // Chapter
-#let chapter(title, abstract: none, toc: true, numbered: true, body) = {
+#let chapter(title: none, abstract: none, toc: true, numbered: true, body) = {
   counter(math.equation).update(0)
   counter(figure.where(kind: image)).update(0)
   counter(figure.where(kind: table)).update(0)

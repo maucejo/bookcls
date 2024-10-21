@@ -1,6 +1,9 @@
 #import "../../src/book.typ": *
 
-#chapter("Fondements mathématiques", toc: false)[
+#show: chapter.with(
+  title: "Fondements mathématiques",
+  toc: false
+)
 
 #lorem(100)
 
@@ -28,5 +31,3 @@ columns: (1fr, 1fr),
 caption: [(a) Left image and (b) Right image],
 label: <fig:subfig3>,
 )
-
-]
