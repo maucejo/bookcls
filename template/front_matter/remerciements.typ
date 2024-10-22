@@ -1,9 +1,7 @@
 #import "../../src/book.typ": *
 
-// #chapter("Remerciements", toc: false)[
-//   #lorem(50)
-// ]
-
-= Remerciements
+#show: chapter.with(title: "Remerciements", toc: false)
 
 #lorem(50)
+
+

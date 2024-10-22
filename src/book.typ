@@ -35,9 +35,6 @@
   let math-fonts = (math-font, "New Computer Modern Math")
   show math.equation: set text(font: math-fonts, stylistic-set: 1)
 
-  // Page layout
-  set page(paper: paper-size)
-
   // Paragraphs
   set par(justify: true)
 
@@ -54,15 +51,15 @@
   show heading.where(level: 1): it => {
     // Clear page if necessary
     pagebreak(to: "odd")
-
     // Title body
     set align(right)
     set underline(stroke: 2pt + colors.gray, offset: 8pt)
     if it.numbering != none {
       v(5em)
       block[
-        #text(counter(heading).display(it.numbering), size: 4em, fill: colors.red)
-
+        #let number = context {counter(heading).get().first()}
+        #text(number, size: 4em, fill: colors.red)
+        #v(-3em)
         #text(underline(it.body), size: 1.5em)
       ]
       v(5em)
@@ -153,6 +150,20 @@
   // Lists
   set list(marker: [#text(fill:colors.red, size: 1.75em)[#sym.bullet]])
   set enum(numbering: n => text(fill:red-color)[#n.])
+
+   // Page layout
+  let header = context {
+    set text(style: "italic", fill: colors.gray)
+    if calc.odd(here().page()) {
+      align(right, hydra(2, book: true))
+    } else {
+      align(left, hydra(1))
+    }
+  }
+  set page(
+    paper: paper-size,
+    header: header
+  )
 
   title-page(
     title: title,

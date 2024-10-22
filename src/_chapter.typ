@@ -17,7 +17,8 @@
   specialty: none,
   commity: (),
   logo: none
-) = {place(top + left, dx: -16%, dy: -10%,
+) = {
+  place(top + left, dx: -16%, dy: -10%,
       rect(fill: colors.red, height: 121%, width: 20%)
   )
 
@@ -108,27 +109,20 @@
   counter(figure.where(kind: image)).update(0)
   counter(figure.where(kind: table)).update(0)
 
-  // Header
-  set page(header: context {
-  set text(style: "italic", fill: colors.gray)
-  if calc.odd(here().page()) {
-    align(right, hydra(2))
-  } else {
-    align(left, hydra(1, book: false))
-  }
-})
-
   context{
     let numbering-heading = states.num-pattern.get()
-    let numbering-fig = n => {
-      let h1 = counter(heading).get().first()
-      numbering(numbering-heading, h1, n)
-    }
-
+    let num-pattern-fig = "1.1"
     let num-pattern-eq = "(1.1)"
     if states.isappendix.get() {
+      num-pattern-fig = "A.1"
       num-pattern-eq = "(A.1)"
     }
+
+    let numbering-fig = n => {
+      let h1 = counter(heading).get().first()
+      numbering(num-pattern-fig, h1, n)
+    }
+
     let numbering-eq = n => {
       let h1 = counter(heading).get().first()
       numbering(num-pattern-eq, h1, n)
@@ -162,6 +156,7 @@
 
     let toc-header = states.localization.get().toc
     if toc {
+      set page(header: none)
       set align(horizon)
       heading(title)
 
@@ -189,7 +184,7 @@
 
 // Quatrième de couverture
 #let back-cover(resume: none, abstract: none) = {
-  set page(numbering: none)
+  set page(header: none, numbering: none)
 
   pagebreak(to: "even", weak: true)
   set align(horizon)

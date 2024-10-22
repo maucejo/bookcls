@@ -18,19 +18,17 @@
 }
 
 // Subfigure
-#let subfigure = {
-  subpar.grid.with(
-    numbering: n => if states.isappendix.get() {numbering("A.1", counter(heading).get().first(), n)
-      } else {
-        numbering("1.1", counter(heading).get().first() , n)
-      },
-    numbering-sub-ref: (m, n) => if states.isappendix.get() {numbering("A.1a", counter(heading).get().first(), m, n)
-      } else {
-        numbering("1.1a", counter(heading).get().first(), m, n)
-      },
-    supplement: fig-supplement
-  )
-}
+#let subfigure = subpar.grid.with(
+  numbering: n => if states.isappendix.get() {numbering("A.1", counter(heading).get().first(), n)
+    } else {
+      numbering("1.1", counter(heading).get().first() , n)
+    },
+  numbering-sub-ref: (m, n) => if states.isappendix.get() {numbering("A.1a", counter(heading).get().first(), m, n)
+    } else {
+      numbering("1.1a", counter(heading).get().first(), m, n)
+    },
+  supplement: fig-supplement
+)
 
 // Long and short captions for figures or tables
 #let ls-caption(long, short) = context { if states.in-outline.get() { short } else {
@@ -48,13 +46,4 @@ long }}
     }
 
 		return res
-}
-
-#let pagebreak-to-odd = context {
-  let n = here().page()
-  if calc.odd(n) {
-    page(header: [], footer: [])[]
-  } else if calc.even(n) {
-    v(100%, weak: true)
-  }
 }

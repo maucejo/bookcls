@@ -47,4 +47,3 @@ label: <fig:subfig>,
     table.cell(colspan: 2)[24.7],
   ), caption: [#lorem(4)]
 )
-]
