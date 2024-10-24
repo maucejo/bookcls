@@ -83,13 +83,15 @@
   let has-content = state("content.pages", (0,)).get()
     .contains(here().page())
 
+  let current-page = counter(page).get().first()
+  let total-page = counter(page).final().first() - 2
   if has-content or is-start-chapter {
     if states.page-numbering.get() == "i" {
       align(center, counter(page).display(states.page-numbering.get()))
     } else {
-      let current-page = counter(page).get().first()
-      let total-page = counter(page).final().first() - 2
       align(center, [#current-page / #total-page])
     }
+  } else {
+    if current-page > 2 {align(center, [#current-page / #total-page])}
   }
 }
