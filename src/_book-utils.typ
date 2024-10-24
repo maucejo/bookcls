@@ -49,12 +49,12 @@
   return res
 }
 
+
 // Page header and footer - add empty page if necessary
 #let page-header = context {
-  let page = here().page()
   let is-start-chapter = query(heading.where(level:1))
     .map(it => it.location().page())
-    .contains(page)
+    .contains(here().page())
 
   if not state("content.switch", false).get() and not is-start-chapter {
     return
@@ -76,10 +76,14 @@
 }
 
 #let page-footer = context {
+  let is-start-chapter = query(heading.where(level:1))
+    .map(it => it.location().page())
+    .contains(here().page())
+
   let has-content = state("content.pages", (0,)).get()
     .contains(here().page())
 
-  if has-content {
+  if has-content or is-start-chapter {
     if states.page-numbering.get() == "i" {
       align(center, counter(page).display(states.page-numbering.get()))
     } else {
