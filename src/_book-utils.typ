@@ -49,7 +49,7 @@
   return res
 }
 
-// Page header and footer
+// Page header and footer - add empty page if necessary
 #let page-header = context {
   let page = here().page()
   let is-start-chapter = query(heading.where(level:1))
