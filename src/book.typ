@@ -1,9 +1,9 @@
 // Exported packages
 // Internals
-#import "_environments.typ": *
-#import "_outlines.typ": *
-#import "_chapter.typ": *
-#import "_utils.typ": *
+#import "_book-environments.typ": *
+#import "_book-outlines.typ": *
+#import "_book-components.typ": *
+#import "_book-utils.typ": *
 
 // Template
 #let book(
@@ -17,7 +17,7 @@
   laboratory: "Nom du laboratoire",
   defense-date: "01 janvier 1970",
   discipline: "Mécanique, Génie Mécanique, Génie Civil",
-  specialty: "Mécanique",
+  speciality: "Mécanique",
   commity: (),
   lang: "fr",
   logo: image("resources/images/logo_cnam.png"),
@@ -50,15 +50,17 @@
 
   show heading.where(level: 1): it => {
     // Clear page if necessary
-    pagebreak(to: "odd")
+    state("content.switch").update(false)
+    pagebreak(weak: true, to:"odd")
+    state("content.switch").update(true)
+
     // Title body
     set align(right)
     set underline(stroke: 2pt + colors.gray, offset: 8pt)
     if it.numbering != none {
       v(5em)
       block[
-        #let number = context {counter(heading).get().first()}
-        #text(number, size: 4em, fill: colors.red)
+        #text(counter(heading).display(states.num-heading.get()), size: 4em, fill: colors.red)
         #v(-3em)
         #text(underline(it.body), size: 1.5em)
       ]
@@ -72,7 +74,7 @@
 
   show heading.where(level: 2): it => {
     if it.numbering != none {
-      text(counter(heading).display(it.numbering), fill: colors.red)
+      text(counter(heading).display(), fill: colors.red)
       h(0.25em)
     }
     text(it.body)
@@ -83,7 +85,7 @@
 
   show heading.where(level: 3): it => {
     if it.numbering != none {
-      text(counter(heading).display(it.numbering), fill: colors.red)
+      text(counter(heading).display(), fill: colors.red)
       h(0.25em)
     }
     text(it.body)
@@ -151,18 +153,11 @@
   set list(marker: [#text(fill:colors.red, size: 1.75em)[#sym.bullet]])
   set enum(numbering: n => text(fill:red-color)[#n.])
 
-   // Page layout
-  let header = context {
-    set text(style: "italic", fill: colors.gray)
-    if calc.odd(here().page()) {
-      align(right, hydra(2, book: true))
-    } else {
-      align(left, hydra(1))
-    }
-  }
+  // Page layout
   set page(
     paper: paper-size,
-    header: header
+    header: page-header,
+    footer: page-footer
   )
 
   title-page(
@@ -172,7 +167,7 @@
     defense-date: defense-date,
     school: school,
     discipline: discipline,
-    specialty: specialty,
+    speciality: speciality,
     supervisor: supervisor,
     cosupervisor: cosupervisor,
     commity: commity,
