@@ -45,8 +45,8 @@
 
 #include "chapters/ch_main.typ"
 
-#bibliography("bibliography/sample.yml")
-// #bibliography("bibliographie/sample.bib")
+// #bibliography("bibliography/sample.yml")
+#bibliography("bibliography/sample.bib")
 
 #show: appendix
 
