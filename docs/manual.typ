@@ -1,4 +1,5 @@
-#import "@preview/thesistemplate:0.2.0": *
+#import "../src/book.typ": *
+#import "@preview/subpar:0.1.1"
 #import "./manual-template.typ": *
 
 #show: manual-template.with(
@@ -29,15 +30,25 @@ Pour finir, la documentation de #typst est suffisamment bien écrite et détaill
 
 Avant de décrire plus en détail les principaux éléments du modèle, voici quelques images illustrant le rendu du modèle.
 
-#figure(
-  grid(columns: 2, column-gutter: 0em, row-gutter: 1em,
-  subfigure(image("manual-images/page_garde.png", width: 60%), caption: [Page de garde]),
-	subfigure(image("manual-images/back-cover.png", width: 60%), caption: [Quatrième de ouverture]),
-	subfigure(image("manual-images/page-chapitre.png", width: 60%), caption: [Introduction d'un chapitre]),
-	subfigure(image("manual-images/page-chapitre-section.png", width: 60%), caption: [Section d'un chapitre])
-  ),
-  caption: [Illustrations du rendu du modèle],
+#subpar.grid(
+	gap: 1em,
+	figure(image("manual-images/page_garde.png", width: 60%), caption: [Page de garde]),
+	figure(image("manual-images/back-cover.png", width: 60%), caption: [Quatrième de ouverture]),
+	figure(image("manual-images/page-chapitre.png", width: 60%), caption: [Introduction d'un chapitre]),
+	figure(image("manual-images/page-chapitre-section.png", width: 60%), caption: [Section d'un chapitre]),
+	columns: (1fr, 1fr),
+	caption: [Illustrations du rendu du modèle]
 )
+
+// #figure(
+//   grid(columns: 2, column-gutter: 0em, row-gutter: 1em,
+//   subfigure(image("manual-images/page_garde.png", width: 60%), caption: [Page de garde]),
+// 	subfigure(image("manual-images/back-cover.png", width: 60%), caption: [Quatrième de ouverture]),
+// 	subfigure(image("manual-images/page-chapitre.png", width: 60%), caption: [Introduction d'un chapitre]),
+// 	subfigure(image("manual-images/page-chapitre-section.png", width: 60%), caption: [Section d'un chapitre])
+//   ),
+//   caption: [Illustrations du rendu du modèle],
+// )
 
 #pagebreak()
 = Utilisation
@@ -81,7 +92,7 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
   laboratory: "Nom du laboratoire",
   defense-date: "01 janvier 1970",
   discipline: "Mécanique, Génie Mécanique, Génie Civil",
-  specialty: "Mécanique",
+  speciality: "Mécanique",
   commity: (),
   lang: "fr",
   logo: "assets/logo_cnam.png",
@@ -117,7 +128,7 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
 
 		#argument("discipline", default: "Mécanique, Génie Mécanique, Génie Civil", types: "string")[Discipline dans laquelle s'inscrit le mémoire.]
 
-		#argument("specialty", default: "Mécanique", types: "string")[Spécialité dans laquelle s'inscrit mémoire.]
+		#argument("speciality", default: "Mécanique", types: "string")[Spécialité dans laquelle s'inscrit mémoire.]
 
 		#argument("commity", default: (), types: "array")[Liste des membres du jury de soutenance. Chaque membre du jury est défini par un dictionnaire, de type #dtype((:)), contenant les champs suivant :
 
@@ -127,20 +138,20 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
 			- `role` : Rôle dans le jury (Rapporteur, Examinateur, #sym.dots)
 
 			#example-box[
-				```typ
-				commity: (
-  (
-    name: "Hari Seldon",
-    position: "Professeur des Universités",
-    affiliation: "Streeling university",
-    role: "Rapporteur",
-  ),
-  (
-    name: "Ford Prefect",
-    position: "Maître de conférences",
-    affiliation: "Beltegeuse University",
-    role: "Examinateur"
-  ),
+				```typc
+commity: (
+	(
+		name: "Hari Seldon",
+		position: "Professeur des Universités",
+		affiliation: "Streeling university",
+		role: "Rapporteur",
+	),
+	(
+		name: "Ford Prefect",
+		position: "Maître de conférences",
+		affiliation: "Beltegeuse University",
+		role: "Examinateur"
+	),
 )
 				```
 			]
@@ -150,7 +161,7 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
 
 		Outre le français, la seule langue prise en compte est l'anglais (`lang: "en"`).]
 
-		#argument("logo", default: "images/logo_cnam.png", types: "string")[Chemin vers le logo de l'établissement de préparation du mémoire.
+		#argument("logo", default: "image(" + "resources/images/logo_cnam.png" + ")", types: "content")[Chemin vers le logo de l'établissement de préparation du mémoire.
 		#wbox[
 			#set text(size: 11pt)
 
@@ -173,6 +184,7 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
 		]
 	]
 
+#v(1.5em)
 == Contenu du mémoire
 
 Le contenu du mémoire est à rédiger dans le fichier principal `typ` ou dans des fichiers annexes. Le modèle fournit une structure de base pour la rédaction du mémoire.
@@ -214,7 +226,6 @@ D'une manière générale, la partie du fichier principal correspondant au conte
 
 Le contenu du mémoire est divisé en trois parties principales : `front-matter`, `main-matter` et `appendix`. Ces éléments s'accompagnent de fonctions complémentaires permettant de faciliter la rédaction du mémoire.
 
-#pagebreak()
 === Environnements
 
 Le modèle propose trois environnements pour structurer le contenu du mémoire :
@@ -370,7 +381,7 @@ abstract: none
 	#argument("abstract", types: "content")[Résumé de la thèse en anglais.]
 ]
 
-
+#v(1.5em)
 = Paquets recommandés
 
 Cette section présente une liste de paquets qui peuvent être pertinents lors de la rédaction d'un mémoire en #typst.
