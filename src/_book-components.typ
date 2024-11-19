@@ -112,7 +112,7 @@
   context{
     let numbering-heading = states.num-pattern.get()
     let num-pattern-fig = "1.1"
-    let num-pattern-eq = "(1.1)"
+    let num-pattern-eq = "(1.1a)"
     if states.isappendix.get() {
       num-pattern-fig = "A.1"
       num-pattern-eq = "(A.1)"
@@ -123,15 +123,15 @@
       numbering(num-pattern-fig, h1, n)
     }
 
-    let numbering-eq = n => {
+    let numbering-eq = (..n) => {
       let h1 = counter(heading).get().first()
-      numbering(num-pattern-eq, h1, n)
+      numbering(num-pattern-eq, h1, ..n)
     }
 
     // Is the chapter numbered?
     if not numbered {
       numbering-heading = none
-      numbering-eq = "(1)"
+      numbering-eq = "(1a)"
       numbering-fig = "1"
     }
 

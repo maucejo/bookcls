@@ -1,4 +1,5 @@
 // Exported packages
+#import "@preview/equate:0.2.1": *
 // Internals
 #import "_book-environments.typ": *
 #import "_book-outlines.typ": *
@@ -34,6 +35,9 @@
   // Math font
   let math-fonts = (math-font, "New Computer Modern Math")
   show math.equation: set text(font: math-fonts, stylistic-set: 1)
+
+  // Equations
+  show: equate.with(breakable: true, sub-numbering: true)
 
   // Paragraphs
   set par(justify: true)

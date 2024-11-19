@@ -1,86 +1,72 @@
 #!/usr/bin/env bash
 set -eu
 
-# adapted from https://github.com/johannes-wolf/cetz/blob/35c0868378cea5ad323cc0d9c2f76de8ed9ba5bd/scripts/package
-# licensed under Apache License 2.0
+function read-toml() {
+  local file="$1"
+  local key="$2"
+  # Read a key value pair in the format: <key> = "<value>"
+  # stripping surrounding quotes.
+  perl -lne "print \"\$1\" if /^${key}\\s*=\\s*\"(.*)\"/" < "$file"
+}
 
-. "$(dirname "${BASH_SOURCE[0]}")/setup"
+SOURCE="$(cd "$(dirname "$0")"; pwd -P)/.." # macOS has no realpath
+TARGET="${1:?Missing target path or @local}"
+VERSION="$(read-toml "$SOURCE/typst.toml" "version")"
+PKG_PREFIX="$(read-toml "$SOURCE/typst.toml" "name")"
+
+# List of all files that get packaged
+files=(
+  src/
+  template/
+  typst.toml
+  LICENSE
+  README.md
+  docs/manual.typ
+  docs/manual.pdf
+)
+
+# Local package directories per platform
+if [[ "$OSTYPE" == "linux"* ]]; then
+  DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  DATA_DIR="$HOME/Library/Application Support"
+else
+  DATA_DIR="${APPDATA}"
+fi
 
 if (( $# < 1 )) || [[ "${1:-}" == "help" ]]; then
   echo "package TARGET"
   echo ""
-  echo "Packages all relevant files into a directory named '<name>/<version>'"
-  echo "at TARGET. If TARGET is set to @local or @preview, the local Typst package"
-  echo "directory will be used so that the package gets installed for local use."
-  echo "The name and version are read from 'typst.toml' in the project root."
+  echo "Packages all relevant files into a directory named '${PKG_PREFIX}/<version>'"
+  echo "at TARGET. If TARGET is set to @local, the local Typst package directory"
+  echo "will be used so that the package gets installed for local use."
+  echo "The version is read from 'typst.toml' in the project root."
   echo ""
   echo "Local package prefix: $DATA_DIR/typst/package/local"
-  echo "Local preview package prefix: $DATA_DIR/typst/package/preview"
   exit 1
 fi
 
-TARGET="$(resolve-target "${1:?Missing target path, @local or @preview}")"
-echo "Install dir: $TARGET"
+if [[ "$TARGET" == "@local" ]] || [[ "$TARGET" == "install" ]]; then
+  TARGET="${DATA_DIR}/typst/packages/local/"
+  echo "Install dir: $TARGET"
+fi
 
-# ignore rules
-readarray -t ignores < <(grep -v '^#' .typstignore | grep '[^[:blank:]]')
-
-# recursively print all files that are not excluded via .typstignore
-function enumerate {
-	local root="$1"
-	if [[ -f "$root" ]]; then
-		echo "$root"
-	else
-		local files
-		readarray -t files < <(find "$root" \
-      -mindepth 1 -maxdepth 1 \
-      -not -name .git \
-      -not -name .typstignore)
-		# declare -p files >&2
-
-		local f
-		for f in "${files[@]}"; do
-			local include
-			include=1
-
-			local ignore
-			for ignore in "${ignores[@]}"; do
-				if [[ "$ignore" =~ ^! ]]; then
-					ignore="${ignore:1}"
-					if [[ "$f" == ./$ignore ]]; then
-						# echo "\"$f\" matched \"!$ignore\"" >&2
-						include=1
-					fi
-				elif [[ "$f" == ./$ignore ]]; then
-					# echo "\"$f\" matched \"$ignore\"" >&2
-					include=0
-				fi
-			done
-			if [[ "$include" == 1 ]]; then
-				enumerate "$f"
-			fi
-		done
-	fi
-}
-
-# List of all files that get packaged
-readarray -t files < <(enumerate ".")
-# declare -p files >&2
+if [[ "$TARGET" == "@preview" ]] || [[ "$TARGET" == "install-preview" ]]; then
+  TARGET="${DATA_DIR}/typst/packages/preview/"
+  echo "Install dir: $TARGET"
+fi
 
 TMP="$(mktemp -d)"
 
 for f in "${files[@]}"; do
   mkdir -p "$TMP/$(dirname "$f")" 2>/dev/null
-  cp -r "$ROOT/$f" "$TMP/$f"
+  cp -r "$SOURCE/$f" "$TMP/$f"
 done
 
 TARGET="${TARGET:?}/${PKG_PREFIX:?}/${VERSION:?}"
 echo "Packaged to: $TARGET"
-if rm -r "${TARGET:?}" 2>/dev/null; then
+if rm -rf "${TARGET:?}" 2>/dev/null; then
   echo "Overwriting existing version."
 fi
 mkdir -p "$TARGET"
-
-# include hidden files by setting dotglob
-shopt -s dotglob
 mv "$TMP"/* "$TARGET"

@@ -4,8 +4,8 @@
 
 #show: manual-template.with(
 	abstract : [Ce package Typst est une proposition de modèle pour la rédaction de mémoire thèse ou de HDR pour les personnels du Laboratoire de Mécanique des Structures et des Systèmes Couplés du Conservatoire National des Arts et Métiers.],
-	version: "Template 0.3.0",
-	typst-version: "Typst 0.11.1"
+	version: "Template 0.4.0",
+	typst-version: "Typst 0.12"
 )
 
 = Qu'est-ce que Typst ?
@@ -435,7 +435,7 @@ Le modèle est en cours de développement. Voici la liste des fonctionnalités q
 - [x] Page de garde
 - [x] Quatrième de couverture
 
-#pagebreak()
+
 *Environnements*
 
 - [x] Création de l'environnement `front-matter`
@@ -455,7 +455,7 @@ Le modèle est en cours de développement. Voici la liste des fonctionnalités q
 
 - [x] Personnalisation de l'apparence des légendes des figures et des tableaux en fonction du contexte (chapitre ou annexe)
 - [x] Titres courts pour les tables des figures et des tableaux
-- [x] Création de la fonction #cmd-["subfigure"] pour les sous-figures
+- [x] Création de la fonction #cmd-["subfigure"] pour les sous-figures via le package `subpar`
 - [x] Référencement automatique des sous-figures via la modification de la fonction Typst #cmd-["ref"]
 - [x] Recréation des liens hypertextes pour les sous-figures pour la navigation dans le document via la fonction Typst #cmd-["link"]
 
@@ -464,12 +464,9 @@ Le modèle est en cours de développement. Voici la liste des fonctionnalités q
 - [x] Adaptation de la numérotation des équations en fonction du contexte (chapitre ou annexe)
 - [x] Création d'une fonction pour encadrer les équations importante -- #cmd-["boxeq"]
 - [x] Création d'une fonction définir des équations sans numérotation -- #cmd-["nonumeq"]
-- [ ] Numérotation des équations d'un système de type (1.1a) -- _Discussions en cours sur le dépôt Github de Typst_
+- [x] Utilisation du package `equate` pour numéroter des équations d'un système de type (1.1a)
 
-// *Liens*
-
-// - [ ] Personnalisation plus poussée des liens hypertextes (couleur, style, #sym.dots) ?
-
+#pagebreak()
 *Bibliographie*
 
 - [x] Vérification de la liste des références via `bibtex`
