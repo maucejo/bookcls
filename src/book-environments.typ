@@ -51,16 +51,16 @@
     numbering: none
   )
 
-  set text(size: 3em, weight: "bold")
-  set align(center + horizon)
+    set align(center + horizon)
 
   state("content.switch").update(false)
   pagebreak(weak: true, to:"odd")
 
   line(stroke: 1.75pt + colors.red, length: 104%)
-  context[Partie #states.counter-part.get() \
-  #line(stroke: 1.75pt + colors.red, length: 35%)
-   #emph(title)
+  context[
+    #text(size: 2.5em)[Partie #states.counter-part.get()]
+    #line(stroke: 1.75pt + colors.red, length: 35%)
+    #text(size: 3em)[*#title*]
    ]
   line(stroke: 1.75pt + colors.red, length: 104%)
 
