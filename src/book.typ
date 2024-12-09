@@ -1,10 +1,10 @@
 // Exported packages
 #import "@preview/equate:0.2.1": *
 // Internals
-#import "_book-environments.typ": *
-#import "_book-outlines.typ": *
-#import "_book-components.typ": *
-#import "_book-utils.typ": *
+#import "book-environments.typ": *
+#import "book-outlines.typ": *
+#import "book-components.typ": *
+#import "book-utils.typ": *
 
 // Template
 #let book(

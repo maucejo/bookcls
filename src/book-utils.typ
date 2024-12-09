@@ -1,6 +1,6 @@
 #import "@preview/subpar:0.1.1"
 #import "@preview/hydra:0.5.1": hydra
-#import "_book-params.typ": *
+#import "book-params.typ": *
 
 // Equations
 #let boxeq(body) = {

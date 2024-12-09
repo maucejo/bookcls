@@ -1,4 +1,4 @@
-#import "_book-params.typ": *
+#import "book-params.typ": *
 
 #let front-matter(body) = {
   set heading(numbering: none)
@@ -40,4 +40,35 @@
   states.isappendix.update(true)
 
   body
+}
+
+// Part
+#let part(title) = {
+  states.counter-part.update(i => i + 1)
+  set page(
+    header: none,
+    footer: none,
+    numbering: none
+  )
+
+  set text(size: 3em, weight: "bold")
+  set align(center + horizon)
+
+  state("content.switch").update(false)
+  pagebreak(weak: true, to:"odd")
+
+  line(stroke: 1.75pt + colors.red, length: 104%)
+  context[Partie #states.counter-part.get() \
+  #line(stroke: 1.75pt + colors.red, length: 35%)
+   #emph(title)
+   ]
+  line(stroke: 1.75pt + colors.red, length: 104%)
+
+  context{
+    show heading: none
+    heading[Partie #box[#text(fill:colors.red)[#states.counter-part.get() -- #title] ]]
+  }
+
+  pagebreak(weak: true, to:"odd")
+  state("content.switch").update(true)
 }

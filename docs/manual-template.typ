@@ -50,10 +50,10 @@
 }
 
 #let manual-template(
-  title: "Modèle de thèse ou de HDR",
-  subtitle: "Rédaction de mémoire en Typst",
+  title: "Modèle de thèses ou de livres",
+  subtitle: "Rédaction de mémoires ou d'ouvrages en Typst",
   version: "Template 0.1.0",
-  typst-version: "Typst 0.11.0",
+  typst-version: "Typst 0.12.0",
   date: datetime.today().display("[day]-[month]-[year]"),
   abstract : none,
   body

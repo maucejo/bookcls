@@ -14,6 +14,7 @@
   isbackcover: state("isbackcover", false),
   author: state("author", none),
   title: state("title", none),
+  counter-part: state("counter-part", 0),
 )
 
 #let fig-supplement = [Figure]

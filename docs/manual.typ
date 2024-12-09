@@ -57,7 +57,7 @@ Pour utiliser le modèle, il faut l'importer dans votre fichier principal `typ` 
 
 #codesnippet[
 	```typ
-	#import "./src/book.typ": *
+	#import "@preview/book:0.1.0": *
 	```
 ]
 
@@ -251,6 +251,13 @@ Le modèle propose trois environnements pour structurer le contenu du mémoire :
 		```
 	]
 
+4. *part* : environnement pour structurer le contenu du mémoire en parties. Pour activer cet environnement, il faut insérer dans le fichier principal `typ` à l'endroit souhaité la commande suivante :
+	#codesnippet[
+		```typ
+		#part("Titre de la partie")
+		```
+	]
+
 === Chapitre
 
 Les chapitres du mémoire sont définis par la fonction #cmd("chapter") qui dispose d'une certain nombre de paramètres permettant d'adapter le rendu du chapitre en fonction du contexte. Voici la liste des paramètres disponibles :
@@ -319,7 +326,6 @@ Cette section présente les fonctions complémentaires implémentées dans le mo
 
 D'une manière générale, les figures sont insérées dans le document à l'aide de la fonction #cmd("figure") de #typst. Cependant, #typst ne dispose pas actuellement de mécanismes permettant de gérer les sous-figures (numérotation et référencement). Pour pallier ce manque, le modèle intègre une fonction #cmd("subfigure") permettant de gérer les sous-figures de manière adaptée. Cette fonction encapsule la fonction #cmd("subpar.grid") du package `subpar`.
 
-#pagebreak()
 #example-box[
 	```typ
 	#subfigure(
@@ -441,6 +447,7 @@ Le modèle est en cours de développement. Voici la liste des fonctionnalités q
 - [x] Création de l'environnement `front-matter`
 - [x] Création de l'environnement `main-matter`
 - [x] Création de l'environnement `appendix`
+- [x] Création de l'environnement `part`
 
 *Tables des matières*
 
