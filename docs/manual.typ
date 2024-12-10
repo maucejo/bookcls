@@ -252,6 +252,20 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
 
 				- `collection` : Nom de la collection
 		]
+
+		#argument("config-colors", default: (:), types: "dict")[
+			Dictionnaire permettant de personnaliser les couleurs du document.
+
+			Les options disponibles sont les suivantes :
+
+			- `primary` : Couleur principale
+
+			- `secondary` : Couleur secondaire
+
+			- `boxeq` : Couleur des encadrés d'équations
+
+			- `header` : Couleur de l'en-tête du document
+		]
 	]
 
 
