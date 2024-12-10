@@ -56,17 +56,17 @@
   state("content.switch").update(false)
   pagebreak(weak: true, to:"odd")
 
-  line(stroke: 1.75pt + colors.red, length: 104%)
-  context[
-    #text(size: 2.5em)[Partie #states.counter-part.get()]
-    #line(stroke: 1.75pt + colors.red, length: 35%)
-    #text(size: 3em)[*#title*]
-   ]
-  line(stroke: 1.75pt + colors.red, length: 104%)
+  context{
+    line(stroke: 1.75pt + states.colors.get().primary, length: 104%)
+    text(size: 2.5em)[Partie #states.counter-part.get()]
+    line(stroke: 1.75pt + states.colors.get().primary, length: 35%)
+    text(size: 3em)[*#title*]
+    line(stroke: 1.75pt + states.colors.get().primary, length: 104%)
+   }
 
   context{
     show heading: none
-    heading[Partie #box[#text(fill:colors.red)[#states.counter-part.get() -- #title] ]]
+    heading[Partie #box[#text(fill:states.colors.get().primary)[#states.counter-part.get() -- #title] ]]
   }
 
   pagebreak(weak: true, to:"odd")

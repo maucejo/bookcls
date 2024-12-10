@@ -10,24 +10,24 @@
 #let book(
   title: "Titre de la thèse",
   author: "Nom du candidat",
-  type: "these",
-  school: "Conservatoire National des Arts et Métiers",
-  doctoral-school: "Sciences des Métiers de l'Ingénieur",
-  supervisor: ("Nom du directeur de thèse",),
-  cosupervisor: none,
-  laboratory: "Nom du laboratoire",
-  defense-date: "01 janvier 1970",
-  discipline: "Mécanique, Génie Mécanique, Génie Civil",
-  speciality: "Mécanique",
-  commity: (),
+  type: "thesis",
   lang: "fr",
   logo: image("resources/images/logo_cnam.png"),
   body-font: "Lato",
   math-font: "Lete Sans Math",
+  config-titre: (:),
+  config-colors: (:),
   body
 ) = {
   // Document's properties
   set document(author: author, title: title)
+
+  let book-title = (:)
+  if type == "thesis" {
+    book-title = create_dict(default-config-thesis, config-titre)
+  }
+
+  let book-colors = create_dict(default-config-colors, config-colors)
 
   // Fonts
   set text(font: body-font, lang: lang, size: text-size)
@@ -60,11 +60,11 @@
 
     // Title body
     set align(right)
-    set underline(stroke: 2pt + colors.gray, offset: 8pt)
+    set underline(stroke: 2pt + book-colors.secondary, offset: 8pt)
     if it.numbering != none {
       v(5em)
       block[
-        #text(counter(heading).display(states.num-heading.get()), size: 4em, fill: colors.red)
+        #text(counter(heading).display(states.num-heading.get()), size: 4em, fill: book-colors.primary)
         #v(-3em)
         #text(underline(it.body), size: 1.5em)
       ]
@@ -78,18 +78,18 @@
 
   show heading.where(level: 2): it => {
     if it.numbering != none {
-      text(counter(heading).display(), fill: colors.red)
+      text(counter(heading).display(), fill: book-colors.primary)
       h(0.25em)
     }
     text(it.body)
     v(-0.5em)
-    line(stroke: 1.5pt + colors.gray, length: 100%)
+    line(stroke: 1.5pt + book-colors.secondary, length: 100%)
     v(1em)
   }
 
   show heading.where(level: 3): it => {
     if it.numbering != none {
-      text(counter(heading).display(), fill: colors.red)
+      text(counter(heading).display(), fill: book-colors.primary)
       h(0.25em)
     }
     text(it.body)
@@ -108,9 +108,9 @@
         let item-number = box(width: 1fr, it.fill) + h(0.25em) + it.page
         if it.level == 1 {
           block(above: 1.5em, below: 0em)
-          item = [#text([*#number*], fill: colors.red) #h(0.15em) #strong(body) #h(0.15em)]
+          item = [#text([*#number*], fill: book-colors.primary) #h(0.15em) #strong(body) #h(0.15em)]
         } else {
-          item = [#text([#number], fill: colors.red) #h(0.15em) #body #h(0.15em)]
+          item = [#text([#number], fill: book-colors.primary) #h(0.15em) #body #h(0.15em)]
         }
         link(it.element.location(), item + item-number)
       } else {
@@ -126,7 +126,7 @@
     } else if it.element.func() == figure {
         block(above: 1.25em, below: 0em)
         let (type, _, counter, ..body) = it.body.children
-        link(it.element.location(), [#type #text(counter, fill: colors.red) #body.join()])
+        link(it.element.location(), [#type #text(counter, fill: book-colors.primary) #body.join()])
     } else {
       it
     }
@@ -138,12 +138,12 @@
   // Table customizations
   show table.cell.where(y: 0): set text(weight: "bold", fill: white)
     set table(
-    fill: (_, y) => if y == 0 {colors.red} else if calc.odd(y) { colors.gray.lighten(60%)},
+    fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) { book-colors.secondary.lighten(60%)},
     stroke: (x, y) => (
-      left: if x == 0 or y > 0 { (thickness: 1pt, paint: colors.gray) } else { (thickness: 1pt, paint: colors.red) },
-      right: (thickness: 1pt, paint: colors.gray),
-      top: if y <= 1 { (thickness: 1pt, paint: colors.gray) } else { 0pt },
-      bottom: (thickness: 1pt, paint: colors.gray),
+      left: if x == 0 or y > 0 { (thickness: 1pt, paint: book-colors.secondary) } else { (thickness: 1pt, paint: book-colors.primary) },
+      right: (thickness: 1pt, paint: book-colors.secondary),
+      top: if y <= 1 { (thickness: 1pt, paint: book-colors.secondary) } else { 0pt },
+      bottom: (thickness: 1pt, paint: book-colors.secondary),
     )
   )
 
@@ -154,8 +154,8 @@
   }
 
   // Lists
-  set list(marker: [#text(fill:colors.red, size: 1.75em)[#sym.bullet]])
-  set enum(numbering: n => text(fill:red-color)[#n.])
+  set list(marker: [#text(fill:book-colors.primary, size: 1.75em)[#sym.bullet]])
+  set enum(numbering: n => text(fill:book-colors.primary)[#n.])
 
   // Page layout
   set page(
@@ -164,22 +164,19 @@
     footer: page-footer
   )
 
-  title-page(
-    title: title,
-    author: author,
-    type: type,
-    defense-date: defense-date,
-    school: school,
-    discipline: discipline,
-    speciality: speciality,
-    supervisor: supervisor,
-    cosupervisor: cosupervisor,
-    commity: commity,
-    logo: logo
-  )
+  if type == "thesis" {
+    title-page-thesis(
+      title: title,
+      author: author,
+      logo: logo,
+      book-title,
+      book-colors,
+    )
+  }
 
   states.author.update(author)
   states.title.update(title)
+  states.colors.update(book-colors)
 
   body
 }

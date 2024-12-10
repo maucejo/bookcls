@@ -3,23 +3,15 @@
 #import "book-params.typ" : *
 
 // Title page
-#let title-page(
+#let title-page-thesis(
   title: none,
   author: none,
-  type: "these",
-  school: none,
-  doctoral-school: none,
-  supervisor: (),
-  cosupervisor: none,
-  laboratory: none,
-  defense-date: none,
-  discipline: none,
-  speciality: none,
-  commity: (),
-  logo: none
+  logo: none,
+  config-titre,
+  config-colors,
 ) = {
   place(top + left, dx: -16%, dy: -10%,
-      rect(fill: colors.red, height: 121%, width: 20%)
+      rect(fill: config-colors.primary, height: 121%, width: 20%)
   )
 
   let tpage = {
@@ -27,11 +19,11 @@
     set image(width: 35%)
     place(top + right, dx: 0%, dy: -15%, logo)
     }
-    text([ÉCOLE DOCTORALE #h(0.25em) #doctoral-school], size: 1.25em)
+    text([ÉCOLE DOCTORALE #h(0.25em) #config-titre.doctoral-school], size: 1.25em)
     v(0.25em)
-    text(laboratory, size: 1.25em)
+    text(config-titre.laboratory, size: 1.25em)
     v(2em)
-    if type == "these" {
+    if config-titre.type == "these" {
       text([*Thèse de doctorat*], size: 1.5em)
     } else {
       text([*Habilitation à diriger des recherches*], size: 1.5em)
@@ -39,20 +31,20 @@
     v(0.25em)
     text([_présentée par_ *#author*], size: 1.15em)
     v(0.25em)
-    text([_soutenue le_ *#defense-date*], size: 1.15em)
+    text([_soutenue le_ *#config-titre.defense-date*], size: 1.15em)
     v(0.25em)
-    text([_préparée au_ *#school*], size: 1.15em)
+    text([_préparée au_ *#config-titre.school*], size: 1.15em)
     v(0.25em)
-    text([_Discipline_ : *#discipline*], size: 1.1em)
+    text([_Discipline_ : *#config-titre.discipline*], size: 1.1em)
     v(0.15em)
-    text([_Spécialité_ : *#speciality*], size: 1.1em)
+    text([_Spécialité_ : *#config-titre.speciality*], size: 1.1em)
     v(2em)
-    line(stroke: 1.75pt + colors.red, length: 104%)
+    line(stroke: 1.75pt + config-colors.primary, length: 104%)
     align(center)[#text(strong(title), size: 2em)]
-    line(stroke: 1.75pt + colors.red, length: 104%)
+    line(stroke: 1.75pt + config-colors.primary, length: 104%)
     v(1em)
     let n = 0
-    for director in supervisor {
+    for director in config-titre.supervisor {
       if n == 0 {
         if type == "these" {
           text([Directeur de thèse : *#director*], size: 1.15em)
@@ -67,9 +59,9 @@
         v(0.05em)
       }
     }
-    if cosupervisor != none {
-      for codirector in cosupervisor {
-        text([Co-encadrant : *#codirector*], size: 1.15em)
+    if config-titre.cosupervisor != none {
+      for codirector in config-titre.cosupervisor {
+        text([Co-encadrant : *codirector*], size: 1.15em)
         v(0.05em)
       }
     }
@@ -84,7 +76,7 @@
         row-gutter: 1em,
         align: left,
         stroke: none,
-        ..for (name, position, affiliation, role) in commity {
+        ..for (name, position, affiliation, role) in config-titre.commity {
           ([*#name*], position, affiliation, role)
         },
       )
@@ -169,9 +161,11 @@
         #v(-0.25em)
       ]
 
-      line(stroke: 1.5pt + colors.gray, length: 100%)
-      minitoc(target: heading.where(outlined: true, level: 2))
-      line(stroke: 1.5pt + colors.gray, length: 100%)
+      context{
+        line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
+        minitoc(target: heading.where(outlined: true, level: 2))
+        line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
+      }
       pagebreak()
 
     } else {
@@ -196,7 +190,7 @@
   context{
     v(2em)
     align(center)[
-      #text([*#states.author.get()*], size: 1.5em, fill: colors.red)
+      #text([*#states.author.get()*], size: 1.5em, fill: states.colors.get().primary)
 
       #text([*#states.title.get()*], size: 1.25em)
 
@@ -204,25 +198,29 @@
     ]
   }
   if resume != none {
-    block(
-      width: 100%,
-      stroke: 1pt + colors.red,
-      inset: 1em,
-      radius: 0.5em,
-      below: 2em
-    )[
-      #text([*Résumé : * #resume], size: 0.9em)
-    ]
+    context{
+      block(
+        width: 100%,
+        stroke: 1pt + states.colors.get().primary,
+        inset: 1em,
+        radius: 0.5em,
+        below: 2em
+      )[
+        #text([*Résumé : * #resume], size: 0.9em)
+      ]
+    }
   }
 
   if abstract != none {
-    block(
-      width: 100%,
-      stroke: 1pt + colors.red,
-      inset: 1em,
-      radius: 0.5em,
-      )[
-      #text([*Abstract : * #abstract], size: 0.9em)
-    ]
+    context{
+      block(
+        width: 100%,
+        stroke: 1pt + states.colors.get().primary,
+        inset: 1em,
+        radius: 0.5em,
+        )[
+        #text([*Abstract : * #abstract], size: 0.9em)
+      ]
+    }
   }
 }

@@ -1,7 +1,6 @@
 #import "../src/book.typ": *
 
-#show: book.with(
-  author: "Mathieu Aucejo",
+#let config-titre = (
   commity: (
     (
       name: "Hari Seldon",
@@ -28,6 +27,18 @@
       role: "Examinateur"
     ),
   ),
+)
+
+#let config-colors = (
+  primary: blue,
+  secondary: blue.lighten(70%),
+  header: blue.lighten(50%),
+)
+
+#show: book.with(
+  author: "Mathieu Aucejo",
+  config-titre: config-titre,
+  config-colors: config-colors,
   lang: "fr"
 )
 

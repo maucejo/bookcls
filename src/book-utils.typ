@@ -5,12 +5,14 @@
 // Equations
 #let boxeq(body) = {
   set align(center)
-  box(
-    stroke: 1pt + colors.gray,
-    radius: 5pt,
-    inset: 0.5em,
-    fill: colors.gray.lighten(60%),
-  )[#body]
+  context{
+    box(
+      stroke: 1pt + states.colors.get().boxeq.darken(35%),
+      radius: 5pt,
+      inset: 0.6em,
+      fill: states.colors.get().boxeq,
+    )[#body]
+  }
 }
 
 #let nonumeq(x) = {
@@ -66,11 +68,12 @@
   })
 
   if not is-start-chapter { // Use of Hydra for the header
-    set text(style: "italic", fill: colors.gray)
-    if calc.odd(here().page()) {
-      align(right, hydra(2, book: true))
-    } else {
-      align(left, hydra(1))
+    context{set text(style: "italic", fill: states.colors.get().header)
+      if calc.odd(here().page()) {
+        align(right, hydra(2, book: true))
+      } else {
+        align(left, hydra(1))
+      }
     }
   }
 }
@@ -94,4 +97,16 @@
   } else {
     if current-page > 2 {align(center, [#current-page / #total-page])}
   }
+}
+
+// Merge two dictionaries
+#let create_dict(default-dict, user-dict) = {
+  let new-dict = default-dict
+    for (key, value) in user-dict {
+      if key in default-dict.keys() {
+        new-dict.insert(key, value)
+      }
+    }
+
+  return new-dict
 }
