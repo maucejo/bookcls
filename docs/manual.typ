@@ -294,7 +294,11 @@ D'une manière générale, la partie du fichier principal correspondant au conte
 	#include "chapitre.typ"
 
 	#bibliography("bibliography.bib")
+```
+]
 
+#codesnippet[
+	```typ
 	#show: appendix
 
 	#part("Annexes du document")
@@ -337,6 +341,7 @@ Le modèle propose trois environnements pour structurer le contenu du mémoire :
 Pour structurer le contenu du mémoire, il est possible de définir des parties à l'aide de la fonction #cmd("part"). Pour insérer une nouvelle partie, il faut insérer la commande suivante :
 #command("part", "\"Titre de la partie\"")[]
 
+#v(1em)
 === Chapitre
 
 Les chapitres du mémoire sont définis par la fonction #cmd("chapter") qui dispose d'une certain nombre de paramètres permettant d'adapter le rendu du chapitre en fonction du contexte. Voici la liste des paramètres disponibles :
@@ -442,6 +447,7 @@ Pour encadrer une équation importante, la fonction #cmd("boxeq") doit être uti
 	$
 ]
 
+#pagebreak()
 Pour créer une équation sans numérotation, il faut utiliser la fonction #cmd("nonumeq").
 
 #example-box[
@@ -459,7 +465,6 @@ Pour créer une équation sans numérotation, il faut utiliser la fonction #cmd(
 
 La quatrième de couverture de la thèse est générée automatiquement à partir de la fonction #cmd("back-cover"), qui affiche les informations relatives à la thèse (titre et  auteur), ainsi qu'un résumé en français et en anglais.
 
-#pagebreak()
 #command("back-cover", ..args(
 resume: none,
 abstract: none
@@ -555,7 +560,6 @@ Le modèle est en cours de développement. Voici la liste des fonctionnalités q
 - [x] Création d'une fonction définir des équations sans numérotation -- #cmd-["nonumeq"]
 - [x] Utilisation du package `equate` pour numéroter des équations d'un système de type (1.1a)
 
-#pagebreak()
 *Bibliographie*
 
 - [x] Vérification de la liste des références via `bibtex`

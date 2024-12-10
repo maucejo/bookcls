@@ -1,6 +1,6 @@
-#import "@preview/showybox:2.0.1": *
+#import "@preview/showybox:2.0.3": *
 #import "@preview/hydra:0.4.0": hydra
-#import "@preview/mantys:0.1.3": *
+#import "@preview/mantys:0.1.4": *
 #import "@preview/cheq:0.1.0": *
 
 #let vskip = 1em
