@@ -6,7 +6,7 @@
 )
 
 #let default-config-thesis = (
-  type: "these",
+  type: "thesis",
   school: "Conservatoire National des Arts et Métiers",
   doctoral-school: "Sciences des Métiers de l'Ingénieur",
   supervisor: ("Nom du directeur de thèse",),

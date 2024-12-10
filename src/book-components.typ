@@ -23,7 +23,7 @@
     v(0.25em)
     text(config-titre.laboratory, size: 1.25em)
     v(2em)
-    if config-titre.type == "these" {
+    if config-titre.type == "phd" {
       text([*Thèse de doctorat*], size: 1.5em)
     } else {
       text([*Habilitation à diriger des recherches*], size: 1.5em)
@@ -46,7 +46,7 @@
     let n = 0
     for director in config-titre.supervisor {
       if n == 0 {
-        if type == "these" {
+        if config-titre.type == "phd" {
           text([Directeur de thèse : *#director*], size: 1.15em)
         } else {
           text([Garant : *#director*], size: 1.15em)
@@ -59,13 +59,16 @@
         v(0.05em)
       }
     }
+
     if config-titre.cosupervisor != none {
       for codirector in config-titre.cosupervisor {
         text([Co-encadrant : *codirector*], size: 1.15em)
         v(0.05em)
       }
     }
+
     v(1fr)
+
     align(center)[
       #text([*Composition du jury*])
       #v(0.5em)

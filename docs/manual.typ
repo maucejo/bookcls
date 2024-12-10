@@ -2,9 +2,21 @@
 #import "@preview/subpar:0.1.1"
 #import "./manual-template.typ": *
 
+#let manual-boxeq(body) = {
+  set align(center)
+  context{
+    box(
+      stroke: 1pt + default-config-colors.boxeq.darken(35%),
+      radius: 5pt,
+      inset: 0.6em,
+      fill: default-config-colors.boxeq,
+    )[#body]
+  }
+}
+
 #show: manual-template.with(
-	abstract : [Ce package Typst est une proposition de modèle pour la rédaction de mémoire thèse ou de HDR pour les personnels du Laboratoire de Mécanique des Structures et des Systèmes Couplés du Conservatoire National des Arts et Métiers.],
-	version: "Template 0.4.0",
+	abstract : [Ce package Typst est une proposition de modèle pour la rédaction de mémoire thèse ou de HDR ou d'ouvrages scientifiques.],
+	version: "Template 0.5.0",
 	typst-version: "Typst 0.12"
 )
 
@@ -24,21 +36,77 @@
 
 #v(0.5em)
 
-Pour finir, la documentation de #typst est suffisamment bien écrite et détaillée pour permettre de créer rapidement ses propres documents. Il faut compter moins d'une heure pour prendre en main la syntaxe (sans mentir #emoji.face.beam). Pour accéder à la documentation, suivez ce #link("https://typst.app/docs", text("lien", fill: typst-color)). Pour faciliter la transition de #LaTeX vers #typst, un guide est disponible #link("https://typst.app/docs/guides/guide-for-latex-users/", text("ici", fill: typst-color)).
+Concernant la courbe d'apprentissage, la documentation de #typst est suffisamment bien écrite et détaillée pour permettre de créer rapidement ses propres documents. Il faut compter moins d'une heure pour prendre en main la syntaxe (sans mentir #emoji.face.beam). Pour accéder à la documentation, suivez ce #link("https://typst.app/docs", text("lien", fill: typst-color)). Pour faciliter la transition de #LaTeX vers #typst, un guide est disponible #link("https://typst.app/docs/guides/guide-for-latex-users/", text("ici", fill: typst-color)).
 
-= Illustrations
+#typst peut être utilisé comme #LaTeX de deux manières différentes :
 
-Avant de décrire plus en détail les principaux éléments du modèle, voici quelques images illustrant le rendu du modèle.
++ En ligne, via l'application web #link("https://typst.app", text("Typst", fill: typst-color)). Il suffit de créer un compte pour commencer à rédiger ses documents. L'application web fonctionne de façon similaire à Overleaf. L'offre gratuite est généreuse et permet de :
+   - Créer et éditer des projets ;
+	 - Partager et collaborer sur des projets ;
+	 - Convertir des fichiers #LaTeX ou Word ;
+	 - 200 Mb de stockage et jusqu'à 100 fichiers par projet.
 
-#subpar.grid(
-	gap: 1em,
-	figure(image("manual-images/page_garde.png", width: 60%), caption: [Page de garde]),
-	figure(image("manual-images/back-cover.png", width: 60%), caption: [Quatrième de ouverture]),
-	figure(image("manual-images/page-chapitre.png", width: 60%), caption: [Introduction d'un chapitre]),
-	figure(image("manual-images/page-chapitre-section.png", width: 60%), caption: [Section d'un chapitre]),
-	columns: (1fr, 1fr),
-	caption: [Illustrations du rendu du modèle]
-)
++ En local, en installant le compilateur #typst. Pour cela, il faut suivre les instructions contenues dans le fichier README.md du dépôt #link("https://github.com/typst/typst", text("Github", fill: typst-color)) officiel. Une fois le compilateur installé, il est possible de compiler ses fichiers en utilisant la commande `typst compile` (compilation unitaire) ou `typst watch` (compilation incrémentale) dans le terminal.
+
+  Une solution complémentaire consiste à utiliser un éditeur de texte comme VS Code avec l'extension `Tinymist` pour bénéficier de la coloration syntaxique, de l'autocomplétion et de la prévisualisation (munie d'une fonctionnalité similaire à `synctex` en #LaTeX) et export au format PDF.
+
+= Installation du modèle
+
+La collection de gabarits Cnam est disponible sur le dépôt #link("https://github.com/maucejo/book_template", text("Github", fill: typst-color)) de l'auteur. Vous pouvez ainsi soit cloner le dépôt, soit télécharger le fichier zip de la dernière _Release_ contenant les gabarits. Pour utiliser les gabarits, deux possibilités s'offrent à vous :
+
++ Copier l'ensemble du dossier `cnam_templates` dans le dossier de votre projet #typst. Vous pouvez alors inclure les gabarits dans votre document en utilisant par exemple la commande :
+	#codesnippet[
+	```typ
+	#import "./src/book.typ": *
+	```
+	]
+
+	#ibox[
+		#set text(size: 11pt)
+		L'adresse du fichier à utiliser dans votre fichier principal `nom_de_mon_document.typ` dépend de l'emplacement du dossier `book_template` dans votre projet.
+
+		Il faut toutefois noter que le dossier contenant les gabarits doit être situé dans le même répertoire que votre fichier principal.
+	]
+
++ Installer localement le dossier `book_template` dans un dossier accessible par le compilateur #typst. Pour cela, il suffit de suivre les instructions de la documentation officielle #link("https://github.com/typst/packages", text("ici", fill: typst-color)). Pour cela, il faut cependant que le nom du dossier corresponde au numéro de version du paquet et que celui-ci soit contenu dans le dossier `book_template` (actuellement `book/0.5.0`).
+
+	#codesnippet[
+		```typ
+		// Si installation dans le dossier `/typst/packages/local`
+		#import "@local/book:0.5.0": *
+
+		// Si installation dans le dossier /typst/packages/preview`
+		#import "@preview/book:0.5.0": *
+		```
+	]
+
+	Ce process peut être automatisé en utilisant le script `just` contenu dans le fichier `justfile`. Pour cela, il suffit de lancer dans un terminal ouvert dans le dossier `cnam-templates` contenant les gabarits. . Une fois `just` installé, il suffit de lancer la commande :
+
+	#codesnippet[
+		```bash
+		# Pour installer les gabarits dans le dossier `/typst/packages/local`
+		just install
+
+		# Pour installer les gabarits dans le dossier `/typst/packages/preview`
+		just install-preview
+		```
+	]
+
+	#ibox[Pour installer `just`, il faut suivre les instructions figurant dans le fichier README.md du dépôt #link("https://github.com/casey/just", text("Github", fill: typst-color)) officiel.]
+
+// = Illustrations
+
+// Avant de décrire plus en détail les principaux éléments du modèle, voici quelques images illustrant le rendu du modèle.
+
+// #subpar.grid(
+// 	gap: 1em,
+// 	figure(image("manual-images/page_garde.png", width: 60%), caption: [Page de garde]),
+// 	figure(image("manual-images/back-cover.png", width: 60%), caption: [Quatrième de ouverture]),
+// 	figure(image("manual-images/page-chapitre.png", width: 60%), caption: [Introduction d'un chapitre]),
+// 	figure(image("manual-images/page-chapitre-section.png", width: 60%), caption: [Section d'un chapitre]),
+// 	columns: (1fr, 1fr),
+// 	caption: [Illustrations du rendu du modèle]
+// )
 
 // #figure(
 //   grid(columns: 2, column-gutter: 0em, row-gutter: 1em,
@@ -50,14 +118,14 @@ Avant de décrire plus en détail les principaux éléments du modèle, voici qu
 //   caption: [Illustrations du rendu du modèle],
 // )
 
-#pagebreak()
+
 = Utilisation
 
 Pour utiliser le modèle, il faut l'importer dans votre fichier principal `typ` en utilisant la commande suivante.
 
 #codesnippet[
 	```typ
-	#import "@preview/book:0.1.0": *
+	#import "@preview/book:0.5.0": *
 	```
 ]
 
@@ -84,122 +152,122 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
 #command("book", ..args(
 	title: "Titre de la thèse",
   author: "Nom du candidat",
-  type: "these",
-  school: "Conservatoire National des Arts et Métiers",
-  doctoral-school: "Sciences des Métiers de l'Ingénieur",
-  supervisor: ("Nom du directeur de thèse",),
-  cosupervisor: none,
-  laboratory: "Nom du laboratoire",
-  defense-date: "01 janvier 1970",
-  discipline: "Mécanique, Génie Mécanique, Génie Civil",
-  speciality: "Mécanique",
-  commity: (),
+  type: "thesis",
   lang: "fr",
-  logo: "assets/logo_cnam.png",
+  logo: "image(\"resources/images/logo_cnam.png\")",
   body-font: "Lato",
   math-font: "Lete Sans Math",
+  config-titre: (:),
+  config-colors: (:),
 	[body]))[
 		#argument("title", default: "Titre de la thèse", types: "string")[Titre du mémoire de thèse ou de HDR.]
 
-		#colbreak()
-
 		#argument("author", default: "Nom du candidat", types: "string")[Nom de l'auteur du mémoire.]
 
-		#argument("type", default: "these", types: "string")[Type de document (these, hdr).
+		#argument("type", default: "thesis", types: "string")[Type de document.
 
-		Le type du document figurant sur la page de garde sera adapté à la valeur prise par ce paramètre.
-
-		#h(1em) Si #arg("type"): \"these\", le document sera intitulé _Thèse de doctorat_.
-
-		#h(1em) Si #arg("type"): \"hdr\", le document sera intitulé _Habilitation à Diriger des Recherches_.
+			Deux types de modèles sont actuellement disponibles :
+			- `"thesis"` pour une thèse (doctorat ou HDR)
+			- `"textbook"` pour un ouvrage scientifique
 		]
-
-		#argument("school", default: "Conservatoire National des Arts et Métiers", types: "string")[Nom de l'établissement de préparation du mémoire.]
-
-		#argument("doctoral-school", default: "Sciences des Métiers de l'Ingénieur", types: "string")[Nom de l'école doctorale de rattachement du candidat.]
-
-		#argument("supervisor", default: ("Nom du directeur de thèse",), types: "array")[Nom du/des directeurs de thèse ou du garant de la HDR. Chaque élément de la liste est de type #dtype("string").]
-
-		#argument("cosupervisor", default: none, types: "array")[Nom du ou des co-encadrants de thèse. Chaque élément de la liste est de type #dtype("string")]
-
-		#argument("laboratory", default: "Nom du laboratoire", types: "string")[Nom du laboratoire de recherche de rattachement du candidat.]
-
-		#argument("defense-date", default: "01 janvier 1970", types: "string")[Date de soutenance du mémoire.]
-
-		#argument("discipline", default: "Mécanique, Génie Mécanique, Génie Civil", types: "string")[Discipline dans laquelle s'inscrit le mémoire.]
-
-		#argument("speciality", default: "Mécanique", types: "string")[Spécialité dans laquelle s'inscrit mémoire.]
-
-		#argument("commity", default: (), types: "array")[Liste des membres du jury de soutenance. Chaque membre du jury est défini par un dictionnaire, de type #dtype((:)), contenant les champs suivant :
-
-			- `name` : Nom du membre du jury
-			- `position` : Poste occupé (MCF, PU, #sym.dots)
-			- `affiliation` : Établissement de rattachement
-			- `role` : Rôle dans le jury (Rapporteur, Examinateur, #sym.dots)
-
-			#example-box[
-				```typc
-commity: (
-	(
-		name: "Hari Seldon",
-		position: "Professeur des Universités",
-		affiliation: "Streeling university",
-		role: "Rapporteur",
-	),
-	(
-		name: "Ford Prefect",
-		position: "Maître de conférences",
-		affiliation: "Beltegeuse University",
-		role: "Examinateur"
-	),
-)
-				```
-			]
-	 ]
 
 		#argument("lang", default: "fr", types: "string")[Langue du document. En fonction de la valeur prise par ce paramètre, la localisation  du document sera adaptée.
 
 		Outre le français, la seule langue prise en compte est l'anglais (`lang: "en"`).]
 
 		#argument("logo", default: "image(" + "resources/images/logo_cnam.png" + ")", types: "content")[Chemin vers le logo de l'établissement de préparation du mémoire.
-		#wbox[
-			#set text(size: 11pt)
+			#wbox[
+				#set text(size: 11pt)
 
-			Il faut que le template soit à la racine du répertoire pour que le chemin soit correctement interprété. Dans le cas contraire, une erreur de compilation sera générée.
-		]
+				Il faut que le template soit à la racine du répertoire pour que le chemin soit correctement interprété. Dans le cas contraire, une erreur de compilation sera générée.
+			]
 		]
 
 		#argument("body-font", default: "Lato", types: "string")[Nom de la police de caractère du corps du texte.]
 
-		#colbreak()
-
 		#argument("math-font", default: "Lete Sans Math", types: "string")[Nom de la police de caractère des équations mathématiques.]
 
 		#ibox[
-		#set text(size: 11pt)
+			#set text(size: 11pt)
 
-		Les polices de caractère doivent être préalablement installées sur votre système pour être utilisées dans le document.
+			Les polices de caractère doivent être préalablement installées sur votre système pour être utilisées dans le document.
 
-		Pour vérifier la disponibilité de la police choisie, vous pouvez entrer la commande `typst font` dans un terminal.
+			Pour vérifier la disponibilité de la police choisie, vous pouvez entrer la commande `typst font` dans un terminal.
+		]
+
+		#argument("config-titre", default: (:), types: "dict")[
+			Dictionnaire permettant de personnaliser la page de titre du document.
+
+			Les options disponibles diffèrent en fonction du `type` de document choisi :
+			- Pour un document de `type: "thesis"` :
+				- `type` : Type de document -- `"phd"` ou `"hdr"`
+
+				- `school` : Nom de l'établissement de préparation de la thèse
+
+				- `doctoral-school` : Nom de l'école doctorale de rattachement
+
+				- `supervisor` : Nom du/des directeurs de thèse ou du garant de la HDR
+
+				- `cosupervisor` : Nom du ou des co-encadrants de thèse
+
+				- `laboratory` : Nom du laboratoire de recherche de rattachement
+
+				- `defense-date` : Date de soutenance de la thèse
+
+				- `discipline` : Discipline dans laquelle s'inscrit la thèse
+
+				- `speciality` : Spécialité dans laquelle s'inscrit la thèse
+
+				- `commity` : Liste des membres du jury de soutenance
+
+				#ibox[
+					Chaque membre du jury est défini par un dictionnaire, de type #dtype((:)), contenant les champs suivant :
+					- `name` : Nom du membre du jury
+					- `position` : Poste occupé (MCF, PU, #sym.dots)
+					- `affiliation` : Établissement de rattachement
+					- `role` : Rôle dans le jury (Rapporteur, Examinateur, #sym.dots)
+				]
+
+				#example-box[
+				```typc
+				commity: (
+					(
+						name: "Hari Seldon",
+						position: "Professeur des Universités",
+						affiliation: "Streeling university",
+						role: "Rapporteur",
+					),
+					(
+						name: "Ford Prefect",
+						position: "Maître de conférences",
+						affiliation: "Beltegeuse University",
+						role: "Examinateur"
+					),
+				)
+				```
+				]
+
+			- Pour un document de `type: "textbook"` :
+				- `school` : Nom de l'établissement de préparation de l'ouvrage
+
+				- `collection` : Nom de la collection
 		]
 	]
 
+
 #v(1.5em)
-== Contenu du mémoire
+== Contenu du document
 
-Le contenu du mémoire est à rédiger dans le fichier principal `typ` ou dans des fichiers annexes. Le modèle fournit une structure de base pour la rédaction du mémoire.
+Le contenu du document est à rédiger dans le fichier principal `typ` ou dans des fichiers annexes. Le modèle fournit une structure de base pour la rédaction d'un document.
 
-D'une manière générale, la partie du fichier principal correspondant au contenu du mémoire est structurée de la manière suivante :
+D'une manière générale, la partie du fichier principal correspondant au contenu du document est structurée de la manière suivante :
 #codesnippet[
 	```typ
 	#show: front-matter
 
-
 	#include "front-content.typ"
 
-
 	#show: main-matter
-
 
 	#tableofcontents()
 
@@ -207,18 +275,17 @@ D'une manière générale, la partie du fichier principal correspondant au conte
 
 	#listoftables()
 
+	#part("Corps du document")
 
 	#include "chapitre.typ"
 
-
 	#bibliography("bibliography.bib")
-
 
 	#show: appendix
 
+	#part("Annexes du document")
 
 	#include "appendix.typ"
-
 
 	#back-cover(...)
 	```
@@ -251,12 +318,10 @@ Le modèle propose trois environnements pour structurer le contenu du mémoire :
 		```
 	]
 
-4. *part* : environnement pour structurer le contenu du mémoire en parties. Pour activer cet environnement, il faut insérer dans le fichier principal `typ` à l'endroit souhaité la commande suivante :
-	#codesnippet[
-		```typ
-		#part("Titre de la partie")
-		```
-	]
+=== Parties
+
+Pour structurer le contenu du mémoire, il est possible de définir des parties à l'aide de la fonction #cmd("part"). Pour insérer une nouvelle partie, il faut insérer la commande suivante :
+#command("part", "\"Titre de la partie\"")[]
 
 === Chapitre
 
@@ -278,6 +343,8 @@ Les chapitres du mémoire sont définis par la fonction #cmd("chapter") qui disp
 
 	#argument("numbered", default: true, types: "boolean")[Indique si le chapitre doit être numéroté.]
 ]
+
+#v(1em)
 
 #example-box[
 ```typ
@@ -357,7 +424,7 @@ Pour encadrer une équation importante, la fonction #cmd("boxeq") doit être uti
 	#align(center)[#line(stroke: 1pt + typst-color, length: 95%)]
 
 	$
-	#boxeq[$p(A|B) prop p(B|A) space p(A)$]
+	#manual-boxeq[$p(A|B) prop p(B|A) space p(A)$]
 	$
 ]
 
@@ -378,6 +445,7 @@ Pour créer une équation sans numérotation, il faut utiliser la fonction #cmd(
 
 La quatrième de couverture de la thèse est générée automatiquement à partir de la fonction #cmd("back-cover"), qui affiche les informations relatives à la thèse (titre et  auteur), ainsi qu'un résumé en français et en anglais.
 
+#pagebreak()
 #command("back-cover", ..args(
 resume: none,
 abstract: none
