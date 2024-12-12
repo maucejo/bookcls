@@ -6,7 +6,7 @@
 )
 
 #let default-config-thesis = (
-  type: "thesis",
+  type: "phd",
   school: "Conservatoire National des Arts et Métiers",
   doctoral-school: "Sciences des Métiers de l'Ingénieur",
   supervisor: ("Nom du directeur de thèse",),
@@ -16,6 +16,15 @@
   discipline: "Mécanique, Génie Mécanique, Génie Civil",
   speciality: "Mécanique",
   commity: (),
+)
+
+#let default-config-book = (
+  subtitle: "Sous-titre du livre",
+  edition: "Première édition",
+  school: "Conservatoire National des Arts et Métiers",
+  collection: "Mécanique",
+  year: "2024",
+  cover-image: none
 )
 
 #let states = (

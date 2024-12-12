@@ -1,32 +1,36 @@
 #import "../src/book.typ": *
 
+// #let config-titre = (
+//   commity: (
+//     (
+//       name: "Hari Seldon",
+//       position: "Professeur des Universités",
+//       affiliation: "Streeling university",
+//       role: "Rapporteur",
+//     ),
+//     (
+//       name: "Gal Dornick",
+//       position: "Maître de conférences - HDR",
+//       affiliation: "Synnax University",
+//       role: "Rapporteur"
+//     ),
+//     (
+//       name: "Ford Prefect",
+//       position: "Maître de conférences",
+//       affiliation: "Beltegeuse University",
+//       role: "Examinateur"
+//     ),
+//     (
+//       name: "Paul Atreides",
+//       position: "Maître de conférences",
+//       affiliation: "Caladan University",
+//       role: "Examinateur"
+//     ),
+//   ),
+// )
+
 #let config-titre = (
-  commity: (
-    (
-      name: "Hari Seldon",
-      position: "Professeur des Universités",
-      affiliation: "Streeling university",
-      role: "Rapporteur",
-    ),
-    (
-      name: "Gal Dornick",
-      position: "Maître de conférences - HDR",
-      affiliation: "Synnax University",
-      role: "Rapporteur"
-    ),
-    (
-      name: "Ford Prefect",
-      position: "Maître de conférences",
-      affiliation: "Beltegeuse University",
-      role: "Examinateur"
-    ),
-    (
-      name: "Paul Atreides",
-      position: "Maître de conférences",
-      affiliation: "Caladan University",
-      role: "Examinateur"
-    ),
-  ),
+  cover-image: image("images/book-cover.jpg", width: 45%),
 )
 
 #let config-colors = (
@@ -37,8 +41,9 @@
 
 #show: book.with(
   author: "Mathieu Aucejo",
+  type: "textbook",
   config-titre: config-titre,
-  config-colors: config-colors,
+  // config-colors: config-colors,
   lang: "fr"
 )
 

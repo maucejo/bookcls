@@ -150,8 +150,8 @@ Après avoir importé le modèle, celui doit être initialisé en appliquant une
 Le modèle #cmd("book") possède un certain nombre de paramètres permettant de personnaliser le document. Voici la liste des paramètres disponibles :
 
 #command("book", ..args(
-	title: "Titre de la thèse",
-  author: "Nom du candidat",
+	title: "Titre du document",
+  author: "Nom de l'auteur",
   type: "thesis",
   lang: "fr",
   logo: "image(\"resources/images/logo_cnam.png\")",
@@ -160,9 +160,9 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
   config-titre: (:),
   config-colors: (:),
 	[body]))[
-		#argument("title", default: "Titre de la thèse", types: "string")[Titre du mémoire de thèse ou de HDR.]
+		#argument("title", default: "Titre du document", types: "string")[Titre du mémoire de thèse ou de HDR.]
 
-		#argument("author", default: "Nom du candidat", types: "string")[Nom de l'auteur du mémoire.]
+		#argument("author", default: "Nom de l'auteur", types: "string")[Nom de l'auteur du mémoire.]
 
 		#argument("type", default: "thesis", types: "string")[Type de document.
 
@@ -248,9 +248,17 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
 				]
 
 			- Pour un document de `type: "textbook"` :
+				- `subtitle` : Sous-titre de l'ouvrage
+
+				- `edition` : Numéro de l'édition
+
 				- `school` : Nom de l'établissement de préparation de l'ouvrage
 
 				- `collection` : Nom de la collection
+
+				- `year` : Année de publication
+
+				- `cover-image` : Image de couverture de l'ouvrage
 		]
 
 		#argument("config-colors", default: (:), types: "dict")[
@@ -288,17 +296,17 @@ D'une manière générale, la partie du fichier principal correspondant au conte
 	#listoffigures()
 
 	#listoftables()
-
-	#part("Corps du document")
-
-	#include "chapitre.typ"
-
-	#bibliography("bibliography.bib")
 ```
 ]
 
 #codesnippet[
 	```typ
+	#part("Corps du document")
+
+	#include "chapitre.typ"
+
+	#bibliography("bibliography.bib")
+
 	#show: appendix
 
 	#part("Annexes du document")

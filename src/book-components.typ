@@ -2,7 +2,7 @@
 #import "@preview/hydra:0.5.1": hydra
 #import "book-params.typ" : *
 
-// Title page
+// Title pages
 #let title-page-thesis(
   title: none,
   author: none,
@@ -96,6 +96,107 @@
       tpage
     )
   )
+}
+
+#let title-page-book(
+  title: none,
+  author: none,
+  logo: none,
+  config-titre,
+  config-colors
+) = {
+  let header = context {
+    box(fill: config-colors.primary, width: 100%, inset: 1em)[
+      #set align(center + horizon)
+      #text(fill: white, size: 1.5em)[#strong(delta: 400)[Collection #config-titre.collection]]
+    ]
+  }
+
+  let footer = context {
+    box(fill: config-colors.primary, width: 100%, inset: 1em)[
+      #set align(center + horizon)
+      #text(fill: white, size: 1.5em)[#strong(delta: 400)[#config-titre.school]]
+    ]
+  }
+
+  set page(
+    header: header,
+    footer: footer,
+    margin: (left: 0em, right:0em, top: 4em, bottom: 4em)
+  )
+
+  let book-title = {
+    align(horizon)[
+      #move(dx: 2em)[
+        #line(stroke: 1.5pt + config-colors.primary, length: 90%)
+        #v(1em)
+      ]
+
+      #move(dx: 4em)[
+        #text(size: 3em)[*#title*]
+        #linebreak()
+
+        #if config-titre.subtitle != none {
+          v(0.5em)
+          text(size: 1.75em)[#config-titre.subtitle]
+          linebreak()
+          v(0.5em)
+        }
+
+        #if config-titre.edition != none {
+          v(0.5em)
+          text(size: 1.25em)[_ #config-titre.edition _]
+          linebreak()
+          v(0.5em)
+        }
+
+        #v(0.5em)
+        #text(size: 1.5em)[#author]
+      ]
+
+      #move(dx: 2em)[
+        #v(1em)
+        #line(stroke: 1.5pt + config-colors.primary, length: 90%)
+      ]
+
+      #if config-titre.cover-image != none {
+        v(1.5em)
+        align(center)[#config-titre.cover-image]
+      }
+    ]
+
+    set page(header: none, footer: none, margin: auto)
+    pagebreak(to: "odd")
+
+    align(center + horizon)[
+      #text(size: 3em)[*#title*]
+
+      #if config-titre.subtitle != none {
+          v(-1.5em)
+          text(size: 1.75em)[#config-titre.subtitle]
+          linebreak()
+          v(0.5em)
+        }
+
+        #if config-titre.edition != none {
+          v(0.5em)
+          text(size: 1.25em)[_ #config-titre.edition _]
+          linebreak()
+          v(0.5em)
+        }
+    ]
+
+    if logo != none {
+      set image(width: 35%)
+      place(bottom + center, dy: -4em, logo)
+    }
+
+    place(bottom)[
+      #text(size: 0.85em)[Cette version de  peut être consultée et téléchargée gratuitement pour un usage personnel uniquement. Elle ne doit pas être redistribuée, vendue ou utilisée dans des travaux dérivés. \ #sym.copyright #author, #config-titre.year.]
+    ]
+  }
+
+  book-title
 }
 
 // Chapter

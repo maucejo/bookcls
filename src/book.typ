@@ -8,8 +8,8 @@
 
 // Template
 #let book(
-  title: "Titre de la thèse",
-  author: "Nom du candidat",
+  title: "Titre du document",
+  author: "Nom de l'auteur",
   type: "thesis",
   lang: "fr",
   logo: image("resources/images/logo_cnam.png"),
@@ -25,6 +25,8 @@
   let book-title = (:)
   if type == "thesis" {
     book-title = create_dict(default-config-thesis, config-titre)
+  } else {
+    book-title = create_dict(default-config-book, config-titre)
   }
 
   let book-colors = create_dict(default-config-colors, config-colors)
@@ -172,7 +174,15 @@
       book-title,
       book-colors,
     )
-  }
+  } else {
+    title-page-book(
+      title: title,
+      author: author,
+      logo: logo,
+      book-title,
+      book-colors,
+    )
+    }
 
   states.author.update(author)
   states.title.update(title)

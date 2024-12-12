@@ -1,12 +1,12 @@
 [package]
 name = "book"
-version = "0.4.0"
+version = "0.5.0"
 authors = ["Mathieu Aucejo"]
 license = "MIT"
-description = "Modèle de thèse pour le Cnam"
+description = "Modèle de thèse ou de livre"
 entrypoint = "src/book.typ"
 categories = ["report"]
-repository = "https://github.com/maucejo/Cnam_thesis_template"
+repository = "https://github.com/maucejo/book_template"
 
 [template]
 path = "template"
