@@ -2,7 +2,7 @@
   primary: rgb("#c1002a"),
   secondary: rgb("#dddddd").darken(15%),
   boxeq: rgb("#dddddd"),
-  header: rgb("#dddddd").darken(25%)
+  header: rgb("#dddddd").darken(25%),
 )
 
 #let default-config-thesis = (
@@ -16,6 +16,7 @@
   discipline: "Mécanique, Génie Mécanique, Génie Civil",
   speciality: "Mécanique",
   commity: (),
+  custom-title-page: none
 )
 
 #let default-config-book = (
@@ -24,7 +25,8 @@
   school: "Conservatoire National des Arts et Métiers",
   collection: "Mécanique",
   year: "2024",
-  cover-image: none
+  cover-image: none,
+  custom-title-page: none
 )
 
 #let states = (

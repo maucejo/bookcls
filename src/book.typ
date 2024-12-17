@@ -5,6 +5,7 @@
 #import "book-outlines.typ": *
 #import "book-components.typ": *
 #import "book-utils.typ": *
+#import "book-boxes.typ": *
 
 // Template
 #let book(
@@ -166,7 +167,10 @@
     footer: page-footer
   )
 
-  if type == "thesis" {
+  if book-title.custom-title-page != none {
+    book-title.custom-title-page()
+  } else {
+    if type == "thesis" {
     title-page-thesis(
       title: title,
       author: author,
@@ -174,15 +178,16 @@
       book-title,
       book-colors,
     )
-  } else {
-    title-page-book(
-      title: title,
-      author: author,
-      logo: logo,
-      book-title,
-      book-colors,
-    )
+    } else {
+      title-page-book(
+        title: title,
+        author: author,
+        logo: logo,
+        book-title,
+        book-colors,
+      )
     }
+  }
 
   states.author.update(author)
   states.title.update(title)

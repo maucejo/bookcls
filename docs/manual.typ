@@ -20,6 +20,7 @@
 	typst-version: "Typst 0.12"
 )
 
+#pagebreak()
 = Qu'est-ce que Typst ?
 
 #typst est un nouveau langage de balise open source é crit en Rust et développé à partir de 2019 par deux étudiants allemands, Laurenz Mädje et Martin Haug, dans le cadre de leur projet de master @Mad22 @Hau22. La version 0.1.0 a été publiée sur GitHub le 04 avril 2023#footnote[Adresse du dépôt GitHub : #link("https://github.com/typst/typst", text("https://github.com/typst/typst", fill: typst-color))].
@@ -50,6 +51,7 @@ Concernant la courbe d'apprentissage, la documentation de #typst est suffisammen
 
   Une solution complémentaire consiste à utiliser un éditeur de texte comme VS Code avec l'extension `Tinymist` pour bénéficier de la coloration syntaxique, de l'autocomplétion et de la prévisualisation (munie d'une fonctionnalité similaire à `synctex` en #LaTeX) et export au format PDF.
 
+#pagebreak()
 = Installation du modèle
 
 La collection de gabarits Cnam est disponible sur le dépôt #link("https://github.com/maucejo/book_template", text("Github", fill: typst-color)) de l'auteur. Vous pouvez ainsi soit cloner le dépôt, soit télécharger le fichier zip de la dernière _Release_ contenant les gabarits. Pour utiliser les gabarits, deux possibilités s'offrent à vous :
@@ -94,31 +96,8 @@ La collection de gabarits Cnam est disponible sur le dépôt #link("https://gith
 
 	#ibox[Pour installer `just`, il faut suivre les instructions figurant dans le fichier README.md du dépôt #link("https://github.com/casey/just", text("Github", fill: typst-color)) officiel.]
 
-// = Illustrations
 
-// Avant de décrire plus en détail les principaux éléments du modèle, voici quelques images illustrant le rendu du modèle.
-
-// #subpar.grid(
-// 	gap: 1em,
-// 	figure(image("manual-images/page_garde.png", width: 60%), caption: [Page de garde]),
-// 	figure(image("manual-images/back-cover.png", width: 60%), caption: [Quatrième de ouverture]),
-// 	figure(image("manual-images/page-chapitre.png", width: 60%), caption: [Introduction d'un chapitre]),
-// 	figure(image("manual-images/page-chapitre-section.png", width: 60%), caption: [Section d'un chapitre]),
-// 	columns: (1fr, 1fr),
-// 	caption: [Illustrations du rendu du modèle]
-// )
-
-// #figure(
-//   grid(columns: 2, column-gutter: 0em, row-gutter: 1em,
-//   subfigure(image("manual-images/page_garde.png", width: 60%), caption: [Page de garde]),
-// 	subfigure(image("manual-images/back-cover.png", width: 60%), caption: [Quatrième de ouverture]),
-// 	subfigure(image("manual-images/page-chapitre.png", width: 60%), caption: [Introduction d'un chapitre]),
-// 	subfigure(image("manual-images/page-chapitre-section.png", width: 60%), caption: [Section d'un chapitre])
-//   ),
-//   caption: [Illustrations du rendu du modèle],
-// )
-
-
+#pagebreak()
 = Utilisation
 
 Pour utiliser le modèle, il faut l'importer dans votre fichier principal `typ` en utilisant la commande suivante.
@@ -220,6 +199,9 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
 
 				- `commity` : Liste des membres du jury de soutenance
 
+				- `custom-title-page` : Page de titre personnalisée (type #dtype("content"))
+
+
 				#ibox[
 					Chaque membre du jury est défini par un dictionnaire, de type #dtype((:)), contenant les champs suivant :
 					- `name` : Nom du membre du jury
@@ -259,8 +241,11 @@ Le modèle #cmd("book") possède un certain nombre de paramètres permettant de 
 				- `year` : Année de publication
 
 				- `cover-image` : Image de couverture de l'ouvrage
+
+				- `custom-title-page` : Page de titre personnalisée (type #dtype("content"))
 		]
 
+		#colbreak()
 		#argument("config-colors", default: (:), types: "dict")[
 			Dictionnaire permettant de personnaliser les couleurs du document.
 
@@ -296,11 +281,7 @@ D'une manière générale, la partie du fichier principal correspondant au conte
 	#listoffigures()
 
 	#listoftables()
-```
-]
 
-#codesnippet[
-	```typ
 	#part("Corps du document")
 
 	#include "chapitre.typ"
@@ -319,6 +300,7 @@ D'une manière générale, la partie du fichier principal correspondant au conte
 
 Le contenu du mémoire est divisé en trois parties principales : `front-matter`, `main-matter` et `appendix`. Ces éléments s'accompagnent de fonctions complémentaires permettant de faciliter la rédaction du mémoire.
 
+#pagebreak()
 === Environnements
 
 Le modèle propose trois environnements pour structurer le contenu du mémoire :
@@ -455,7 +437,6 @@ Pour encadrer une équation importante, la fonction #cmd("boxeq") doit être uti
 	$
 ]
 
-#pagebreak()
 Pour créer une équation sans numérotation, il faut utiliser la fonction #cmd("nonumeq").
 
 #example-box[
@@ -469,20 +450,78 @@ Pour créer une équation sans numérotation, il faut utiliser la fonction #cmd(
 	#nonumeq[$ integral_0^1 f(x) dif x = F(1) - F(0) $]
 ]
 
+*Boîtes d'information*
+
+Le modèle propose plusieurs types de boîtes pour mettre en avant différents contenus :
+
+- #cmd("info-box") pour les remarques ;
+- #cmd("tip-box") pour les astuces ;
+- #cmd("warning-box") pour les avertissements ;
+- #cmd("important-box") pour les informations importantes ;
+- #cmd("proof-box") pour les démonstrations ;
+- #cmd("question-box") pour les questions.
+
+#example-box[
+	#show math.equation: set text(font: "Lete Sans Math")
+	```typ
+	#info-box[#lorem(10)]
+	#tip-box[#lorem(10)]
+	#warning-box[#lorem(10)]
+	#important-box[#lorem(10)]
+	#proof-box[#lorem(10)]
+	#question-box[#lorem(10)]
+	```
+
+	#align(center)[#line(stroke: 1pt + typst-color, length: 95%)]
+
+	#info-box[#lorem(10)]
+	#tip-box[#lorem(10)]
+	#warning-box[#lorem(10)]
+	#important-box[#lorem(10)]
+	#proof-box[#lorem(10)]
+	#question-box[#lorem(10)]
+]
+
+Les boîtes d'information décrites précédemment sont construites à partir de la fonction #cmd("custom-box") qui permet de créer des boîtes personnalisées. Cette fonction générique prend en entrée les paramètres suivants :
+#command("custom-box",
+..args(
+	title: none,
+	icon: "info",
+	color: rgb(29, 144, 208),
+	[body],
+)
+)[
+	#argument("title", default: none, types: "string")[Nom de la boîte.]
+
+	#argument("icon", default: "info", types: "string")[Nom de l'icône à afficher dans la boîte.
+
+	Les icônes disponibles sont :
+	- #box-title(image("../src/resources/images/icons/alert.svg", width: 1em), [: `"alert"`])
+	- #box-title(image("../src/resources/images/icons/info.svg", width: 1em), [: `"info"`])
+	- #box-title(image("../src/resources/images/icons/question.svg", width: 1em), [: `"question"`])
+	- #box-title(image("../src/resources/images/icons/report.svg", width: 1em), [: `"report"`])
+	- #box-title(image("../src/resources/images/icons/stop.svg", width: 1em), [: `"stop"`])
+	- #box-title(image("../src/resources/images/icons/tip.svg", width: 1em), [: `"tip"`])
+	]
+
+	#argument("color", default: rgb(29, 144, 208), types: "color")[Couleur de la boîte.]
+]
+
+#v(1.5em)
 *Quatrième de couverture*
 
-La quatrième de couverture de la thèse est générée automatiquement à partir de la fonction #cmd("back-cover"), qui affiche les informations relatives à la thèse (titre et  auteur), ainsi qu'un résumé en français et en anglais.
+La quatrième de couverture du document est générée automatiquement à partir de la fonction #cmd("back-cover"), qui affiche les informations relatives à la thèse (titre et  auteur), ainsi qu'un résumé en français et en anglais.
 
 #command("back-cover", ..args(
 resume: none,
 abstract: none
 ))[
-	#argument("resume", types: "content")[Résumé de la thèse en français.]
+	#argument("resume", types: "content")[Résumé du document en français.]
 
-	#argument("abstract", types: "content")[Résumé de la thèse en anglais.]
+	#argument("abstract", types: "content")[Résumé du document en anglais.]
 ]
 
-#v(1.5em)
+#pagebreak()
 = Paquets recommandés
 
 Cette section présente une liste de paquets qui peuvent être pertinents lors de la rédaction d'un mémoire en #typst.
@@ -527,6 +566,7 @@ Cette section présente une liste de paquets qui peuvent être pertinents lors d
 	- *Description* : Ce paquet permet de créer aisément un index.
 	- *Liens* : #link("https://typst.app/universe/package/in-dexter", text("Typst: Universe", fill: typst-color)), #link("https://github.com/RolfBremer/in-dexter", text("dépôt GitHub", fill: typst-color)) et #link("https://github.com/RolfBremer/in-dexter/blob/main/sample-usage.pdf", text("documentation", fill: typst-color)).
 
+#pagebreak()
 = Feuille de route
 
 Le modèle est en cours de développement. Voici la liste des fonctionnalités qui sont implémentées ou le seront dans une prochaine version.
@@ -568,10 +608,15 @@ Le modèle est en cours de développement. Voici la liste des fonctionnalités q
 - [x] Création d'une fonction définir des équations sans numérotation -- #cmd-["nonumeq"]
 - [x] Utilisation du package `equate` pour numéroter des équations d'un système de type (1.1a)
 
+*Boîtes*
+
+- [x] Création de boîtes d'information pour mettre en avant des contenus importants
+
 *Bibliographie*
 
 - [x] Vérification de la liste des références via `bibtex`
 - [x] Idem pour `hayagriva` (voir #link("https://github.com/typst/hayagriva/blob/main/docs/file-format.md", text("documentation", fill: typst-color)))
 
+#v(1em)
 #bibliography("manual-biblio.yml", style: "american-institute-of-aeronautics-and-astronautics")
 

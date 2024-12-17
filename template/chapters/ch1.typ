@@ -47,3 +47,27 @@ label: <fig:subfig>,
     table.cell(colspan: 2)[24.7],
   ), caption: [#lorem(4)]
 )
+
+#info-box[
+  #lorem(10)
+]
+
+#tip-box[
+  #lorem(10)
+]
+
+#warning-box[
+  #lorem(10)
+]
+
+#important-box[
+  #lorem(10)
+]
+
+#proof-box[
+  #lorem(10)
+]
+
+#question-box[
+  #lorem(10)
+]
