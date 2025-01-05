@@ -43,7 +43,7 @@
   author: "Mathieu Aucejo",
   type: "textbook",
   config-titre: config-titre,
-  // config-colors: config-colors,
+  config-colors: config-colors,
   lang: "fr"
 )
 

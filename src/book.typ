@@ -25,12 +25,12 @@
 
   let book-title = (:)
   if type == "thesis" {
-    book-title = create_dict(default-config-thesis, config-titre)
+    book-title = default-config-thesis + config-titre
   } else {
-    book-title = create_dict(default-config-book, config-titre)
+    book-title = default-config-book + config-titre
   }
 
-  let book-colors = create_dict(default-config-colors, config-colors)
+  let book-colors = default-config-colors + config-colors
 
   // Fonts
   set text(font: body-font, lang: lang, size: text-size)
