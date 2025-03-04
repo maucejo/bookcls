@@ -1,4 +1,5 @@
-#import "@preview/minitoc:0.1.0": *
+// #import "@preview/minitoc:0.1.0": *
+#import "@preview/suboutline:0.2.0": *
 #import "@preview/hydra:0.5.1": hydra
 #import "book-params.typ" : *
 
@@ -265,11 +266,10 @@
         #v(-0.25em)
       ]
 
-      context{
-        line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
-        minitoc(target: heading.where(outlined: true, level: 2))
-        line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
-      }
+      line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
+      v(0.25em)
+      suboutline(target: heading.where(outlined: true, level: 2))
+      line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
       pagebreak()
 
     } else {

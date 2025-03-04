@@ -66,7 +66,7 @@
 
   context{
     show heading: none
-    heading[Partie #box[#text(fill:states.colors.get().primary)[#states.counter-part.get() -- #title] ]]
+    heading[#box[#text(fill:states.colors.get().primary)[Partie #states.counter-part.get() -- #title]]]
   }
 
   pagebreak(weak: true, to:"odd")

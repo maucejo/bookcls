@@ -105,31 +105,20 @@
   // Outline entries
   show outline.entry: it => {
     if it.element.func() == heading {
-      if it.body.has("children") {
-        let (number, .., body) = it.body.children
-        let item = none
-        let item-number = box(width: 1fr, it.fill) + h(0.25em) + it.page
-        if it.level == 1 {
-          block(above: 1.5em, below: 0em)
-          item = [#text([*#number*], fill: book-colors.primary) #h(0.15em) #strong(body) #h(0.15em)]
-        } else {
-          item = [#text([#number], fill: book-colors.primary) #h(0.15em) #body #h(0.15em)]
-        }
-        link(it.element.location(), item + item-number)
+      let number = it.prefix()
+      let section = it.element.body
+      let item = none
+      if it.level == 1 {
+      block(above: 1.5em, below: 0em)
+        item = [#text([*#number*], fill: book-colors.primary) *#it.inner()*]
       } else {
-        let item = none
-        if it.level == 1 {
-          block(above: 1.25em, below: 0em)
-          item = strong(it.body) + h(0.15em) + box(width: 1fr, it.fill) + h(0.25em) + it.page
-        } else {
-          item = it.body + h(0.15em) + box(width: 1fr, it.fill) + h(0.25em) + it.page
-        }
-        link(it.element.location(), item)
+        block(above: 1em, below: 0em)
+        item = [#h(1em) #text([#number], fill: book-colors.primary) #it.inner()]
       }
+      link(it.element.location(), item)
     } else if it.element.func() == figure {
-        block(above: 1.25em, below: 0em)
-        let (type, _, counter, ..body) = it.body.children
-        link(it.element.location(), [#type #text(counter, fill: book-colors.primary) #body.join()])
+      block(above: 1.25em, below: 0em)
+      link(it.element.location(), [#text([#it.prefix().], fill: book-colors.primary) #h(0.2em) #it.inner()])
     } else {
       it
     }
@@ -164,7 +153,7 @@
   set page(
     paper: paper-size,
     header: page-header,
-    footer: page-footer
+    // footer: page-footer
   )
 
   if book-title.custom-title-page != none {

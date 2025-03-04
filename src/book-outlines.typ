@@ -4,7 +4,8 @@
 #let tableofcontents() = {
   context{
     let localization = states.localization.get()
-      outline(title: localization.toc, indent: 1em, fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
+    set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
+    outline(title: localization.toc, indent: 1em)
   }
 }
 
@@ -12,6 +13,7 @@
 #let listoffigures() = {
   context{
     let localization = states.localization.get()
+    set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
     outline(title: localization.tof, target: figure.where(kind: image))
   }
 }
@@ -20,6 +22,7 @@
 #let listoftables() = {
   context{
     let localization = states.localization.get()
+    set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
     outline(title: localization.tot, target: figure.where(kind: table))
   }
 }

@@ -1,6 +1,5 @@
 #import "../../src/book.typ": *
 
-#chapter("Conclusion et perspectives", toc: false, numbered: false)[
+#show: chapter.with(title: "Conclusions et perspectives", toc: false)
 
 #lorem(100)
-]

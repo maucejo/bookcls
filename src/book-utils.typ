@@ -1,5 +1,5 @@
-#import "@preview/subpar:0.1.1"
-#import "@preview/hydra:0.5.1": hydra
+#import "@preview/subpar:0.2.1"
+#import "@preview/hydra:0.6.0": hydra
 #import "book-params.typ": *
 
 // Equations
@@ -54,59 +54,56 @@
 
 // Page header and footer - add empty page if necessary
 #let page-header = context {
-  let is-start-chapter = query(heading.where(level:1))
-    .map(it => it.location().page())
-    .contains(here().page())
-
-  if not state("content.switch", false).get() and not is-start-chapter {
-    return
-  }
-
-  state("content.pages", (0,)).update(it => {
-    it.push(page)
-    return it
-  })
-
-  if not is-start-chapter { // Use of Hydra for the header
-    context{set text(style: "italic", fill: states.colors.get().header)
-      if calc.odd(here().page()) {
-        align(right, hydra(2, book: true))
-      } else {
-        align(left, hydra(1))
-      }
-    }
-  }
-}
-
-#let page-footer = context {
-  let is-start-chapter = query(heading.where(level:1))
-    .map(it => it.location().page())
-    .contains(here().page())
-
-  let has-content = state("content.pages", (0,)).get()
-    .contains(here().page())
-
-  let current-page = counter(page).get().first()
-  let total-page = counter(page).final().first() - 2
-  if has-content or is-start-chapter {
-    if states.page-numbering.get() == "i" {
-      align(center, counter(page).display(states.page-numbering.get()))
-    } else {
-      align(center, [#current-page / #total-page])
-    }
+  set text(style: "italic", fill: states.colors.get().header)
+  if calc.odd(here().page()) {
+    align(right, hydra(2, book: true))
   } else {
-    if current-page > 2 {align(center, [#current-page / #total-page])}
+    align(left, hydra(1))
   }
 }
 
-// Merge two dictionaries - Useless
-// #let create_dict(default-dict, user-dict) = {
-//   let new-dict = default-dict
-//     for (key, value) in user-dict {
-//       if key in default-dict.keys() {
-//         new-dict.insert(key, value)
+// #let page-header = context {
+//   let is-start-chapter = query(heading.where(level:1))
+//     .map(it => it.location().page())
+//     .contains(here().page())
+
+//   if not state("content.switch", false).get() and not is-start-chapter {
+//     return
+//   }
+
+//   state("content.pages", (0,)).update(it => {
+//     it.push(page)
+//     return it
+//   })
+
+//   if not is-start-chapter { // Use of Hydra for the header
+//     context{set text(style: "italic", fill: states.colors.get().header)
+//       if calc.odd(here().page()) {
+//         align(right, hydra(2, book: true))
+//       } else {
+//         align(left, hydra(1))
 //       }
 //     }
+//   }
+// }
 
-//   return new-dict
+// #let page-footer = context {
+//   let is-start-chapter = query(heading.where(level:1))
+//     .map(it => it.location().page())
+//     .contains(here().page())
+
+//   let has-content = state("content.pages", (0,)).get()
+//     .contains(here().page())
+
+//   let current-page = counter(page).get().first()
+//   let total-page = counter(page).final().first() - 2
+//   if has-content or is-start-chapter {
+//     if states.page-numbering.get() == "i" {
+//       align(center, counter(page).display(states.page-numbering.get()))
+//     } else {
+//       align(center, [#current-page / #total-page])
+//     }
+//   } else {
+//     if current-page > 2 {align(center, [#current-page / #total-page])}
+//   }
 // }
