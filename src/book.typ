@@ -1,5 +1,5 @@
 // Exported packages
-#import "@preview/equate:0.2.1": *
+#import "@preview/equate:0.3.2": *
 // Internals
 #import "book-environments.typ": *
 #import "book-outlines.typ": *

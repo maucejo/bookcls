@@ -1,4 +1,4 @@
-#import "@preview/showybox:2.0.3": *
+#import "@preview/showybox:2.0.4": *
 
 // Utility
 #let box-title(a, b) = {

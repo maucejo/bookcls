@@ -1,5 +1,5 @@
-#import "@preview/subpar:0.2.1"
-#import "@preview/hydra:0.6.0": hydra
+#import "@preview/subpar:0.2.2"
+#import "@preview/hydra:0.6.1": hydra
 #import "book-params.typ": *
 
 // Equations
@@ -56,7 +56,7 @@
 #let page-header = context {
   set text(style: "italic", fill: states.colors.get().header)
   if calc.odd(here().page()) {
-    align(right, hydra(2, book: true))
+    align(right, hydra(2))
   } else {
     align(left, hydra(1))
   }

@@ -1,6 +1,5 @@
-// #import "@preview/minitoc:0.1.0": *
-#import "@preview/suboutline:0.2.0": *
-#import "@preview/hydra:0.5.1": hydra
+#import "@preview/suboutline:0.3.0": *
+#import "@preview/hydra:0.6.1": hydra
 #import "book-params.typ" : *
 
 // Title pages
