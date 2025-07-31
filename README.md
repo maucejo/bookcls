@@ -11,7 +11,7 @@ Ce dépôt contient un modèle en langage Typst pour la rédaction de mémoire d
 Pour utiliser le modèle, il faut l'importer dans votre fichier principal `typ` en utilisant la commande suivante :
 
 ```typ
-#import "./template/thesistemplate.typ": *
+#import "./template/book.typ": *
 ```
 
 Pour plus d'informations, veuillez consulter le [manuel](https://github.com/maucejo/Phd_template/blob/main/docs/manual.pdf).

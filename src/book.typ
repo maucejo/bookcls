@@ -65,8 +65,7 @@
     }
     it
   }
-
-
+  show heading.where(level: 1): it => {
     // Title body
     set align(right)
     set underline(stroke: 2pt + book-colors.secondary, offset: 8pt)
