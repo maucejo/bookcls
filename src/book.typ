@@ -55,11 +55,17 @@
   // Headings
   set heading(numbering: "1.1")
 
-  show heading.where(level: 1): it => {
-    // Clear page if necessary
-    state("content.switch").update(false)
-    pagebreak(weak: true, to:"odd")
-    state("content.switch").update(true)
+  let headings-on-odd-page(it) = {
+    show heading.where(level: 1): it => {
+      {
+        set page(header: none, numbering: none)
+        pagebreak(to: "odd")
+      }
+      it
+    }
+    it
+  }
+
 
     // Title body
     set align(right)
@@ -78,6 +84,7 @@
       v(2em)
     }
   }
+  show: headings-on-odd-page
 
   show heading.where(level: 2): it => {
     if it.numbering != none {
