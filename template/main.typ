@@ -29,7 +29,7 @@
 //   ),
 // )
 
-#let config-titre = (
+#let config-title = (
   cover-image: image("images/book-cover.jpg", width: 45%),
 )
 
@@ -41,11 +41,11 @@
 
 #show: book.with(
   author: "Mathieu Aucejo",
-  type: "thesis",
-  // config-titre: config-titre,
-  config-colors: config-colors,
+  type: "textbook",
+  config-title: config-title,
+  // config-colors: config-colors,
   lang: "fr",
-  theme: "modern"
+  // theme: "modern"
 )
 
 #show: front-matter
