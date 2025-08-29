@@ -1,12 +1,13 @@
 #import "../../src/book.typ": *
 
-// #chapter("Introduction", abstract: lorem(50), numbered: false)[]
+// #show: chapter.with(
+//   title: "Introduction",
+//   abstract: [#lorem(50)],
+//   numbered: false
+// )
 
-#show: chapter.with(
-  title: "Introduction",
-  abstract: [#lorem(50)],
-  numbered: false
-)
+#show: chapter-nonum.with()
+= Introduction
 
 == Objectifs
 
@@ -29,7 +30,7 @@ caption: [#ls-caption([#lorem(10)], [#lorem(2)])],
 
 #lorem(50)
 
-#v(1.25em)
+#pagebreak()
 == Méthodologie
 
-#lorem(100)
+#lorem(1000)

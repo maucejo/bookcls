@@ -1,9 +1,11 @@
 #import "../../src/book.typ": *
 
-#show: chapter.with(
-  title: "Algorithmes",
-  toc: false
-)
+// #show: chapter.with(
+//   title: "Algorithmes",
+//   toc: false
+// )
+
+= Algorithmes
 
 #lorem(100)
 
@@ -30,3 +32,7 @@ table(
   table.cell(colspan: 2)[24.7],
 ), caption: [#lorem(2)]
 )
+
+== Test
+
+#lorem(100)

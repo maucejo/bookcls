@@ -1,9 +1,11 @@
 #import "../../src/book.typ": *
 
-#show: chapter.with(
-  title: "Fondements mathématiques",
-  toc: false
-)
+// #show: chapter.with(
+//   title: "Fondements mathématiques",
+//   toc: false
+// )
+
+= Fondements mathématiques
 
 #lorem(100)
 

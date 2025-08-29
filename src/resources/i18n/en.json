@@ -1,5 +1,12 @@
 {
     "toc": "Table of contents",
-    "tof": "List of figures",
-    "tot": "List of tables"
+    "lof": "List of figures",
+    "lot": "List of tables",
+    "part": "Part",
+    "note": "Note",
+    "tip": "Tip",
+    "warning": "Warning",
+    "proof": "Proof",
+    "chapter": "Chapter",
+    "appendix": "Appendix"
 }

@@ -1,5 +1,8 @@
 #import "../../src/book.typ": *
 
-#show: chapter.with(title: "Résumé", toc: false)
+// #show: chapter.with(title: "Résumé", toc: false)
+#show: chapter-nonum.with()
+
+= Résumé
 
 #lorem(500)

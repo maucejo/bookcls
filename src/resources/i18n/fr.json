@@ -1,5 +1,12 @@
 {
     "toc": "Table des matières",
-    "tof": "Table des figures",
-    "tot": "Table des tableaux"
+    "lof": "Table des figures",
+    "lot": "Table des tableaux",
+    "part": "Partie",
+    "note": "Remarque",
+    "tip": "Astuce",
+    "warning": "Attention",
+    "proof": "Démonstration",
+    "chapter": "Chapitre",
+    "appendix": "Annexe"
 }

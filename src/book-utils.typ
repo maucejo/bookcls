@@ -1,5 +1,6 @@
 #import "@preview/subpar:0.2.2"
-#import "@preview/hydra:0.6.1": hydra
+#import "@preview/hydra:0.6.2": hydra
+#import "@preview/suboutline:0.3.0": *
 #import "book-params.typ": *
 
 // Equations
@@ -23,87 +24,66 @@
 // Subfigure
 #let subfigure = subpar.grid.with(
   gap: 1em,
-  numbering: n => if states.isappendix.get() {numbering("A.1", counter(heading).get().first(), n)
-    } else {
-      numbering("1.1", counter(heading).get().first() , n)
-    },
-  numbering-sub-ref: (m, n) => if states.isappendix.get() {numbering("A.1a", counter(heading).get().first(), m, n)
-    } else {
-      numbering("1.1a", counter(heading).get().first(), m, n)
-    },
+  numbering: n => {numbering(states.num-pattern-fig.get(), counter(heading).get().first() , n)},
+  numbering-sub-ref: (m, n) => {numbering(states.num-pattern-subfig.get(), counter(heading).get().first(), m, n)},
   supplement: fig-supplement
 )
 
 // Long and short captions for figures or tables
 #let ls-caption(long, short) = context if states.in-outline.get() { short } else { long }
 
-// Font exists ?
-#let checkfont(font) = context {
-  let res = true
-  let size = measure(text(font: font, fallback: false)[
-      Test
-  ])
-
-  if size.width == 0pt {
-      res = false
-  }
-
-  return res
-}
-
-
 // Page header and footer - add empty page if necessary
-#let page-header = context {
+#let page-header = context if states.theme.get().contains("fancy") {
   set text(style: "italic", fill: states.colors.get().header)
   if calc.odd(here().page()) {
-    align(right, hydra(2))
+    align(right, hydra(2, book: true))
   } else {
     align(left, hydra(1))
   }
+} else if states.theme.get().contains("classic") {
+  align(left, hydra(2, book: true))
+  v(-0.75em)
+  line(stroke: 0.75pt + black, length: 100%)
 }
 
-// #let page-header = context {
-//   let is-start-chapter = query(heading.where(level:1))
-//     .map(it => it.location().page())
-//     .contains(here().page())
+#let page-footer = context {
+    let cp = counter(page).get().first()
+    let current-page = counter(page).display()
+    set text(fill: white, weight: "bold")
+    v(1.5em)
+    if calc.odd(cp) {
+      set align(right)
+      box(outset: 6pt, fill: states.colors.get().primary, width: 1.5em, height: 100%)[
+        #set align(center)
+        #current-page
+        ]
+    } else {
+      set align(left)
+      box(outset: 6pt, fill: states.colors.get().primary, width: 1.5em, height: 100%)[
+        #set align(center)
+        #current-page
+      ]
+      }
+  }
 
-//   if not state("content.switch", false).get() and not is-start-chapter {
-//     return
-//   }
+// Minitoc
+#let minitoc = context {
+  let toc-header = states.localization.get().toc
+  block(above: 3.5em)[
+    #text([*#toc-header*])
+    #v(-0.5em)
+  ]
 
-//   state("content.pages", (0,)).update(it => {
-//     it.push(page)
-//     return it
-//   })
+  let miniline = line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
+  if states.theme.get().contains("classic"){
+    miniline = line(stroke: 0.75pt, length: 100%)
+  }
 
-//   if not is-start-chapter { // Use of Hydra for the header
-//     context{set text(style: "italic", fill: states.colors.get().header)
-//       if calc.odd(here().page()) {
-//         align(right, hydra(2, book: true))
-//       } else {
-//         align(left, hydra(1))
-//       }
-//     }
-//   }
-// }
+  miniline
+  v(0.5em)
+  suboutline(target: heading.where(outlined: true, level: 2))
+  miniline
+}
 
-// #let page-footer = context {
-//   let is-start-chapter = query(heading.where(level:1))
-//     .map(it => it.location().page())
-//     .contains(here().page())
-
-//   let has-content = state("content.pages", (0,)).get()
-//     .contains(here().page())
-
-//   let current-page = counter(page).get().first()
-//   let total-page = counter(page).final().first() - 2
-//   if has-content or is-start-chapter {
-//     if states.page-numbering.get() == "i" {
-//       align(center, counter(page).display(states.page-numbering.get()))
-//     } else {
-//       align(center, [#current-page / #total-page])
-//     }
-//   } else {
-//     if current-page > 2 {align(center, [#current-page / #total-page])}
-//   }
-// }
+// Conditional set-show
+#let show-if(cond, func) = body => if cond { func(body) } else { body }

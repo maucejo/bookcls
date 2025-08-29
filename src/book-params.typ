@@ -34,6 +34,8 @@
   in-outline: state("in-outline", false),
   num-pattern: state("num-pattern", "1.1."),
   num-pattern-fig: state("num-pattern-fig", "1.1"),
+  num-pattern-subfig: state("num-pattern-subfig", "1.1a"),
+  num-pattern-eq: state("num-pattern-eq", "(1.1)"),
   num-heading: state("num-heading", "1"),
   page-numbering: state("page-numbering", "1/1"),
   isappendix: state("isappendix", false),
@@ -42,8 +44,9 @@
   title: state("title", none),
   counter-part: state("counter-part", 0),
   colors: state("theme-colors"),
+  theme: state("theme", "fancy")
 )
 
 #let fig-supplement = [Figure]
-#let text-size = 12pt
+#let text-size = 11pt
 #let paper-size = "a4"

@@ -1,6 +1,6 @@
-#import "@preview/suboutline:0.3.0": *
-#import "@preview/hydra:0.6.1": hydra
-#import "book-params.typ" : *
+#import "@preview/hydra:0.6.2": hydra
+#import "book-params.typ": *
+#import "book-utils.typ": *
 
 // Title pages
 #let title-page-thesis(
@@ -9,15 +9,23 @@
   logo: none,
   config-titre,
   config-colors,
+  paper-size
 ) = {
+  set page(
+      paper: paper-size,
+      header: none,
+      footer: none,
+      margin: auto
+    )
+
   place(top + left, dx: -16%, dy: -10%,
       rect(fill: config-colors.primary, height: 121%, width: 20%)
   )
 
   let tpage = {
     if logo != none {
-    set image(width: 35%)
-    place(top + right, dx: 0%, dy: -15%, logo)
+      set image(width: 35%)
+      place(top + right, dx: 0%, dy: -15%, logo)
     }
     text([ÉCOLE DOCTORALE #h(0.25em) #config-titre.doctoral-school], size: 1.25em)
     v(0.25em)
@@ -96,6 +104,7 @@
       tpage
     )
   )
+
 }
 
 #let title-page-book(
@@ -103,16 +112,17 @@
   author: none,
   logo: none,
   config-titre,
-  config-colors
+  config-colors,
+  paper-size
 ) = {
-  let header = context {
+  let header = {
     box(fill: config-colors.primary, width: 100%, inset: 1em)[
       #set align(center + horizon)
       #text(fill: white, size: 1.5em)[#strong(delta: 400)[Collection #config-titre.collection]]
     ]
   }
 
-  let footer = context {
+  let footer = {
     box(fill: config-colors.primary, width: 100%, inset: 1em)[
       #set align(center + horizon)
       #text(fill: white, size: 1.5em)[#strong(delta: 400)[#config-titre.school]]
@@ -120,6 +130,7 @@
   }
 
   set page(
+    paper: paper-size,
     header: header,
     footer: footer,
     margin: (left: 0em, right:0em, top: 4em, bottom: 4em)
@@ -165,7 +176,12 @@
       }
     ]
 
-    set page(header: none, footer: none, margin: auto)
+    set page(
+      paper: paper-size,
+      header: none,
+      footer: none,
+      margin: auto
+    )
     pagebreak(to: "odd")
 
     align(center + horizon)[
@@ -200,36 +216,70 @@
 }
 
 // Chapter
-#let chapter(title: none, abstract: none, toc: true, numbered: true, body) = {
-  counter(math.equation).update(0)
-  counter(figure.where(kind: image)).update(0)
-  counter(figure.where(kind: table)).update(0)
-
-  context{
-    let numbering-heading = states.num-pattern.get()
-    let num-pattern-fig = "1.1"
-    let num-pattern-eq = "(1.1a)"
-    if states.isappendix.get() {
-      num-pattern-fig = "A.1"
-      num-pattern-eq = "(A.1)"
-    }
-
-    let numbering-fig = n => {
-      let h1 = counter(heading).get().first()
-      numbering(num-pattern-fig, h1, n)
-    }
-
-    let numbering-eq = (..n) => {
-      let h1 = counter(heading).get().first()
-      numbering(num-pattern-eq, h1, ..n)
-    }
-
+#let chapter(title: none, abstract: none, toc: true, numbered: true, body) = context {
     // Is the chapter numbered?
     if not numbered {
       numbering-heading = none
       numbering-eq = "(1a)"
       numbering-fig = "1"
+
+      // Heading numbering
+      set heading(numbering: numbering-heading)
+
+      // Equation numbering
+      set math.equation(numbering: numbering-eq)
+
+      // Figure numbering
+      show figure.where(kind: image): set figure(
+        supplement: fig-supplement,
+        numbering: numbering-fig,
+        gap: 1.5em
+      )
+
+      // Table numbering
+      show figure.where(kind: table): set figure(
+        numbering: numbering-fig,
+        gap: 1.5em
+      )
     }
+
+    let toc-header = states.localization.get().toc
+    if toc {
+      set page(header: none)
+      set align(horizon)
+      heading(title)
+
+      if abstract != none {
+        abstract
+      }
+
+      minitoc
+      pagebreak()
+    } else {
+      heading(title)
+    }
+
+    body
+  }
+}
+
+#let chapter-nonum(body) = {
+  let numbering-heading = none
+  let numbering-eq = "(1a)"
+  let numbering-fig = "1"
+
+  // Figure numbering
+    show figure.where(kind: image): set figure(
+      supplement: fig-supplement,
+      numbering: numbering-fig,
+      gap: 1.5em
+    )
+
+    // Table numbering
+    show figure.where(kind: table): set figure(
+      numbering: numbering-fig,
+      gap: 1.5em
+    )
 
     // Heading numbering
     set heading(numbering: numbering-heading)
@@ -250,33 +300,7 @@
       gap: 1.5em
     )
 
-    let toc-header = states.localization.get().toc
-    if toc {
-      set page(header: none)
-      set align(horizon)
-      heading(title)
-
-      if abstract != none {
-        abstract
-      }
-
-      block(above: 3.5em)[
-        #text([*#toc-header*])
-        #v(-0.25em)
-      ]
-
-      line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
-      v(0.25em)
-      suboutline(target: heading.where(outlined: true, level: 2))
-      line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
-      pagebreak()
-
-    } else {
-      heading(title)
-    }
-
     body
-  }
 }
 
 // Quatrième de couverture

@@ -5,7 +5,7 @@
 #import "book-outlines.typ": *
 #import "book-components.typ": *
 #import "book-utils.typ": *
-#import "book-boxes.typ": *
+#import "book-theming.typ": *
 
 // Template
 #let book(
@@ -16,24 +16,26 @@
   logo: image("resources/images/logo_cnam.png"),
   body-font: "Lato",
   math-font: "Lete Sans Math",
-  config-titre: (:),
+  config-title: (:),
   config-colors: (:),
+  theme: "fancy",
   body
-) = {
+) = context {
   // Document's properties
   set document(author: author, title: title)
 
   let book-title = (:)
-  if type == "thesis" {
-    book-title = default-config-thesis + config-titre
+  if type.contains("thesis") {
+    book-title = default-config-thesis + config-title
   } else {
-    book-title = default-config-book + config-titre
+    book-title = default-config-book + config-title
   }
 
   let book-colors = default-config-colors + config-colors
 
   // Fonts
-  set text(font: body-font, lang: lang, size: text-size)
+  let body-fonts = (body-font, "New Computer Modern")
+  set text(font: body-fonts, lang: lang, size: text-size)
 
   // Math font
   let math-fonts = (math-font, "New Computer Modern Math")
@@ -47,94 +49,49 @@
 
   // Localization
   let localization = json("resources/i18n/fr.json")
-  if lang == "en" {
+  if lang.contains("en") {
     localization = json("resources/i18n/en.json")
   }
   states.localization.update(localization)
 
   // Headings
-  set heading(numbering: "1.1")
-
-  let headings-on-odd-page(it) = {
-    show heading.where(level: 1): it => {
-      {
-        set page(header: none, numbering: none)
-        pagebreak(to: "odd")
-      }
-      it
-    }
-    it
-  }
-  show heading.where(level: 1): it => {
-    // Title body
-    set align(right)
-    set underline(stroke: 2pt + book-colors.secondary, offset: 8pt)
-    if it.numbering != none {
-      v(5em)
-      block[
-        #text(counter(heading).display(states.num-heading.get()), size: 4em, fill: book-colors.primary)
-        #v(-3em)
-        #text(underline(it.body), size: 1.5em)
-      ]
-      v(5em)
-    } else {
-      v(1em)
-      text(underline(it.body), size: 1.5em)
-      v(2em)
-    }
-  }
+  show: heading-level1
+  show: heading-level2
+  show: heading-level3
   show: headings-on-odd-page
-
-  show heading.where(level: 2): it => {
-    if it.numbering != none {
-      text(counter(heading).display(), fill: book-colors.primary)
-      h(0.25em)
-    }
-    text(it.body)
-    v(-0.5em)
-    line(stroke: 1.5pt + book-colors.secondary, length: 100%)
-    v(1em)
-  }
-
-  show heading.where(level: 3): it => {
-    if it.numbering != none {
-      text(counter(heading).display(), fill: book-colors.primary)
-      h(0.25em)
-    }
-    text(it.body)
-    v(1em)
-  }
 
   // References
   set ref(supplement: it => none)
 
   // Outline entries
-  show outline.entry: it => {
-    if it.element.func() == heading {
-      let number = it.prefix()
-      let section = it.element.body
-      let item = none
-      if it.level == 1 {
-      block(above: 1.5em, below: 0em)
-        item = [#text([*#number*], fill: book-colors.primary) *#it.inner()*]
-      } else {
-        block(above: 1em, below: 0em)
-        item = [#h(1em) #text([#number], fill: book-colors.primary) #it.inner()]
-      }
-      link(it.element.location(), item)
-    } else if it.element.func() == figure {
-      block(above: 1.25em, below: 0em)
-      link(it.element.location(), [#text([#it.prefix().], fill: book-colors.primary) #h(0.2em) #it.inner()])
-    } else {
-      it
-    }
-  }
+  set outline(depth: 3)
+  show: outline-entry
 
   // Figures
+  let numbering-fig = n => {
+      let h1 = counter(heading).get().first()
+      numbering(states.num-pattern-fig.get(), h1, n)
+  }
+
+  show figure.where(kind: image): set figure(
+      supplement: fig-supplement,
+      numbering: numbering-fig,
+      gap: 1.5em
+    )
+
   show figure: set figure.caption(separator: [ -- ])
 
+  // Equations
+  let numbering-eq = (..n) => {
+    let h1 = counter(heading).get().first()
+    numbering(states.num-pattern-eq.get(), h1, ..n)
+  }
+
+  set math.equation(numbering: numbering-eq)
+
   // Table customizations
-  show table.cell.where(y: 0): set text(weight: "bold", fill: white)
+  show: show-if(theme.contains("fancy"), it => {
+    show table.cell.where(y: 0): set text(weight: "bold", fill: white)
     set table(
     fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) { book-colors.secondary.lighten(60%)},
     stroke: (x, y) => (
@@ -143,9 +100,14 @@
       top: if y <= 1 { (thickness: 1pt, paint: book-colors.secondary) } else { 0pt },
       bottom: (thickness: 1pt, paint: book-colors.secondary),
     )
-  )
+  ); it})
+
 
   // Tables
+  show figure.where(kind: table): set figure(
+    numbering: numbering-fig,
+    gap: 1.5em
+  )
   show figure.where(kind: table): it => {
     set figure.caption(position: top)
     it
@@ -155,24 +117,18 @@
   set list(marker: [#text(fill:book-colors.primary, size: 1.75em)[#sym.bullet]])
   set enum(numbering: n => text(fill:book-colors.primary)[#n.])
 
-  // Page layout
-  set page(
-    paper: paper-size,
-    header: page-header,
-    // footer: page-footer
-  )
-
   if book-title.custom-title-page != none {
-    book-title.custom-title-page()
+    book-title.custom-title-page
   } else {
-    if type == "thesis" {
-    title-page-thesis(
-      title: title,
-      author: author,
-      logo: logo,
-      book-title,
-      book-colors,
-    )
+    if type.contains("thesis") {
+      title-page-thesis(
+        title: title,
+        author: author,
+        logo: logo,
+        book-title,
+        book-colors,
+        paper-size
+      )
     } else {
       title-page-book(
         title: title,
@@ -180,12 +136,26 @@
         logo: logo,
         book-title,
         book-colors,
+        paper-size
       )
     }
   }
 
+  // Page layout
+  set page(
+    paper: paper-size,
+    header: page-header,
+    footer: page-footer
+  ) if theme.contains("modern")
+
+  set page(
+    paper: paper-size,
+    header: page-header,
+  ) if theme.contains("fancy") or theme.contains("classic")
+
   states.author.update(author)
   states.title.update(title)
+  states.theme.update(theme)
   states.colors.update(book-colors)
 
   body

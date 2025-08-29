@@ -1,38 +1,6 @@
-#!/usr/bin/env bash
 set -eu
 
-function read-toml() {
-  local file="$1"
-  local key="$2"
-  # Read a key value pair in the format: <key> = "<value>"
-  # stripping surrounding quotes.
-  perl -lne "print \"\$1\" if /^${key}\\s*=\\s*\"(.*)\"/" < "$file"
-}
-
-SOURCE="$(cd "$(dirname "$0")"; pwd -P)/.." # macOS has no realpath
-TARGET="${1:?Missing target path or @local}"
-VERSION="$(read-toml "$SOURCE/typst.toml" "version")"
-PKG_PREFIX="$(read-toml "$SOURCE/typst.toml" "name")"
-
-# List of all files that get packaged
-files=(
-  src/
-  template/
-  typst.toml
-  LICENSE
-  README.md
-  docs/manual.typ
-  docs/manual.pdf
-)
-
-# Local package directories per platform
-if [[ "$OSTYPE" == "linux"* ]]; then
-  DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-  DATA_DIR="$HOME/Library/Application Support"
-else
-  DATA_DIR="${APPDATA}"
-fi
+. "$(dirname "${BASH_SOURCE[0]}")/setup"
 
 if (( $# < 1 )) || [[ "${1:-}" == "help" ]]; then
   echo "package TARGET"
@@ -46,15 +14,75 @@ if (( $# < 1 )) || [[ "${1:-}" == "help" ]]; then
   exit 1
 fi
 
-if [[ "$TARGET" == "@local" ]] || [[ "$TARGET" == "install" ]]; then
-  TARGET="${DATA_DIR}/typst/packages/local/"
-  echo "Install dir: $TARGET"
-fi
+TARGET="$(resolve_target "${1:?Missing target path or @local}")"
+echo "Install dir: $TARGET"
 
-if [[ "$TARGET" == "@preview" ]] || [[ "$TARGET" == "install-preview" ]]; then
-  TARGET="${DATA_DIR}/typst/packages/preview/"
-  echo "Install dir: $TARGET"
-fi
+# ignore rules
+ignores=()
+tmpfile_ignores="$(mktemp)"
+grep '[^[:blank:]]' .typstignore > "$tmpfile_ignores"
+while IFS= read -r line; do
+	[[ "$line" =~ ^# ]] && continue
+	[[ -z "$line" ]] && continue
+	ignores+=("$line")
+done < "$tmpfile_ignores"
+rm -f "$tmpfile_ignores"
+
+# recursively print all files that are not excluded via .typstignore
+function enumerate {
+	local root="$1"
+	if [[ -f "$root" ]]; then
+		echo "$root"
+	else
+		local files=()
+		local tmpfile
+		tmpfile="$(mktemp)"
+		find "$root" \
+			-mindepth 1 -maxdepth 1 \
+			-not -name .git \
+			-not -name .typstignore > "$tmpfile"
+		while IFS= read -r line; do
+			files+=("$line")
+		done < "$tmpfile"
+		rm -f "$tmpfile"
+		# declare -p files >&2
+
+		local f
+		for f in "${files[@]}"; do
+			local include
+			include=1
+
+			local ignore
+			for ignore in "${ignores[@]}"; do
+				if [[ "$ignore" =~ ^! ]]; then
+					ignore="${ignore:1}"
+					if [[ "$f" == ./$ignore ]]; then
+						# echo "\"$f\" matched \"!$ignore\"" >&2
+						include=1
+					fi
+				elif [[ "$f" == ./$ignore ]]; then
+					# echo "\"$f\" matched \"$ignore\"" >&2
+					include=0
+				fi
+			done
+			if [[ "$include" == 1 ]]; then
+				enumerate "$f"
+			fi
+		done
+	fi
+}
+
+
+# List of all files that get packaged
+# Compatible bash/zsh : lecture via fichier temporaire
+files=()
+tmpfile_files="$(mktemp)"
+enumerate "." > "$tmpfile_files"
+while IFS= read -r line; do
+	files+=("$line")
+done < "$tmpfile_files"
+rm -f "$tmpfile_files"
+# declare -p files >&2
 
 TMP="$(mktemp -d)"
 
@@ -65,8 +93,11 @@ done
 
 TARGET="${TARGET:?}/${PKG_PREFIX:?}/${VERSION:?}"
 echo "Packaged to: $TARGET"
-if rm -rf "${TARGET:?}" 2>/dev/null; then
+if rm -r "${TARGET:?}" 2>/dev/null; then
   echo "Overwriting existing version."
 fi
 mkdir -p "$TARGET"
+
+# include hidden files by setting dotglob
+shopt -s dotglob
 mv "$TMP"/* "$TARGET"

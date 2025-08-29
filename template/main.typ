@@ -41,10 +41,11 @@
 
 #show: book.with(
   author: "Mathieu Aucejo",
-  type: "textbook",
-  config-titre: config-titre,
+  type: "thesis",
+  // config-titre: config-titre,
   config-colors: config-colors,
-  lang: "fr"
+  lang: "fr",
+  theme: "modern"
 )
 
 #show: front-matter
@@ -63,7 +64,7 @@
 
 #include "chapters/ch_main.typ"
 
-// // #bibliography("bibliography/sample.yml")
+// #bibliography("bibliography/sample.yml")
 #bibliography("bibliography/sample.bib")
 
 #part("Deuxième partie")

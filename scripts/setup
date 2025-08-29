@@ -12,7 +12,7 @@ else
   DATA_DIR="${APPDATA}"
 fi
 
-function read-toml() {
+function read_toml() {
   local file="$1"
   local key="$2"
   # Read a key value pair in the format: <key> = "<value>"
@@ -20,11 +20,11 @@ function read-toml() {
   perl -lne "print \"\$1\" if /^${key}\\s*=\\s*\"(.*)\"/" < "$file"
 }
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P)/.." # macOS has no realpath
-PKG_PREFIX="$(read-toml "$ROOT/typst.toml" "name")"
-VERSION="$(read-toml "$ROOT/typst.toml" "version")"
+SOURCE="$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P)/.." # macOS has no realpath
+PKG_PREFIX="$(read_toml "$SOURCE/typst.toml" "name")"
+VERSION="$(read_toml "$SOURCE/typst.toml" "version")"
 
-function resolve-target() {
+function resolve_target() {
   local target="$1"
 
 	if [[ "$target" == "@local" ]]; then

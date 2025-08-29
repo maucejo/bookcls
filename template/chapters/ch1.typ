@@ -1,6 +1,11 @@
 #import "../../src/book.typ": *
 
-#show: chapter.with(title: "Premier chapitre")
+// #show: chapter.with(title: "Premier chapitre")
+
+= Premier chapitre
+#lorem(100)
+#minitoc
+#pagebreak()
 
 == Objectifs
 #lorem(100)
@@ -13,6 +18,9 @@ $ <eq:1>
 $
 integral_0^1 f(x) dif x = F(1) - F(0) "et voilà"
 $ <eq:2>
+
+#lorem(20)
+== Code
 
 La Figure @fig:1 illustre le cas d'industriels utilisant des absorbants.
 
@@ -47,6 +55,8 @@ label: <fig:subfig>,
     table.cell(colspan: 2)[24.7],
   ), caption: [#lorem(4)]
 )
+
+=== Informations
 
 #info-box[
   #lorem(10)

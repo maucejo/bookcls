@@ -2,6 +2,10 @@
 
 #show: chapter.with(title: "Deuxième chapitre")
 
+// = Deuxième chapitre
+// #minitoc
+// #pagebreak()
+
 == Objectifs
 #lorem(100)
 
