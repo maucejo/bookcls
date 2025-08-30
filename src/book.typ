@@ -35,7 +35,7 @@
 
   // Fonts
   let body-fonts = (body-font, "New Computer Modern")
-  set text(font: body-fonts, lang: lang, size: text-size)
+  set text(font: body-fonts, lang: lang, size: text-size, ligatures: false)
 
   // Math font
   let math-fonts = (math-font, "New Computer Modern Math")
@@ -90,7 +90,7 @@
   set math.equation(numbering: numbering-eq)
 
   // Table customizations
-  show: show-if(theme.contains("fancy"), it => {
+  show: show-if(theme.contains("fancy") or theme.contains("modern"), it => {
     show table.cell.where(y: 0): set text(weight: "bold", fill: white)
     set table(
     fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) { book-colors.secondary.lighten(60%)},
@@ -106,7 +106,7 @@
   // Tables
   show figure.where(kind: table): set figure(
     numbering: numbering-fig,
-    gap: 1.5em
+    // gap: 1em
   )
   show figure.where(kind: table): it => {
     set figure.caption(position: top)

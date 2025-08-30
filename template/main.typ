@@ -45,7 +45,7 @@
   config-title: config-title,
   // config-colors: config-colors,
   lang: "fr",
-  // theme: "modern"
+  theme: "classic"
 )
 
 #show: front-matter

@@ -36,14 +36,64 @@
 #let page-header = context if states.theme.get().contains("fancy") {
   set text(style: "italic", fill: states.colors.get().header)
   if calc.odd(here().page()) {
-    align(right, hydra(2, book: true))
+    align(right, hydra(2))
   } else {
     align(left, hydra(1))
   }
 } else if states.theme.get().contains("classic") {
-  align(left, hydra(2, book: true))
-  v(-0.75em)
-  line(stroke: 0.75pt + black, length: 100%)
+  if calc.odd(here().page()) {
+    align(left, hydra(2, display: (_, it) => [
+    #let head = none
+    #if it.numbering != none {
+      head = numbering(it.numbering, ..counter(heading).at(it.location())) + " " + it.body
+    } else {
+      head = it.body
+    }
+    #head
+    #place(dx: 0%, dy: 12%)[#line(length: 100%, stroke: 0.75pt)]
+  ]))
+  } else {
+    align(left, hydra(1, display: (_, it) => [
+    #let head = counter(heading.where(level:1)).display() + " " + it.body
+    #if it.numbering == none {
+      head = it.body
+    }
+    #head
+    #place(dx: 0%, dy: 12%)[#line(length: 100%, stroke: 0.75pt)]
+  ]))
+  }
+} else if states.theme.get().contains("modern") {
+    set text(style: "italic")
+    if calc.odd(here().page()) {
+      align(right)[
+        #hydra(2, display: (_, it) => [
+          #let head = none
+          #if it.numbering != none {
+            head = numbering(it.numbering, ..counter(heading).at(it.location())) + " " + it.body
+          } else {
+            head = it.body
+          }
+          #let size = measure(head)
+          #head
+          #place(dx: -16%, dy: -6.5%)[#line(length: 115% - size.width, stroke: 0.5pt + states.colors.get().primary)]
+          #place(dx: 98.5% - size.width, dy: -12%)[#circle(fill: states.colors.get().primary, stroke: none, radius: 0.25em)]
+        ])
+      ]
+    } else {
+    align(left)[
+      #hydra(1, display: (_, it) => [
+        #let head = counter(heading.where(level:1)).display() + " " + it.body
+        #if it.numbering == none {
+          head = it.body
+        }
+        #let size = measure(head)
+        #head
+        #place(dx: size.width, dy: -12%)[#circle(fill: states.colors.get().primary, stroke: none, radius: 0.25em)]
+        #place(dx: size.width + 1%, dy: -6.5%)[#line(length: 100%, stroke: 0.5pt + states.colors.get().primary)]
+        ]
+      )
+    ]
+  }
 }
 
 #let page-footer = context {

@@ -1,5 +1,5 @@
 #import "../src/book.typ": *
-#import "@preview/subpar:0.1.1"
+#import "@preview/subpar:0.2.2"
 #import "./manual-template.typ": *
 
 #let manual-boxeq(body) = {

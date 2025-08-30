@@ -101,6 +101,9 @@
     counter(figure.where(kind: table)).update(0)
 
     if states.theme.get().contains("fancy") {
+      place(top)[
+        #rect(fill: white, width: 1%, height: 1%)
+      ]
       set align(right)
       set underline(stroke: 2pt + states.colors.get().secondary, offset: 8pt)
       if it.numbering != none {
@@ -117,6 +120,9 @@
         v(2em)
       }
     } else if states.theme.get().contains("classic") {
+      place(top)[
+        #rect(fill: white, width: 1%, height: 1%)
+      ]
       set align(left)
       let type-chapter = if states.isappendix.get() {states.localization.get().appendix} else {states.localization.get().chapter}
       if it.numbering != none {
@@ -174,7 +180,7 @@
       #text(it.body)
       #v(-0.5em)
       #line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
-      #v(1em)
+      #v(0.75em)
     ]
   } else if states.theme.get().contains("classic") {
     block(above: 2em, below: 1.25em)[
@@ -189,7 +195,7 @@
       #text(it.body)
       #v(-0.75em)
       #line(stroke: 0.75pt + states.colors.get().primary, length: 100%)
-      #v(1em)
+      #v(0.75em)
     ]
   }
 

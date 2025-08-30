@@ -56,6 +56,10 @@ label: <fig:subfig>,
   ), caption: [#lorem(4)]
 )
 
+== Boxes
+
+#lorem(10)
+
 === Informations
 
 #info-box[
@@ -81,3 +85,5 @@ label: <fig:subfig>,
 #question-box[
   #lorem(10)
 ]
+
+#lorem(1000)

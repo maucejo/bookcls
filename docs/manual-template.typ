@@ -1,29 +1,13 @@
-#import "@preview/showybox:2.0.3": *
-#import "@preview/hydra:0.4.0": hydra
-#import "@preview/mantys:0.1.4": *
-#import "@preview/cheq:0.1.0": *
+#import "@preview/showybox:2.0.4": *
+#import "@preview/hydra:0.6.2": hydra
+#import "@preview/mantys:1.0.2": *
+#import "@preview/cheq:0.2.3": *
+#import "@preview/swank-tex:0.1.0": LaTeX
 
 #let vskip = 1em
 #let typst-color = rgb(35,157,173)
 
 #let typst = text("Typst", fill: typst-color)
-#let TeX = {
-  set text(font: "New Computer Modern", weight: "regular")
-  box(width: 1.7em, {
-    [T]
-    place(top, dx: 0.56em, dy: 0.22em)[E]
-    place(top, dx: 1.1em)[X]
-  })
-}
-
-#let LaTeX = {
-  set text(font: "New Computer Modern", weight: "regular")
-  box(width: 2.55em, {
-    [L]
-    place(top, dx: 0.3em, text(size: 0.7em)[A])
-    place(top, dx: 0.7em)[#TeX]
-  })
-}
 
 #let example-box(body) = {
   showybox(

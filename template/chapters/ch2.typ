@@ -1,10 +1,10 @@
 #import "../../src/book.typ": *
 
-#show: chapter.with(title: "Deuxième chapitre")
+// #show: chapter.with(title: "Deuxième chapitre")
 
-// = Deuxième chapitre
-// #minitoc
-// #pagebreak()
+= Deuxième chapitre
+#minitoc
+#pagebreak()
 
 == Objectifs
 #lorem(100)
