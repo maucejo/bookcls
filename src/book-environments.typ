@@ -1,4 +1,4 @@
-#import "book-params.typ": *
+#import "book-defaults.typ": *
 
 #let front-matter(body) = {
   set heading(numbering: none)
@@ -100,7 +100,7 @@
       ]
 
       place(center + horizon)[
-        #box(outset: 1.25em, stroke: 0.5pt, radius: 5em, fill: states.colors.get().primary)[
+        #box(outset: 1.25em, stroke: none, radius: 5em, fill: states.colors.get().primary)[
           #set text(fill: white, weight: "bold", size: 3em)
           #title
         ]

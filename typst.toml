@@ -1,6 +1,6 @@
 [package]
-name = "book"
-version = "0.6.0"
+name = "bookcls"
+version = "0.1.0"
 authors = ["Mathieu Aucejo"]
 license = "MIT"
 description = "Modèle de thèse ou de livre"
@@ -11,5 +11,4 @@ repository = "https://github.com/maucejo/book_template"
 [template]
 path = "template"
 entrypoint = "main.typ"
-
-
+thumbnail = "thumbnails/main.png"

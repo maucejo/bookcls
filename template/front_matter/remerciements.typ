@@ -2,7 +2,7 @@
 
 // #show: chapter.with(title: "Remerciements", toc: false)
 #show: chapter-nonum.with()
-= Remerciements
+= Acknowledgments
 
 #lorem(50)
 

@@ -4,42 +4,34 @@
 #import "book-environments.typ": *
 #import "book-outlines.typ": *
 #import "book-components.typ": *
-#import "book-utils.typ": *
 #import "book-theming.typ": *
+#import "book-helper.typ": *
 
 // Template
 #let book(
-  title: "Titre du document",
-  author: "Nom de l'auteur",
-  type: "thesis",
-  lang: "fr",
-  logo: image("resources/images/logo_cnam.png"),
-  body-font: "Lato",
-  math-font: "Lete Sans Math",
-  config-title: (:),
-  config-colors: (:),
-  theme: "fancy",
+  title: "Title",
+  author: "Author Name",
+  book-config: default-book-config,
   body
 ) = context {
   // Document's properties
   set document(author: author, title: title)
+  states.author.update(author)
+  states.title.update(title)
 
-  let book-title = (:)
-  if type.contains("thesis") {
-    book-title = default-config-thesis + config-title
-  } else {
-    book-title = default-config-book + config-title
-  }
+  let config-book = default-book-config + book-config
+  states.theme.update(config-book.theme)
 
-  let book-colors = default-config-colors + config-colors
+  let book-colors = default-book-config.colors + config-book.colors
+  states.colors.update(book-colors)
+
+  let book-fonts = default-book-config.fonts + config-book.fonts
 
   // Fonts
-  let body-fonts = (body-font, "New Computer Modern")
-  set text(font: body-fonts, lang: lang, size: text-size, ligatures: false)
+  set text(font: book-fonts.body, lang: config-book.lang, size: text-size, ligatures: false)
 
   // Math font
-  let math-fonts = (math-font, "New Computer Modern Math")
-  show math.equation: set text(font: math-fonts, stylistic-set: 1)
+  show math.equation: set text(font: book-fonts.math, stylistic-set: 1)
 
   // Equations
   show: equate.with(breakable: true, sub-numbering: true)
@@ -49,7 +41,7 @@
 
   // Localization
   let localization = json("resources/i18n/fr.json")
-  if lang.contains("en") {
+  if config-book.lang.contains("en") {
     localization = json("resources/i18n/en.json")
   }
   states.localization.update(localization)
@@ -62,6 +54,13 @@
 
   // References
   set ref(supplement: it => none)
+  show ref: set text(fill: book-colors.primary) if config-book.theme.contains("fancy") or config-book.theme.contains("modern")
+
+  // Citations
+  show cite: it => {
+    show regex("\[|\]"): it => text(fill: black)[#it]
+    it
+  }
 
   // Outline entries
   set outline(depth: 3)
@@ -90,7 +89,7 @@
   set math.equation(numbering: numbering-eq)
 
   // Table customizations
-  show: show-if(theme.contains("fancy") or theme.contains("modern"), it => {
+  show: show-if(config-book.theme.contains("fancy"), it => {
     show table.cell.where(y: 0): set text(weight: "bold", fill: white)
     set table(
     fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) { book-colors.secondary.lighten(60%)},
@@ -100,6 +99,13 @@
       top: if y <= 1 { (thickness: 1pt, paint: book-colors.secondary) } else { 0pt },
       bottom: (thickness: 1pt, paint: book-colors.secondary),
     )
+  ); it})
+
+  show: show-if(config-book.theme.contains("modern"), it => {
+    show table.cell.where(y: 0): set text(weight: "bold", fill: white)
+    set table(
+    fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) { book-colors.secondary.lighten(60%)},
+    stroke: none
   ); it})
 
 
@@ -117,28 +123,11 @@
   set list(marker: [#text(fill:book-colors.primary, size: 1.75em)[#sym.bullet]])
   set enum(numbering: n => text(fill:book-colors.primary)[#n.])
 
-  if book-title.custom-title-page != none {
-    book-title.custom-title-page
+  // Title page
+  if config-book.title-page != none {
+    config-book.title-page
   } else {
-    if type.contains("thesis") {
-      title-page-thesis(
-        title: title,
-        author: author,
-        logo: logo,
-        book-title,
-        book-colors,
-        paper-size
-      )
-    } else {
-      title-page-book(
-        title: title,
-        author: author,
-        logo: logo,
-        book-title,
-        book-colors,
-        paper-size
-      )
-    }
+    default-title-page
   }
 
   // Page layout
@@ -146,17 +135,12 @@
     paper: paper-size,
     header: page-header,
     footer: page-footer
-  ) if theme.contains("modern")
+  ) if config-book.theme.contains("modern")
 
   set page(
     paper: paper-size,
     header: page-header,
-  ) if theme.contains("fancy") or theme.contains("classic")
-
-  states.author.update(author)
-  states.title.update(title)
-  states.theme.update(theme)
-  states.colors.update(book-colors)
+  ) if config-book.theme.contains("fancy") or config-book.theme.contains("classic")
 
   body
 }

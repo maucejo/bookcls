@@ -9,7 +9,7 @@
 #show: chapter-nonum.with()
 = Introduction
 
-== Objectifs
+== Goals
 
 #lorem(100)
 
@@ -21,16 +21,16 @@ g = h(x)
 $
 
 #v(1.25em)
-=== Sous-objectifs
+=== Sub-goals
 
 #figure(
-image("../images/chapitre1/cas_indus_absorbants.png", width: 75%),
+image("../images/typst-logo.svg", width: 75%),
 caption: [#ls-caption([#lorem(10)], [#lorem(2)])],
 ) <fig:intro>
 
 #lorem(50)
 
 #pagebreak()
-== Méthodologie
+== Methodology
 
 #lorem(1000)

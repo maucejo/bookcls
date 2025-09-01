@@ -1,17 +1,17 @@
-# Modèle Typst pour les mémoires Cnam
+#Book template
 
-[![Generic badge](https://img.shields.io/badge/Version-0.2.1-cornflowerblue.svg)]()
+[![Generic badge](https://img.shields.io/badge/Version-0.6.0-cornflowerblue.svg)]()
 [![MIT License](https://img.shields.io/badge/License-MIT-forestgreen)](https://github.com/maucejo/Cnam_thesis_template/blob/main/LICENSE)
 [![User Manual](https://img.shields.io/badge/doc-.pdf-mediumpurple)](https://github.com/maucejo/Cnam_thesis_template/blob/main/docs/manual.pdf)
 
-Ce dépôt contient un modèle en langage Typst pour la rédaction de mémoire de type thèse et HDR pour le Cnam.
+This Typst package is a proposed template for writing thesis dissertations, French habilitations, or scientific books.
 
 ## Usage
 
-Pour utiliser le modèle, il faut l'importer dans votre fichier principal `typ` en utilisant la commande suivante :
+To use the template, you need to import it into your main `typ` file using the following command:
 
 ```typ
-#import "./template/book.typ": *
+#import "@preview/bookcls:0.6.0": *
 ```
 
-Pour plus d'informations, veuillez consulter le [manuel](https://github.com/maucejo/Phd_template/blob/main/docs/manual.pdf).
+For more information, please refer to the [manual](https://github.com/maucejo/book_template/blob/main/docs/manual.pdf).

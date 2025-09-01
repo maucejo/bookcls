@@ -5,14 +5,14 @@
 //   toc: false
 // )
 
-= Algorithmes
+= Algorithms
 
 #lorem(100)
 
-La Figure @fig:A illustre le cas d'industriels utilisant des absorbants.
+Figure @fig:A is a beautiful typst logo.
 
 #figure(
-image("../images/chapitre1/cnam_region.png", width: 75%),
+image("../images/typst-logo.svg", width: 75%),
 caption: [#lorem(10)],
 ) <fig:A>
 

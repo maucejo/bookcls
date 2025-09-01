@@ -1,5 +1,5 @@
 #import "@preview/showybox:2.0.4": *
-#import "book-params.typ": *
+#import "book-defaults.typ": *
 
 // Boxes - Utility
 #let box-title(a, b) = {
@@ -149,8 +149,8 @@
           #text(size: 2.5em, fill: white)[#type-chapter #counter(heading).display(states.num-heading.get())]
         ]
 
-        place(right, dy: 23%)[
-          #box(outset: 0.9em, radius: 5em, stroke: 0.5pt, fill: states.colors.get().primary)[#text(size: 1.5em, fill: white)[#it.body]]
+        place(right, dy: 22.75%)[
+          #box(outset: 0.9em, radius: 5em, stroke: none, fill: states.colors.get().primary)[#text(size: 1.5em, fill: white)[#it.body]]
         ]
         v(15em)
       } else {
@@ -158,8 +158,8 @@
           #rect(fill: gradient.linear(states.colors.get().primary, states.colors.get().primary.transparentize(65%), dir: ltr), width: 132%, height: 10%)
         ]
 
-        place(top + right, dy: -2%)[
-          #box(outset: 0.9em, radius: 5em, stroke: 0.5pt, fill: states.colors.get().primary)[#text(size: 1.5em, fill: white)[#it.body]]
+        place(top + right, dy: -2.25%)[
+          #box(outset: 0.9em, radius: 5em, stroke: none, fill: states.colors.get().primary)[#text(size: 1.5em, fill: white)[#it.body]]
         ]
 
         v(3em)

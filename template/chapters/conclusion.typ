@@ -2,6 +2,6 @@
 
 // #show: chapter.with(title: "Conclusions et perspectives", toc: false)
 
-= Conclusions et perspectives
+= Conclusions and outlooks
 
 #lorem(100)

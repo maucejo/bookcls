@@ -2,15 +2,15 @@
 
 // #show: chapter.with(title: "Premier chapitre")
 
-= Premier chapitre
+= First chapter
 #lorem(100)
 #minitoc
 #pagebreak()
 
-== Objectifs
+== Goals
 #lorem(100)
 
-Les équations @eq:1 et @eq:2 sont des équations très importantes.
+Equations @eq:1 et @eq:2 are very important.
 $
 integral_0^1 f(x) dif x = F(1) - F(0) "et voilà"
 $ <eq:1>
@@ -22,18 +22,18 @@ $ <eq:2>
 #lorem(20)
 == Code
 
-La Figure @fig:1 illustre le cas d'industriels utilisant des absorbants.
+Figure @fig:1 is a beautiful typst logo.
 
 #figure(
-image("../images/chapitre1/cas_indus_absorbants.png", width: 75%),
+image("../images/typst-logo.svg", width: 75%),
 caption: [#ls-caption([#lorem(10)], [#lorem(2)])],
 ) <fig:1>
 
-La Figure @fig:subfig présente la carte du Cnam. La Figure @b illustre la région du Cnam @Smi21.
+Figure @fig:subfig the Typst logo. Figure @b is a Typst logo @Smi21.
 
 #subfigure(
-figure(image("../images/chapitre1/cnam_region.png"), caption: []),
-figure(image("../images/chapitre1/cnam_region.png"), caption: []), <b>,
+figure(image("../images/typst-logo.svg"), caption: []),
+figure(image("../images/typst-logo.svg"), caption: []), <b>,
 columns: (1fr, 1fr),
 caption: [(a) Left image and (b) Right image],
 label: <fig:subfig>,

@@ -3,6 +3,6 @@
 // #show: chapter.with(title: "Résumé", toc: false)
 #show: chapter-nonum.with()
 
-= Résumé
+= Abstract
 
 #lorem(500)

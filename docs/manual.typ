@@ -1,273 +1,151 @@
+#import "@preview/mantys:1.0.2": *
+#import "@preview/showybox:2.0.4": *
+#import "@preview/swank-tex:0.1.0": LaTeX
+#import "@preview/cheq:0.2.2": *
 #import "../src/book.typ": *
-#import "@preview/subpar:0.2.2"
-#import "./manual-template.typ": *
 
-#let manual-boxeq(body) = {
-  set align(center)
-  context{
-    box(
-      stroke: 1pt + default-config-colors.boxeq.darken(35%),
-      radius: 5pt,
-      inset: 0.6em,
-      fill: default-config-colors.boxeq,
-    )[#body]
-  }
-}
+#show: checklist.with(fill: eastern.lighten(95%), stroke: eastern, radius: .2em)
 
-#show: manual-template.with(
-	abstract : [Ce package Typst est une proposition de modèle pour la rédaction de mémoire thèse ou de HDR ou d'ouvrages scientifiques.],
-	version: "Template 0.5.0",
-	typst-version: "Typst 0.12"
+#let typst-color = rgb(35,157,173)
+#let Typst = text("Typst", fill: typst-color)
+
+#let abstract = [This Typst package is a proposed template for writing thesis dissertations, French habilitations, or scientific books.]
+
+#show: mantys(
+  name: "book.typ",
+  version: "0.1.0",
+  authors: ("Mathieu Aucejo"),
+  license: "MIT",
+  description: "Write beautiful scientific book or thesis with Typst",
+  repository: "https://github.com/maucejo/book_template",
+
+  title: "Book Template",
+  date: datetime.today(),
+
+  abstract: abstract,
+  show-index: false,
 )
 
-#pagebreak()
-= Qu'est-ce que Typst ?
+= Usage
 
-#typst est un nouveau langage de balise open source é crit en Rust et développé à partir de 2019 par deux étudiants allemands, Laurenz Mädje et Martin Haug, dans le cadre de leur projet de master @Mad22 @Hau22. La version 0.1.0 a été publiée sur GitHub le 04 avril 2023#footnote[Adresse du dépôt GitHub : #link("https://github.com/typst/typst", text("https://github.com/typst/typst", fill: typst-color))].
+== Using `bookcls`
 
-#typst se présente comme un successeur de #LaTeX plus moderne, rapide et simple d'utilisation. Parmi ses avantages, on peut citer :
-
-- la compilation incrémentale ;
-- des messages d'erreur clair et compréhensible ;
-- un langage de programmation Turing-complet ;
-- une système de style cohérent permettant de configurer aisément tous les aspects de son document (police, pagination, marges, #sym.dots) ;
-- une communauté active et sympathique (serveur Discord pour le support, annonce de nouveaux paquets) ;
-- un système de paquets simple d'utilisation (pour rechercher ou voir la liste des paquets, n'hésitez pas à visiter #link("https://typst.app/universe", text("Typst: Universe", fill: typst-color))) ;
-- des extensions pour VS Code existent, comme `Typst LSP` ou `Tinymist`, pour avoir des fonctionnalités similaires à `LaTeX Workshop`.
-
-#v(0.5em)
-
-Concernant la courbe d'apprentissage, la documentation de #typst est suffisamment bien écrite et détaillée pour permettre de créer rapidement ses propres documents. Il faut compter moins d'une heure pour prendre en main la syntaxe (sans mentir #emoji.face.beam). Pour accéder à la documentation, suivez ce #link("https://typst.app/docs", text("lien", fill: typst-color)). Pour faciliter la transition de #LaTeX vers #typst, un guide est disponible #link("https://typst.app/docs/guides/guide-for-latex-users/", text("ici", fill: typst-color)).
-
-#typst peut être utilisé comme #LaTeX de deux manières différentes :
-
-+ En ligne, via l'application web #link("https://typst.app", text("Typst", fill: typst-color)). Il suffit de créer un compte pour commencer à rédiger ses documents. L'application web fonctionne de façon similaire à Overleaf. L'offre gratuite est généreuse et permet de :
-   - Créer et éditer des projets ;
-	 - Partager et collaborer sur des projets ;
-	 - Convertir des fichiers #LaTeX ou Word ;
-	 - 200 Mb de stockage et jusqu'à 100 fichiers par projet.
-
-+ En local, en installant le compilateur #typst. Pour cela, il faut suivre les instructions contenues dans le fichier README.md du dépôt #link("https://github.com/typst/typst", text("Github", fill: typst-color)) officiel. Une fois le compilateur installé, il est possible de compiler ses fichiers en utilisant la commande `typst compile` (compilation unitaire) ou `typst watch` (compilation incrémentale) dans le terminal.
-
-  Une solution complémentaire consiste à utiliser un éditeur de texte comme VS Code avec l'extension `Tinymist` pour bénéficier de la coloration syntaxique, de l'autocomplétion et de la prévisualisation (munie d'une fonctionnalité similaire à `synctex` en #LaTeX) et export au format PDF.
-
-#pagebreak()
-= Installation du modèle
-
-La collection de gabarits Cnam est disponible sur le dépôt #link("https://github.com/maucejo/book_template", text("Github", fill: typst-color)) de l'auteur. Vous pouvez ainsi soit cloner le dépôt, soit télécharger le fichier zip de la dernière _Release_ contenant les gabarits. Pour utiliser les gabarits, deux possibilités s'offrent à vous :
-
-+ Copier l'ensemble du dossier `cnam_templates` dans le dossier de votre projet #typst. Vous pouvez alors inclure les gabarits dans votre document en utilisant par exemple la commande :
-	#codesnippet[
-	```typ
-	#import "./src/book.typ": *
-	```
-	]
-
-	#ibox[
-		#set text(size: 11pt)
-		L'adresse du fichier à utiliser dans votre fichier principal `nom_de_mon_document.typ` dépend de l'emplacement du dossier `book_template` dans votre projet.
-
-		Il faut toutefois noter que le dossier contenant les gabarits doit être situé dans le même répertoire que votre fichier principal.
-	]
-
-+ Installer localement le dossier `book_template` dans un dossier accessible par le compilateur #typst. Pour cela, il suffit de suivre les instructions de la documentation officielle #link("https://github.com/typst/packages", text("ici", fill: typst-color)). Pour cela, il faut cependant que le nom du dossier corresponde au numéro de version du paquet et que celui-ci soit contenu dans le dossier `book_template` (actuellement `book/0.5.0`).
-
-	#codesnippet[
-		```typ
-		// Si installation dans le dossier `/typst/packages/local`
-		#import "@local/book:0.5.0": *
-
-		// Si installation dans le dossier /typst/packages/preview`
-		#import "@preview/book:0.5.0": *
-		```
-	]
-
-	Ce process peut être automatisé en utilisant le script `just` contenu dans le fichier `justfile`. Pour cela, il suffit de lancer dans un terminal ouvert dans le dossier `cnam-templates` contenant les gabarits. . Une fois `just` installé, il suffit de lancer la commande :
-
-	#codesnippet[
-		```bash
-		# Pour installer les gabarits dans le dossier `/typst/packages/local`
-		just install
-
-		# Pour installer les gabarits dans le dossier `/typst/packages/preview`
-		just install-preview
-		```
-	]
-
-	#ibox[Pour installer `just`, il faut suivre les instructions figurant dans le fichier README.md du dépôt #link("https://github.com/casey/just", text("Github", fill: typst-color)) officiel.]
-
-
-#pagebreak()
-= Utilisation
-
-Pour utiliser le modèle, il faut l'importer dans votre fichier principal `typ` en utilisant la commande suivante.
-
-#codesnippet[
-	```typ
-	#import "@preview/book:0.5.0": *
-	```
+To use the #package[elspub] template, you need to include the following line at the beginning of your `typ` file:
+#codesnippet[```typ
+#import "@preview/bookcls:0.6.0": *
+```
 ]
 
-#ibox[
-	#set text(size: 11pt)
+== Initializing the template
 
-	Si vous décomposez votre document en différents fichiers, il faut insérer la commande précédente en préambule de chaque fichier.
-]
-
-== Initilisation du modèle
-
-Après avoir importé le modèle, celui doit être initialisé en appliquant une règle d'affichage (`show` rule) avec la commande #cmd("book") en passant les options nécessaires avec l'instruction `with` dans votre fichier principal `typ` :
-
-#codesnippet(
-	```typ
-	#show book.with(
-	  ...
-	)
-	```
+After importing #package[bookcls], you have to initialize the template by a show rule with the #cmd[book] command. This function takes an optional argument to specify the title of the document.
+#codesnippet[```typ
+#show: book.with(
+  ...
 )
-
-Le modèle #cmd("book") possède un certain nombre de paramètres permettant de personnaliser le document. Voici la liste des paramètres disponibles :
+```
+]
 
 #command("book", ..args(
-	title: "Titre du document",
-  author: "Nom de l'auteur",
-  type: "thesis",
-  lang: "fr",
-  logo: "image(\"resources/images/logo_cnam.png\")",
-  body-font: "Lato",
-  math-font: "Lete Sans Math",
-  config-titre: (:),
-  config-colors: (:),
+	title: "Title",
+  author: "Author Name",
+  book-config: "default-book-config",
 	[body]))[
-		#argument("title", default: "Titre du document", types: "string")[Titre du mémoire de thèse ou de HDR.]
+		#argument("title", default: "Title", types: "string")[Title of the book or the thesis.]
 
-		#argument("author", default: "Nom de l'auteur", types: "string")[Nom de l'auteur du mémoire.]
+		#argument("author", default: "Author Name", types: "string")[Author of the book.]
 
-		#argument("type", default: "thesis", types: "string")[Type de document.
+		#argument("book-config", default: "default-book-config", types: "dict")[Book configuration.
 
-			Deux types de modèles sont actuellement disponibles :
-			- `"thesis"` pour une thèse (doctorat ou HDR)
-			- `"textbook"` pour un ouvrage scientifique
-		]
+			The dictionary allows you to customize various aspects of the book. It contains the following keys:
 
-		#argument("lang", default: "fr", types: "string")[Langue du document. En fonction de la valeur prise par ce paramètre, la localisation  du document sera adaptée.
+			- `theme` #dtype(str) --  Theme of the document. Possible values are:
+				-  `"fancy"` (default)
+				- `"modern"`
+				- `"classic"`
 
-		Outre le français, la seule langue prise en compte est l'anglais (`lang: "en"`).]
+			- `logo` #dtype(image) -- Logo of the book (default #dtype(none))
 
-		#argument("logo", default: "image(" + "resources/images/logo_cnam.png" + ")", types: "content")[Chemin vers le logo de l'établissement de préparation du mémoire.
-			#wbox[
-				#set text(size: 11pt)
+			- `lang` #dtype(str) -- Language of the document. Supported languages French (`"fr"`-- default) and English (`"en"`)
 
-				Il faut que le template soit à la racine du répertoire pour que le chemin soit correctement interprété. Dans le cas contraire, une erreur de compilation sera générée.
-			]
-		]
+			- `fonts` #dtypes(dictionary) -- Fonts used in the document. It contains the following keys:
+				- `body` #dtype(str) -- Font used for the body text (default: `"New Computer Modern"`).
+				- `math` #dtype(str) -- Font used for mathematical equations (default: `"New Computer Modern Math"`).
 
-		#argument("body-font", default: "Lato", types: "string")[Nom de la police de caractère du corps du texte.]
+			- `colors` #dtypes(dictionary) -- Colors used in the document. It contains the following keys:
+				- `primary` #dtype(color) -- Primary color (default: `rgb("#c1002a")`)
+				- `secondary` #dtype(color) -- Secondary color (default: `rgb("#dddddd").darken(15%)`)
+				- `boxeq` #dtype(color) -- Color of equation boxes (default: `rgb("#dddddd")`)
+				- `header` #dtype(color) -- Color used for adapting the color of the document headers (default: `rgb("#dddddd").darken(25%)`)
 
-		#argument("math-font", default: "Lete Sans Math", types: "string")[Nom de la police de caractère des équations mathématiques.]
-
-		#ibox[
-			#set text(size: 11pt)
-
-			Les polices de caractère doivent être préalablement installées sur votre système pour être utilisées dans le document.
-
-			Pour vérifier la disponibilité de la police choisie, vous pouvez entrer la commande `typst font` dans un terminal.
-		]
-
-		#argument("config-titre", default: (:), types: "dict")[
-			Dictionnaire permettant de personnaliser la page de titre du document.
-
-			Les options disponibles diffèrent en fonction du `type` de document choisi :
-			- Pour un document de `type: "thesis"` :
-				- `type` : Type de document -- `"phd"` ou `"hdr"`
-
-				- `school` : Nom de l'établissement de préparation de la thèse
-
-				- `doctoral-school` : Nom de l'école doctorale de rattachement
-
-				- `supervisor` : Nom du/des directeurs de thèse ou du garant de la HDR
-
-				- `cosupervisor` : Nom du ou des co-encadrants de thèse
-
-				- `laboratory` : Nom du laboratoire de recherche de rattachement
-
-				- `defense-date` : Date de soutenance de la thèse
-
-				- `discipline` : Discipline dans laquelle s'inscrit la thèse
-
-				- `speciality` : Spécialité dans laquelle s'inscrit la thèse
-
-				- `commity` : Liste des membres du jury de soutenance
-
-				- `custom-title-page` : Page de titre personnalisée (type #dtype("content"))
-
-
-				#ibox[
-					Chaque membre du jury est défini par un dictionnaire, de type #dtype((:)), contenant les champs suivant :
-					- `name` : Nom du membre du jury
-					- `position` : Poste occupé (MCF, PU, #sym.dots)
-					- `affiliation` : Établissement de rattachement
-					- `role` : Rôle dans le jury (Rapporteur, Examinateur, #sym.dots)
-				]
-
-				#example-box[
-				```typc
-				commity: (
-					(
-						name: "Hari Seldon",
-						position: "Professeur des Universités",
-						affiliation: "Streeling university",
-						role: "Rapporteur",
-					),
-					(
-						name: "Ford Prefect",
-						position: "Maître de conférences",
-						affiliation: "Beltegeuse University",
-						role: "Examinateur"
-					),
-				)
-				```
-				]
-
-			- Pour un document de `type: "textbook"` :
-				- `subtitle` : Sous-titre de l'ouvrage
-
-				- `edition` : Numéro de l'édition
-
-				- `school` : Nom de l'établissement de préparation de l'ouvrage
-
-				- `collection` : Nom de la collection
-
-				- `year` : Année de publication
-
-				- `cover-image` : Image de couverture de l'ouvrage
-
-				- `custom-title-page` : Page de titre personnalisée (type #dtype("content"))
-		]
-
-		#colbreak()
-		#argument("config-colors", default: (:), types: "dict")[
-			Dictionnaire permettant de personnaliser les couleurs du document.
-
-			Les options disponibles sont les suivantes :
-
-			- `primary` : Couleur principale
-
-			- `secondary` : Couleur secondaire
-
-			- `boxeq` : Couleur des encadrés d'équations
-
-			- `header` : Couleur de l'en-tête du document
+			- title-page #dtype(content) -- Content of the title page (default: #dtype(none))
 		]
 	]
 
+=== Initialization example
+#codesnippet[
+```typ
+#show: book.with(
+	author: "Author Name",
+	book-config: (
+		fonts: (
+			body: "Lato",
+			math: "Lete Sans Math"
+		),
+		theme: "modern",
+		lang: "en",
+		logo: image("path_to_image/image.png")
+	)
+)
+```
+]
 
-#v(1.5em)
-== Contenu du document
+#pagebreak()
+=== Themes gallery
 
-Le contenu du document est à rédiger dans le fichier principal `typ` ou dans des fichiers annexes. Le modèle fournit une structure de base pour la rédaction d'un document.
+==== Parts
+#subfigure(
+	columns: 3,
+	figure(image("manual-images/part-fancy.png"), caption: [`"fancy"`]),
+	figure(image("manual-images/part-modern.png"), caption: [`"modern"`]),
+	figure(image("manual-images/part-classic.png"), caption: [`"classic"`]),
+)
 
-D'une manière générale, la partie du fichier principal correspondant au contenu du document est structurée de la manière suivante :
+#v(4em)
+==== Chapters
+
+#subfigure(
+	columns: 3,
+	figure(image("manual-images/chapter-fancy.png"), caption: [`"fancy"`]),
+	figure(image("manual-images/chapter-modern.png"), caption: [`"modern"`]),
+	figure(image("manual-images/chapter-classic.png"), caption: [`"classic"`]),
+)
+
+#pagebreak()
+==== Unnumbered chapters
+
+#subfigure(
+	columns: 3,
+	figure(image("manual-images/chapter-nonum-fancy.png"), caption: [`"fancy"`]),
+	figure(image("manual-images/chapter-nonum-modern.png"), caption: [`"modern"`]),
+	figure(image("manual-images/chapter-nonum-classic.png"), caption: [`"classic"`]),
+)
+
+#v(4em)
+==== Sections
+
+#subfigure(
+	columns: 3,
+	figure(image("manual-images/sections-fancy.png"), caption: [`"fancy"`]),
+	figure(image("manual-images/sections-modern.png"), caption: [`"modern"`]),
+	figure(image("manual-images/sections-classic.png"), caption: [`"classic"`]),
+)
+
+= Book content
+
+The content of the book should be written in the main `typ` file or in additional files. The template provides a basic structure for writing a book.
+
+In general, the section of the main file corresponding to the book content is structured as follows:
 #codesnippet[
 	```typ
 	#show: front-matter
@@ -282,59 +160,57 @@ D'une manière générale, la partie du fichier principal correspondant au conte
 
 	#listoftables()
 
-	#part("Corps du document")
+	#part("Main body")
 
-	#include "chapitre.typ"
+	#include "chapter.typ"
 
 	#bibliography("bibliography.bib")
 
 	#show: appendix
 
-	#part("Annexes du document")
+	#part("Document appendices")
 
 	#include "appendix.typ"
-
-	#back-cover(...)
 	```
 ]
 
-Le contenu du mémoire est divisé en trois parties principales : `front-matter`, `main-matter` et `appendix`. Ces éléments s'accompagnent de fonctions complémentaires permettant de faciliter la rédaction du mémoire.
+The content of the thesis is divided into three main sections: `front-matter`, `main-matter`, and `appendix`. These elements are accompanied by additional functions to facilitate writing.
 
-#pagebreak()
-=== Environnements
+== Environments
 
-Le modèle propose trois environnements pour structurer le contenu du mémoire :
+The template provides three environments to structure the thesis content:
 
-1. *front-matter* : environnement pour le contenu préliminaire du mémoire (page de garde, résumé, remerciements, #sym.dots). En terme de pagination, les pages sont numérotées en chiffres romains et les chapitres ne sont pas numérotés. Pour activer cet environnement, il faut insérer dans le fichier principal `typ` à l'endroit souhaité la commande suivante :
+1. *front-matter*: environment for preliminary content (cover page, abstract, acknowledgments, etc.). Pages are numbered with Roman numerals and chapters are not numbered. To activate this environment, insert the following command in the main `typ` file at the desired location:
 	#codesnippet[
 		```typ
 		#show: front-matter
 		```
 	]
 
-2. *main-matter* : environnement pour le contenu principal du mémoire (introduction, tables des matières chapitres, conclusion, bibliographie, #sym.dots). Les pages sont numérotées et les chapitres sont numérotés en chiffres arabes. Pour activer cet environnement, il faut insérer dans le fichier principal `typ` à l'endroit souhaité la commande suivante :
+2. *main-matter*: environment for the main content (introduction, tables of contents, chapters, conclusion, bibliography, etc.). Pages and chapters are numbered with Arabic numerals. To activate this environment, insert the following command in the main `typ` file at the desired location:
 	#codesnippet[
-		```typ
-		#show: main-matter
-		```
-	]
+	```typ
+	#show: main-matter
+	```
+]
 
-3. *appendix* : environnement pour le contenu des annexes du mémoire. Les pages sont numérotées en chiffres romains et les chapitres sont numérotés en lettres. Pour activer cet environnement, il faut insérer dans le fichier principal `typ` à l'endroit souhaité la commande suivante :
+3. *appendix*: environment for the appendices. Pages are numbered with Roman numerals and chapters are numbered with letters. To activate this environment, insert the following command in the main `typ` file at the desired location:
 	#codesnippet[
 		```typ
 		#show: appendix
 		```
 	]
 
-=== Parties
+== Parts and chapters
 
-Pour structurer le contenu du mémoire, il est possible de définir des parties à l'aide de la fonction #cmd("part"). Pour insérer une nouvelle partie, il faut insérer la commande suivante :
-#command("part", "\"Titre de la partie\"")[]
+To structure the book content, you can define parts using the #cmd("part") function. To insert a new part, use the following command:
+#codesnippet[
+	```typ
+	#part("Part title")
+	```
+]
 
-#v(1em)
-=== Chapitre
-
-Les chapitres du mémoire sont définis par la fonction #cmd("chapter") qui dispose d'une certain nombre de paramètres permettant d'adapter le rendu du chapitre en fonction du contexte. Voici la liste des paramètres disponibles :
+Despite chapters can be defined using the standard #Typst markup language. This template defined a fonction #cmd("chapter") that allows to avoid boilerplate code, such as the manual inclusion of standard elements like title, abstract, and minitoc.
 
 #command("chapitre", arg[title],
 ..args(
@@ -344,124 +220,108 @@ Les chapitres du mémoire sont définis par la fonction #cmd("chapter") qui disp
 	[body],
 )
 )[
-	#argument("title", types: "string")[Titre du chapitre.]
+	#argument("title", types: "string")[Chapter title.]
 
-	#argument("abstract", default: none, types: "content")[Résumé affiché sous le titre du chapitre.]
+	#argument("abstract", default: none, types: "content")[Summary displayed below the chapter title.]
 
-	#argument("toc", default: true, types: "boolean")[Indique si un mini table des matières doit être affichée au début du chapitre.]
+	#argument("toc", default: true, types: "boolean")[Indicates whether a mini table of contents should be displayed at the beginning of the chapter.]
 
-	#argument("numbered", default: true, types: "boolean")[Indique si le chapitre doit être numéroté.]
+	#argument("numbered", default: true, types: "boolean")[Indicates whether the chapter should be numbered.]
 ]
 
-#v(1em)
-
-#example-box[
+#codesnippet[
 ```typ
-#chapitre(
-  "Introduction",
-  abstract: [Résumé du chapitre],
-  toc: true,
-  numbered: true
-)[...]
+	#chapter(
+		"First chapter",
+		abstract: lorem(20),
+		)[
+			// Content of the chapter
+		]
 ```
 ]
+#info-alert[If you use a #sym.ast\.typ file for each chapter, you can type at the top of the file the following code.
 
-=== Bibliographie
+	#codesnippet[
+		```typ
+		#show: chapter.with("First chapter", abstract: lorem(20), toc: true)
 
-Pour insérer une bibliographie, il faut insérer dans le fichier principal `typ` la commande suivante :
+		// Content of the chapter
+		== First section
+		```
+	]
+]
+
+For unnumbered chapters, you can simply use the #cmd("chapter-nonum") function. This function assumes that you have a #sym.ast\.typ file per chapter.
 #codesnippet[
 	```typ
-	#bibliography("your-biblio-file.yml/bib")
+	#show: chapter-nonum.with()
+
+	// Content of the chapter
+	= Chapter title
 	```
 ]
 
-#ibox[
-#set text(size: 11pt)
-Le modèle propose deux formats de bibliographie : YAML et BibTeX.
+== Tables of contents
 
-Pour le fichier YAML, celui-ci est interprété par le module `hayagriva`, dont la documentation est disponible #link("https://github.com/typst/hayagriva/blob/main/docs/file-format.md", text("ici", fill: typst-color.darken(10%))).
-]
+The template defines several commands to facilitate the creation of tables of contents:
+- #cmd("tableofcontents")\() : Table of contents
+- #cmd("listoffigures")\() : List of figures
+- #cmd("listoftables")\() : List of tables
 
-Pour citer une référence bibliographique dans le texte, il suffit d'utiliser la commande #cmd("cite", arg[key]) ou plus simplement #text(`@key`, fill: typst-color) (où `key` est la clé associée à la référence).
+A mini table of contents is automatically generated automatically by using the command #cmd("minitoc") in a chapter. This function is a wraper of the #cmd("suboutline") function provided by the `suboutline` package.
 
-Pour plus d'informations sur la gestion des références bibliographiques, il faut se référer à la documentation de la fonction #cmd("bibliography") de #typst (accessible #link("https://typst.app/docs/reference/model/bibliography/", text("ici", fill: typst-color))).
+= Helper functions
 
-=== Fonctions complémentaires
+== Subfigures
 
-Cette section présente les fonctions complémentaires implémentées dans le modèle pour faciliter la rédaction du mémoire.
+In general, figures are inserted into the document using the #cmd("figure") function from #Typst. However, #Typst currently does not provide mechanisms for handling subfigures (numbering and referencing). To address this limitation, the template includes a #cmd("subfigure") function that manages subfigures appropriately. This function wraps the #cmd("subpar.grid") function from the `subpar` package.
 
-*Tables des matières*
-
-  - #cmd-["tableofcontents"] : création la table des matières.
-
-	- #cmd-["listoffigures"] : création la table des figures.
-
-	- #cmd-["listoftables"] : création la table des tableaux.
-
-*Figures*
-
-D'une manière générale, les figures sont insérées dans le document à l'aide de la fonction #cmd("figure") de #typst. Cependant, #typst ne dispose pas actuellement de mécanismes permettant de gérer les sous-figures (numérotation et référencement). Pour pallier ce manque, le modèle intègre une fonction #cmd("subfigure") permettant de gérer les sous-figures de manière adaptée. Cette fonction encapsule la fonction #cmd("subpar.grid") du package `subpar`.
-
-#example-box[
+#codesnippet[
 	```typ
 	#subfigure(
 		figure(image("image1.png"), caption: []),
 		figure(image("image2.png"), caption: []), <b>,
 		columns: (1fr, 1fr),
-		caption: [Titre de la figure],
+		caption: [Figure title],
 		label: <fig:subfig>,
 	)
 	```
-
-	L'exemple précédent illustre le cas d'une figure composée de deux sous-figures. La première sous-figure est accompagnée d'une légende, tandis que la seconde possède un #dtype("label") mais pas de titre. La seconde sous-figure peut ainsi être référencée dans le texte à l'aide de la commande #text(`@b`, fill: typst-color.darken(15%)).
 ]
 
-*Équations*
+#info-alert[The example above shows a figure composed of two subfigures. The first subfigure has a caption, while the second has a #dtype("label") but no title. The second subfigure can be referenced in the text using the command #text(`@b`, fill: typst-color.darken(15%)).]
 
-Pour encadrer une équation importante, la fonction #cmd("boxeq") doit être utilisée.
+== Equations
 
-#example-box[
-	#set math.equation(numbering: "(1)")
-	#show math.equation: set text(font: "Lete Sans Math", fallback: false)
+To highlight an important equation, use the #cmd("boxeq") function.
 
+#codesnippet[
 	```typ
 	$
-	#boxeq[$p(A|B) prop p(B|A) space p(A)$]
+		#boxeq[$p(A|B) prop p(B|A) space p(A)$]
 	$
 	```
-
-	#align(center)[#line(stroke: 1pt + typst-color, length: 95%)]
-
-	$
-	#manual-boxeq[$p(A|B) prop p(B|A) space p(A)$]
-	$
 ]
 
-Pour créer une équation sans numérotation, il faut utiliser la fonction #cmd("nonumeq").
+To create an equation without numbering, use the #cmd("nonumeq") function.
 
-#example-box[
-	#show math.equation: set text(font: "Lete Sans Math")
+#codesnippet[
 	```typ
 	#nonumeq[$integral_0^1 f(x) dif x = F(1) - F(0)$]
 	```
-
-	#align(center)[#line(stroke: 1pt + typst-color, length: 95%)]
-
-	#nonumeq[$ integral_0^1 f(x) dif x = F(1) - F(0) $]
 ]
 
-*Boîtes d'information*
+== Information boxes
 
-Le modèle propose plusieurs types de boîtes pour mettre en avant différents contenus :
+The template provides several types of boxes to highlight different kinds of content:
 
-- #cmd("info-box") pour les remarques ;
-- #cmd("tip-box") pour les astuces ;
-- #cmd("warning-box") pour les avertissements ;
-- #cmd("important-box") pour les informations importantes ;
-- #cmd("proof-box") pour les démonstrations ;
-- #cmd("question-box") pour les questions.
+- #cmd("info-box") for remarks;
+- #cmd("tip-box") for tips;
+- #cmd("warning-box") for warnings;
+- #cmd("important-box") for important information;
+- #cmd("proof-box") for proofs;
+- #cmd("question-box") for questions.
 
-#example-box[
+#codesnippet[
 	#show math.equation: set text(font: "Lete Sans Math")
 	```typ
 	#info-box[#lorem(10)]
@@ -471,18 +331,11 @@ Le modèle propose plusieurs types de boîtes pour mettre en avant différents c
 	#proof-box[#lorem(10)]
 	#question-box[#lorem(10)]
 	```
-
-	#align(center)[#line(stroke: 1pt + typst-color, length: 95%)]
-
-	#info-box[#lorem(10)]
-	#tip-box[#lorem(10)]
-	#warning-box[#lorem(10)]
-	#important-box[#lorem(10)]
-	#proof-box[#lorem(10)]
-	#question-box[#lorem(10)]
 ]
 
-Les boîtes d'information décrites précédemment sont construites à partir de la fonction #cmd("custom-box") qui permet de créer des boîtes personnalisées. Cette fonction générique prend en entrée les paramètres suivants :
+#info-alert[The appearance of the boxes depends on the selected theme (see the "Themes gallery" section).]
+
+The information boxes described above are built using the #cmd("custom-box") function, which allows you to create custom boxes. This generic function takes the following parameters:
 #command("custom-box",
 ..args(
 	title: none,
@@ -491,11 +344,11 @@ Les boîtes d'information décrites précédemment sont construites à partir de
 	[body],
 )
 )[
-	#argument("title", default: none, types: "string")[Nom de la boîte.]
+	#argument("title", default: none, types: "string")[Name of the box.]
 
-	#argument("icon", default: "info", types: "string")[Nom de l'icône à afficher dans la boîte.
+	#argument("icon", default: "info", types: "string")[Name of the icon to display in the box.
 
-	Les icônes disponibles sont :
+	Available icons are:
 	- #box-title(image("../src/resources/images/icons/alert.svg", width: 1em), [: `"alert"`])
 	- #box-title(image("../src/resources/images/icons/info.svg", width: 1em), [: `"info"`])
 	- #box-title(image("../src/resources/images/icons/question.svg", width: 1em), [: `"question"`])
@@ -504,119 +357,215 @@ Les boîtes d'information décrites précédemment sont construites à partir de
 	- #box-title(image("../src/resources/images/icons/tip.svg", width: 1em), [: `"tip"`])
 	]
 
-	#argument("color", default: rgb(29, 144, 208), types: "color")[Couleur de la boîte.]
+	#argument("color", default: rgb(29, 144, 208), types: "color")[Box color.]
 ]
 
-#v(1.5em)
-*Quatrième de couverture*
+#pagebreak()
+== Title pages
 
-La quatrième de couverture du document est générée automatiquement à partir de la fonction #cmd("back-cover"), qui affiche les informations relatives à la thèse (titre et  auteur), ainsi qu'un résumé en français et en anglais.
+The template provides two functions to create title pages: one for a book and one for a thesis :
+
+#command("book-page-title",
+..args(
+	subtitle: "Book subtitle",
+  edition: "First edition",
+  institution: "Institution",
+  series: "Discipline",
+  year: "2024",
+  cover: none,
+  logo: none,
+	[body]
+)
+)[
+	#argument("subtitle", default: "Book subtitle", types: "string")[Subtitle of the book.]
+
+	#argument("edition", default: "First edition", types: "string")[Edition of the book.]
+
+	#argument("institution", default: "Institution", types: "string")[Name of the institution.]
+
+	#argument("series", default: "Discipline", types: "string")[Name of the series.]
+
+	#argument("year", default: "2024", types: "string")[Year of publication.]
+
+	#argument("cover", default: none, types: "image")[Cover image of the book.]
+
+	#argument("logo", default: none, types: "image")[Logo of the book.]
+]
+
+#codesnippet[
+```typ
+#show: book.with(
+	title-page: book-title-page(
+		logo: image("path_to_logo/logo.png"),
+		cover: image("path_to_image/book-cover.jpg")
+	)
+)
+```
+]
+
+#command("thesis-page-title",
+..args(
+	type: "phd",
+  school: "School name",
+  doctoral-school: "Name of the doctoral school",
+  supervisor: ("Supervisor name",),
+  cosupervisor: none,
+  laboratory: "Laboratory name",
+  defense-date: "01 January 1970",
+  discipline: "Discipline",
+  specialty: "Speciality",
+  committee: (:),
+  logo: none,
+	[body]
+)
+)[
+	#argument("type", default: "phd", types: "string")[
+		Type of thesis. Two values are possible:
+		- `"phd"` for a doctoral thesis
+		- `"hablitation"` for a French habilitation
+	]
+
+	#argument("school", default: "School name", types: "string")[Name of the institution where the thesis was prepared.]
+
+	#argument("doctoral-school", default: "Name of the doctoral school", types: "string")[Name of the doctoral school.]
+
+	#argument("supervisor", default: ("Supervisor name",), types: "array")[Name of the thesis supervisor(s) or the guarantor of the habilitation.]
+
+	#argument("cosupervisor", default: none, types: "array")[Name of the thesis co-supervisor(s).]
+
+	#argument("laboratory", default: "Laboratory name", types: "string")[Name of the research laboratory.]
+
+	#argument("defense-date", default: "01 January 1970", types: "string")[Date of the thesis defense.]
+
+	#argument("discipline", default: "Discipline", types: "string")[Name of the discipline.]
+
+	#argument("specialty", default: "Speciality", types: "string")[Name of the specialty.]
+
+	#argument("committee", default: (:), types: "array")[
+
+		Name of the thesis committee members. Each element of the array is a #dtype(dictionary) with the following keys:
+		- `name`: Name of the committee member.
+		- `position`: Position of the committee member (e.g., "Associate Professor", "Professor", etc.).
+		- `affiliation`: Affiliation of the committee member (e.g., "University Name").
+		- `role`: Role of the committee member (e.g., "Chair", "Member", "Reviewer").
+
+	]
+
+	#argument("logo", default: none, types: "image")[Logo of the institution.]
+]
+
+#codesnippet(
+```typ
+#let committee = (
+	(
+		name: "Hari Seldon",
+		position: "Full Professor",
+		affiliation: "Streeling university",
+		role: "President",
+	),
+	(
+		name: "Gal Dornick",
+		position: "Associate Professor",
+		affiliation: "Synnax University",
+		role: "Reviewer"
+	),
+)
+
+#show: book.with(
+	title-page: thesis-title-page(
+		supervisor: ("Supervisor A", "Supervisor B"),
+		cosupervisor: ("Co-supervisor A", "Co-supervisor B"),
+		committee: committee
+	)
+)
+```
+)
+
+#info-alert[For both title pages, the title of the document and its author are automatically generated based on the information given when initializing the template.]
+
+== Back cover
+
+A back cover of the document is automatically generated using the #cmd("back-cover") function, which displays information about the thesis (title and author), as well as a summary in French and English.
 
 #command("back-cover", ..args(
-resume: none,
-abstract: none
+	resume: none,
+	abstract: none,
+	logo: none
 ))[
-	#argument("resume", types: "content")[Résumé du document en français.]
+	#argument("resume", types: "content")[Summary of the document in French.]
 
-	#argument("abstract", types: "content")[Résumé du document en anglais.]
+	#argument("abstract", types: "content")[Summary of the document in English.]
+
+	#argument("logo", types: array)[Logo of the back cover.
+	#codesnippet[
+		```typ
+		#let logos = (align(left)[#image("images/devise_cnam.svg", width: 45%)], align(right)[#image("images/logo_cnam.png", width: 50%)])
+
+		#back-cover(lorem(10), lorem(10), logos)
+		```
+	]
+	]
 ]
 
-#pagebreak()
-= Paquets recommandés
+= Roadmap
 
-Cette section présente une liste de paquets qui peuvent être pertinents lors de la rédaction d'un mémoire en #typst.
+The template is under development. Here is the list of features that are implemented or will be in a future version.
 
-*Dessin* -- `CeTZ`
-	- *Description* : Ce paquet se veut être un équivalent #typst de TiKZ pour #LaTeX.
-	- *Liens* - #link("https://typst.app/universe/package/cetz", text("Typst: Universe", fill: typst-color)), #link("https://github.com/cetz-package/cetz", text("dépôt GitHub", fill: typst-color)) et #link("https://github.com/cetz-package/cetz/blob/stable/manual.pdf?raw=true", text("documentation", fill: typst-color)).
+*Themes*
 
-#v(0.5em)
+- [x] `fancy`
+- [x] `modern`
+- [x] `classic`
 
-*Boîtes* -- `showybox`
-	- *Description* : Ce paquet permet de créer des boîtes de contenus (textes, #sym.dots) personnalisables.
-	- *Liens* - #link("https://typst.app/universe/package/showybox", text("Typst: Universe", fill: typst-color)), #link("https://github.com/Pablo-Gonzalez-Calderon/showybox-package", text("dépôt GitHub", fill: typst-color)) et #link("https://github.com/Pablo-Gonzalez-Calderon/showybox-package/blob/main/Showybox's%20Manual.pdf", text("documentation", fill: typst-color)).
+*Layout*
 
-#v(0.5em)
+- [x] Standard layout
+- [ ] Tufte layout
 
-*Code* -- `codelst`
-	- *Description* : Ce paquet permet de formatter des blocs de code source en incluant notamment la numérotation des lignes.
-	- *Liens* #link("https://typst.app/universe/package/codelst", text("Typst: Universe", fill: typst-color)), #link("https://github.com/jneug/typst-codelst", text("dépôt GitHub", fill: typst-color)) et #link("https://github.com/jneug/typst-codelst/blob/main/manual.pdf", text("documentation", fill: typst-color)).
+*Cover pages*
 
-#v(0.5em)
+- [x] Title page
+- [x] Back cover
 
-*Algorithme* -- `lovelace`
-	- *Description* : Ce paquet permet d'écrire du pseudo-code, dont le formattage est personnalisable.
-	- *Liens* - #link("https://typst.app/universe/package/lovelace", text("Typst: Universe", fill: typst-color)), #link("https://github.com/andreasKroepelin/lovelace", text("dépôt GitHub", fill: typst-color)) et documentation (voir ReadMe sur GitHub).
+*Environments*
 
-#v(0.5em)
+- [x] Creation of the `front-matter` environment
+- [x] Creation of the `main-matter` environment
+- [x] Creation of the `appendix` environment
 
-*Mathématiques* - `physica`
-	- *Description* : Ce paquet propose des raccourcis pour l'écriture de symboles mathématiques.
-	- *Liens* - #link("https://typst.app/universe/package/physica", text("Typst: Universe", fill: typst-color)), #link("https://github.com/Leedehai/typst-physics", text("dépôt GitHub", fill: typst-color)) et #link("https://github.com/Leedehai/typst-physics/blob/v0.9.3/physica-manual.pdf", text("documentation", fill: typst-color)).
+*Parts and chapters*
+- [x] Creation of a document `part` -- #cmd("part")
+- [x] Creation of a document `chapter` -- #cmd("chapter")
+- [x] Creation of an unnumbered `chapter` -- #cmd("chapter-nonum")
 
-#v(0.5em)
+*Tables of contents*
 
-*Glossaire* - `glossarium`
-	- *Description* : Ce paquet permet de créer un glossaire.
-	- *Liens* - #link("https://typst.app/universe/package/glossarium", text("Typst: Universe", fill: typst-color)), #link("https://github.com/ENIB-Community/glossarium", text("dépôt GitHub", fill: typst-color)) et #link("https://github.com/ENIB-Community/glossarium/blob/master/docs/main.pdf", text("documentation", fill: typst-color)).
+- [x] Creation of the table of contents -- #cmd("tableofcontents")
+- [x] Creation of the list of figures -- #cmd("listoffigures")
+- [x] Creation of the list of tables -- #cmd("listoftables")
+- [x] Creation of a mini table of contents at the beginning of chapters using the `suboutline` package (see #link("https://typst.app/universe/package/minitoc", text("link", fill: typst-color)))
+- [x] Customization of entries (appearance, hyperlink) by modifying the `outline.entry` element
+- [x] Localization of the different tables
 
-#v(0.5em)
+*Figures and tables*
 
-*Index* - `in-dexter`
-	- *Description* : Ce paquet permet de créer aisément un index.
-	- *Liens* : #link("https://typst.app/universe/package/in-dexter", text("Typst: Universe", fill: typst-color)), #link("https://github.com/RolfBremer/in-dexter", text("dépôt GitHub", fill: typst-color)) et #link("https://github.com/RolfBremer/in-dexter/blob/main/sample-usage.pdf", text("documentation", fill: typst-color)).
+- [x] Customization of the appearance of figure and table captions depending on the context (chapter or appendix)
+- [x] Short titles for the lists of figures and tables
+- [x] Creation of the #cmd("subfigure") function for subfigures via the `subpar` package
 
-#pagebreak()
-= Feuille de route
+*Equations*
 
-Le modèle est en cours de développement. Voici la liste des fonctionnalités qui sont implémentées ou le seront dans une prochaine version.
+- [x] Adaptation of equation numbering depending on the context (chapter or appendix)
+- [x] Creation of a function to highlight important equations -- #cmd("boxeq")
+- [x] Creation of a function to define equations without numbering -- #cmd("nonumeq")
+- [x] Use of the `equate` package to number equations in a system like (1.1a)
 
-*Couvertures*
+*Boxes*
 
-- [x] Page de garde
-- [x] Quatrième de couverture
+- [x] Creation of information boxes to highlight important content
 
+*Bibliography*
 
-*Environnements*
-
-- [x] Création de l'environnement `front-matter`
-- [x] Création de l'environnement `main-matter`
-- [x] Création de l'environnement `appendix`
-- [x] Création de l'environnement `part`
-
-*Tables des matières*
-
-- [x] Création de la table des matières -- #cmd-["tableofcontents"]
-- [x] Création de la table des figures -- #cmd-["listoffigures"]
-- [x] Création de la table des tableaux -- #cmd-["listoftables"]
-- [x] Création d'une mini table des matières en début de chapitre grâce au paquet `minitoc` (voir #link("https://typst.app/universe/package/minitoc", text("lien", fill: typst-color)))
-- [x] Personnalisation des entrées (apparence, lien hypertexte) en modifiant l'élément `outline.entry`
-- [x] Localisation des différentes tables
-
-*Figures et tableaux*
-
-- [x] Personnalisation de l'apparence des légendes des figures et des tableaux en fonction du contexte (chapitre ou annexe)
-- [x] Titres courts pour les tables des figures et des tableaux
-- [x] Création de la fonction #cmd-["subfigure"] pour les sous-figures via le package `subpar`
-- [x] Référencement automatique des sous-figures via la modification de la fonction Typst #cmd-["ref"]
-- [x] Recréation des liens hypertextes pour les sous-figures pour la navigation dans le document via la fonction Typst #cmd-["link"]
-
-*Équations*
-
-- [x] Adaptation de la numérotation des équations en fonction du contexte (chapitre ou annexe)
-- [x] Création d'une fonction pour encadrer les équations importante -- #cmd-["boxeq"]
-- [x] Création d'une fonction définir des équations sans numérotation -- #cmd-["nonumeq"]
-- [x] Utilisation du package `equate` pour numéroter des équations d'un système de type (1.1a)
-
-*Boîtes*
-
-- [x] Création de boîtes d'information pour mettre en avant des contenus importants
-
-*Bibliographie*
-
-- [x] Vérification de la liste des références via `bibtex`
-- [x] Idem pour `hayagriva` (voir #link("https://github.com/typst/hayagriva/blob/main/docs/file-format.md", text("documentation", fill: typst-color)))
-
-#v(1em)
-#bibliography("manual-biblio.yml", style: "american-institute-of-aeronautics-and-astronautics")
+- [x] Verification of the reference list via `bibtex`
+- [x] Same for `hayagriva` (see #link("https://github.com/typst/hayagriva/blob/main/docs/file-format.md", text("documentation", fill: typst-color)))
 

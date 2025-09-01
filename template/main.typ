@@ -1,37 +1,32 @@
 #import "../src/book.typ": *
 
-// #let config-titre = (
-//   commity: (
-//     (
-//       name: "Hari Seldon",
-//       position: "Professeur des Universités",
-//       affiliation: "Streeling university",
-//       role: "Rapporteur",
-//     ),
-//     (
-//       name: "Gal Dornick",
-//       position: "Maître de conférences - HDR",
-//       affiliation: "Synnax University",
-//       role: "Rapporteur"
-//     ),
-//     (
-//       name: "Ford Prefect",
-//       position: "Maître de conférences",
-//       affiliation: "Beltegeuse University",
-//       role: "Examinateur"
-//     ),
-//     (
-//       name: "Paul Atreides",
-//       position: "Maître de conférences",
-//       affiliation: "Caladan University",
-//       role: "Examinateur"
-//     ),
-//   ),
-// )
-
-#let config-title = (
-  cover-image: image("images/book-cover.jpg", width: 45%),
+#let committee = (
+  (
+    name: "Hari Seldon",
+    position: "Full Professor",
+    affiliation: "Streeling university",
+    role: "President",
+  ),
+  (
+    name: "Gal Dornick",
+    position: "Associate Professor",
+    affiliation: "Synnax University",
+    role: "Reviewer"
+  ),
+  (
+    name: "Ford Prefect",
+    position: "Associate Professor",
+    affiliation: "Beltegeuse University",
+    role: "Examiner"
+  ),
+  (
+    name: "Paul Atreides",
+    position: "Associate Professor",
+    affiliation: "Caladan University",
+    role: "Examiner"
+  ),
 )
+
 
 #let config-colors = (
   primary: blue,
@@ -40,12 +35,22 @@
 )
 
 #show: book.with(
-  author: "Mathieu Aucejo",
-  type: "textbook",
-  config-title: config-title,
-  // config-colors: config-colors,
-  lang: "fr",
-  theme: "classic"
+  author: "Author Name",
+  book-config: (
+    fonts: (
+      body: "Lato",
+      math: "Lete Sans Math"
+    ),
+    theme: "modern",
+    lang: "en",
+    colors: config-colors,
+    title-page: book-title-page(
+      series: "Typst book series",
+      institution: "Typst community",
+      logo: image("images/typst-logo.svg"),
+      cover: image("images/book-cover.jpg", width: 45%)
+    )
+  )
 )
 
 #show: front-matter
@@ -54,23 +59,23 @@
 
 #show: main-matter
 
-#tableofcontents()
+#tableofcontents
 
-#listoffigures()
+#listoffigures
 
-#listoftables()
+#listoftables
 
-#part("Première partie")
+#part("First part")
 
 #include "chapters/ch_main.typ"
 
 // #bibliography("bibliography/sample.yml")
 #bibliography("bibliography/sample.bib")
 
-#part("Deuxième partie")
+#part("Second part")
 
 #show: appendix
 
 #include "appendix/app_main.typ"
 
-#back-cover(resume: lorem(100), abstract: lorem(100))
+#back-cover(resume: lorem(100), abstract: lorem(100), logo: (align(left)[#image("images/typst-logo.svg", width: 50%)], align(right)[#image("images/typst-logo.svg", width: 50%)]))

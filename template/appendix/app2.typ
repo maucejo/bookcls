@@ -5,7 +5,7 @@
 //   toc: false
 // )
 
-= Fondements mathématiques
+= Foundations
 
 #lorem(100)
 
@@ -20,15 +20,15 @@ $)
 La Figure @fig:B
 
 #figure(
-image("../images/chapitre1/cnam_region.png", width: 75%),
+image("../images/typst-logo.svg", width: 75%),
 caption: [#lorem(10)],
 ) <fig:B>
 
 La Figure @b3 présente la carte du Cnam.
 
 #subfigure(
-figure(image("../images/chapitre1/cnam_region.png"), caption: []),
-figure(image("../images/chapitre1/cnam_region.png"), caption: []), <b3>,
+figure(image("../images/typst-logo.svg"), caption: []),
+figure(image("../images/typst-logo.svg"), caption: []), <b3>,
 columns: (1fr, 1fr),
 caption: [(a) Left image and (b) Right image],
 label: <fig:subfig3>,
