@@ -124,16 +124,16 @@ The template is under development. Here is the list of features that are impleme
 - [x] Creation of the `appendix` environment
 
 *Parts and chapters*
-- [x] Creation of a document `part` -- #cmd("part")
-- [x] Creation of a document `chapter` -- #cmd("chapter")
-- [x] Creation of an unnumbered `chapter` -- #cmd("chapter-nonum")
+- [x] Creation of a document `part`
+- [x] Creation of a document `chapter`
+- [x] Creation of an unnumbered `chapter`
 
 *Tables of contents*
 
-- [x] Creation of the table of contents -- #cmd("tableofcontents")
-- [x] Creation of the list of figures -- #cmd("listoffigures")
-- [x] Creation of the list of tables -- #cmd("listoftables")
-- [x] Creation of a mini table of contents at the beginning of chapters using the `suboutline` package (see #link("https://typst.app/universe/package/minitoc", text("link", fill: typst-color)))
+- [x] Creation of the table of contents
+- [x] Creation of the list of figures
+- [x] Creation of the list of tables
+- [x] Creation of a mini table of contents at the beginning of chapters using the `suboutline` package
 - [x] Customization of entries (appearance, hyperlink) by modifying the `outline.entry` element
 - [x] Localization of the different tables
 
@@ -146,8 +146,8 @@ The template is under development. Here is the list of features that are impleme
 *Equations*
 
 - [x] Adaptation of equation numbering depending on the context (chapter or appendix)
-- [x] Creation of a function to highlight important equations -- #cmd("boxeq")
-- [x] Creation of a function to define equations without numbering -- #cmd("nonumeq")
+- [x] Creation of a function to highlight important equations
+- [x] Creation of a function to define equations without numbering
 - [x] Use of the `equate` package to number equations in a system like (1.1a)
 
 *Boxes*
@@ -157,7 +157,7 @@ The template is under development. Here is the list of features that are impleme
 *Bibliography*
 
 - [x] Verification of the reference list via `bibtex`
-- [x] Same for `hayagriva` (see #link("https://github.com/typst/hayagriva/blob/main/docs/file-format.md", text("documentation", fill: typst-color)))
+- [x] Same for `hayagriva`
 
 ## Licence
 
