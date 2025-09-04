@@ -2,7 +2,7 @@
 
 // #show: chapter.with(title: "Deuxième chapitre")
 
-= Deuxième chapitre
+= Second chapter
 #minitoc
 #pagebreak()
 

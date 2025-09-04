@@ -34,7 +34,7 @@
 
 // Back matter
 #let back-matter(body) = {
-  set page(numbering: none)
+  set page(header: none, footer: none)
 
   body
 }

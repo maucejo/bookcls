@@ -43,7 +43,7 @@
     ),
     theme: "modern",
     lang: "en",
-    colors: config-colors,
+    // colors: config-colors,
     title-page: book-title-page(
       series: "Typst book series",
       institution: "Typst community",
