@@ -141,7 +141,7 @@ The template is under development. Here is the list of features that are impleme
 
 - [x] Customization of the appearance of figure and table captions depending on the context (chapter or appendix)
 - [x] Short titles for the lists of figures and tables
-- [x] Creation of the #cmd("subfigure") function for subfigures via the `subpar` package
+- [x] Creation of the `subfigure` function for subfigures via the `subpar` package
 
 *Equations*
 
