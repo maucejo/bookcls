@@ -1,6 +1,7 @@
 set -eu
-
 . "$(dirname "${BASH_SOURCE[0]}")/setup"
+shopt -s extglob
+
 
 if (( $# < 1 )) || [[ "${1:-}" == "help" ]]; then
   echo "package TARGET"
@@ -49,19 +50,16 @@ function enumerate {
 
 		local f
 		for f in "${files[@]}"; do
-			local include
-			include=1
-
-			local ignore
+			local include=1
+			local rel_f
+			rel_f="${f#./}"
 			for ignore in "${ignores[@]}"; do
 				if [[ "$ignore" =~ ^! ]]; then
 					ignore="${ignore:1}"
-					if [[ "$f" == ./$ignore ]]; then
-						# echo "\"$f\" matched \"!$ignore\"" >&2
+					if [[ "$rel_f" == $ignore ]]; then
 						include=1
 					fi
-				elif [[ "$f" == ./$ignore ]]; then
-					# echo "\"$f\" matched \"$ignore\"" >&2
+				elif [[ "$rel_f" == $ignore ]]; then
 					include=0
 				fi
 			done

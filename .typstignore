@@ -8,7 +8,7 @@
 # .git and .typstignore are excluded automatically
 
 .github
+.gitignore
 scripts
 justfile
-# PDF manuals should be included so that they can be linked, but not their sources
 docs/*.pdf

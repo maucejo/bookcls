@@ -1,7 +1,8 @@
-#import "../../src/book.typ": *
+#import "@preview/bookcls:0.1.0": *
+// #import "../../src/book.typ": *
 
 // #show: chapter.with(
-//   title: "Algorithmes",
+//   title: "Algorithms",
 //   toc: false
 // )
 

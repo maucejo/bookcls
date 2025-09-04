@@ -5,7 +5,7 @@ authors = ["Mathieu Aucejo"]
 license = "MIT"
 description = "Modèle de thèse ou de livre"
 entrypoint = "src/book.typ"
-categories = ["report"]
+categories = ["book", "model"]
 repository = "https://github.com/maucejo/book_template"
 
 [template]

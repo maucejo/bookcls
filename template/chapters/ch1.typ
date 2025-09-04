@@ -1,6 +1,7 @@
-#import "../../src/book.typ": *
+#import "@preview/bookcls:0.1.0": *
+// #import "../../src/book.typ": *
 
-// #show: chapter.with(title: "Premier chapitre")
+// #show: chapter.with(title: "First chapter")
 
 = First chapter
 #lorem(100)

@@ -2,7 +2,8 @@
 #import "@preview/showybox:2.0.4": *
 #import "@preview/swank-tex:0.1.0": LaTeX
 #import "@preview/cheq:0.2.2": *
-#import "../src/book.typ": *
+#import "@preview/bookcls:0.1.0": *
+// #import "../../src/book.typ": *
 
 #show: checklist.with(fill: eastern.lighten(95%), stroke: eastern, radius: .2em)
 
@@ -30,9 +31,9 @@
 
 == Using `bookcls`
 
-To use the #package[elspub] template, you need to include the following line at the beginning of your `typ` file:
+To use the #package[bookcls] template, you need to include the following line at the beginning of your `typ` file:
 #codesnippet[```typ
-#import "@preview/bookcls:0.6.0": *
+#import "@preview/bookcls:0.1.0": *
 ```
 ]
 

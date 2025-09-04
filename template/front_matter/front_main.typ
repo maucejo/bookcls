@@ -1,2 +1,2 @@
-#include "remerciements.typ"
-#include "resume.typ"
+#include "acknowledgments.typ"
+#include "abstract.typ"
