@@ -1,4 +1,4 @@
-#Book template
+# Book template
 
 [![Generic badge](https://img.shields.io/badge/Version-0.1.0-cornflowerblue.svg)]()
 [![MIT License](https://img.shields.io/badge/License-MIT-forestgreen)](https://github.com/maucejo/book_template/blob/main/LICENSE)
@@ -164,3 +164,4 @@ The template is under development. Here is the list of features that are impleme
 MIT licensed
 
 Copyright © 2025 Mathieu AUCEJO (maucejo)
+
