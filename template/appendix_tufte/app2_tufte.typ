@@ -18,14 +18,14 @@ $
 y(x) = f(x)
 $)
 
-La Figure @fig:B
+Figure @fig:B #lorem(10)
 
 #figure(
 image("../images/typst-logo.svg", width: 75%),
 caption: [#lorem(10)],
 ) <fig:B>
 
-La Figure @b3 présente la carte du Cnam.
+Figure @b3 #lorem(50)
 
 #subfigure(
 figure(image("../images/typst-logo.svg"), caption: []),

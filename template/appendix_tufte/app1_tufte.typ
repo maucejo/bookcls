@@ -17,22 +17,19 @@ image("../images/typst-logo.svg", width: 75%),
 caption: [#lorem(10)],
 ) <fig:A>
 
-#figure(
-table(
-  columns: 3,
-  table.header(
-    [Substance],
-    [Subcritical °C],
-    [Supercritical °C],
-  ),
-  [Hydrochloric Acid],
-  [12.0], [92.1],
-  [Sodium Myreth Sulfate],
-  [16.6], [104],
-  [Potassium Hydroxide],
-  table.cell(colspan: 2)[24.7],
-), caption: [#lorem(2)]
-)
+#lorem(20)
+
+#sidefigure(dy: -4em)[
+  #figure(
+    table(
+      columns: 2,
+      [A], [B],
+      [1], [2],
+      [3], [4],
+    ),
+    caption: [#lorem(2)],
+  )
+]
 
 == Test
 

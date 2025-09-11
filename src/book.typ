@@ -6,6 +6,7 @@
 #import "book-components.typ": *
 #import "book-theming.typ": *
 #import "book-helper.typ": *
+#import "book-tufte.typ": *
 
 // Template
 #let book(
@@ -21,6 +22,7 @@
 
   let config-book = default-book-config + book-config
   states.theme.update(config-book.theme)
+  states.layout.update(config-book.layout)
 
   let book-colors = default-book-config.colors + config-book.colors
   states.colors.update(book-colors)
@@ -130,17 +132,31 @@
     default-title-page
   }
 
+  set-page-properties()
+  if config-book.layout.contains("tufte") {
+    set-margin-note-defaults(
+      stroke: none,
+      side: right,
+      margin-right: 5.5cm,
+      margin-left: -1.5cm,
+    )
+  } else {
+    set-margin-note-defaults(stroke: none)
+  }
+
   // Page layout
   set page(
-    paper: paper-size,
-    header: page-header,
-    footer: page-footer
-  ) if config-book.theme.contains("modern")
+    margin: (
+      left: 7%,
+      right: 33%
+    )
+  ) if config-book.layout.contains("tufte")
 
   set page(
     paper: paper-size,
     header: page-header,
-  ) if config-book.theme.contains("fancy") or config-book.theme.contains("classic")
+    footer: page-footer
+  )
 
   body
 }

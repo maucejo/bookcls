@@ -25,12 +25,16 @@ $ <eq:2>
 
 Figure @fig:1 is a beautiful typst logo.
 
-#figure(
+#sidefigure[
+  #figure(
 image("../images/typst-logo.svg", width: 75%),
 caption: [#ls-caption([#lorem(10)], [#lorem(2)])],
 ) <fig:1>
+]
 
-Figure @fig:subfig the Typst logo. Figure @b is a Typst logo @Smi21.
+#lorem(50)
+
+Figure @fig:subfig the Typst logo. Figure @b is a Typst logo.
 
 #subfigure(
 figure(image("../images/typst-logo.svg"), caption: []),
@@ -40,6 +44,7 @@ caption: [(a) Left image and (b) Right image],
 label: <fig:subfig>,
 )
 
+#lorem(50)
 #figure(
   table(
     columns: 3,
@@ -59,7 +64,7 @@ label: <fig:subfig>,
 
 == Boxes
 
-#lorem(10)
+#lorem(50) #sidecite(<Smi21>)
 
 === Informations
 
@@ -86,5 +91,3 @@ label: <fig:subfig>,
 #question-box[
   #lorem(10)
 ]
-
-#lorem(1000)

@@ -5,6 +5,6 @@
 #show: chapter-nonum.with()
 = Acknowledgments
 
-#lorem(50)
+#lorem(50)#sidenote[#lorem(10)]
 
 

@@ -44,7 +44,7 @@
     ),
     theme: "modern",
     // theme: "classic",
-    // layout: "tufte",
+    layout: "tufte",
     lang: "en",
     // colors: config-colors,
     title-page: book-title-page(
@@ -58,7 +58,7 @@
 
 #show: front-matter
 
-#include "front_matter/front_main.typ"
+#include "front_matter_tufte/front_main_tufte.typ"
 
 #show: main-matter
 
@@ -70,7 +70,7 @@
 
 #part("First part")
 
-#include "chapters/ch_main.typ"
+#include "chapters_tufte/ch_main_tufte.typ"
 
 // #bibliography("bibliography/sample.yml")
 #bibliography("bibliography/sample.bib")
@@ -79,6 +79,6 @@
 
 #show: appendix
 
-#include "appendix/app_main.typ"
+#include "appendix_tufte/app_main_tufte.typ"
 
 #back-cover(resume: lorem(100), abstract: lorem(100), logo: (align(left)[#image("images/typst-logo.svg", width: 50%)], align(right)[#image("images/typst-logo.svg", width: 50%)]))

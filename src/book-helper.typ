@@ -3,6 +3,16 @@
 #import "@preview/suboutline:0.3.0": *
 #import "book-defaults.typ": *
 
+// Conditional set-show
+#let show-if(cond, func) = body => if cond { func(body) } else { body }
+
+// Fullwidth block
+#let fullwidth(dx: 0%, body) = context if states.layout.get().contains("tufte") {
+  block(width: 144% + dx, body)
+} else {
+  block(width: 100% + dx, body)
+}
+
 // Equations
 #let boxeq(body) = context {
 set align(center)
@@ -30,90 +40,6 @@ set align(center)
 // Long and short captions for figures or tables
 #let ls-caption(long, short) = context if states.in-outline.get() { short } else { long }
 
-// Page header and footer - add empty page if necessary
-#let page-header = context if states.theme.get().contains("fancy") {
-  set text(style: "italic", fill: states.colors.get().header)
-  if calc.odd(here().page()) {
-    align(right, hydra(2))
-  } else {
-    align(left, hydra(1))
-  }
-} else if states.theme.get().contains("classic") {
-  if calc.odd(here().page()) {
-    align(left, hydra(2, display: (_, it) => [
-    #let head = none
-    #if it.numbering != none {
-      head = numbering(it.numbering, ..counter(heading).at(it.location())) + " " + it.body
-    } else {
-      head = it.body
-    }
-    #head
-    #place(dx: 0%, dy: 12%)[#line(length: 100%, stroke: 0.75pt)]
-  ]))
-  } else {
-    align(left, hydra(1, display: (_, it) => [
-    #let head = counter(heading.where(level:1)).display() + " " + it.body
-    #if it.numbering == none {
-      head = it.body
-    }
-    #head
-    #place(dx: 0%, dy: 12%)[#line(length: 100%, stroke: 0.75pt)]
-  ]))
-  }
-} else if states.theme.get().contains("modern") {
-    set text(style: "italic")
-    if calc.odd(here().page()) {
-      align(right)[
-        #hydra(2, display: (_, it) => [
-          #let head = none
-          #if it.numbering != none {
-            head = numbering(it.numbering, ..counter(heading).at(it.location())) + " " + it.body
-          } else {
-            head = it.body
-          }
-          #let size = measure(head)
-          #head
-          #place(dx: -16%, dy: -6.5%)[#line(length: 115% - size.width, stroke: 0.5pt + states.colors.get().primary)]
-          #place(dx: 98.5% - size.width, dy: -12%)[#circle(fill: states.colors.get().primary, stroke: none, radius: 0.25em)]
-        ])
-      ]
-    } else {
-    align(left)[
-      #hydra(1, display: (_, it) => [
-        #let head = counter(heading.where(level:1)).display() + " " + it.body
-        #if it.numbering == none {
-          head = it.body
-        }
-        #let size = measure(head)
-        #head
-        #place(dx: size.width, dy: -12%)[#circle(fill: states.colors.get().primary, stroke: none, radius: 0.25em)]
-        #place(dx: size.width + 1%, dy: -6.5%)[#line(length: 100%, stroke: 0.5pt + states.colors.get().primary)]
-        ]
-      )
-    ]
-  }
-}
-
-#let page-footer = context {
-    let cp = counter(page).get().first()
-    let current-page = counter(page).display()
-    set text(fill: white, weight: "bold")
-    v(1.5em)
-    if calc.odd(cp) {
-      set align(right)
-      box(outset: 6pt, fill: states.colors.get().primary, width: 1.5em, height: 100%)[
-        #set align(center)
-        #current-page
-        ]
-    } else {
-      set align(left)
-      box(outset: 6pt, fill: states.colors.get().primary, width: 1.5em, height: 100%)[
-        #set align(center)
-        #current-page
-      ]
-      }
-  }
-
 // Minitoc
 #let minitoc = context {
   let toc-header = states.localization.get().toc
@@ -132,9 +58,6 @@ set align(center)
   suboutline(target: heading.where(outlined: true, level: 2))
   miniline
 }
-
-// Conditional set-show
-#let show-if(cond, func) = body => if cond { func(body) } else { body }
 
 // Book title page
 #let book-title-page(
@@ -389,7 +312,7 @@ set align(center)
 
 // Back cover
 #let back-cover(resume: none, abstract: none, logo: none) = {
-  set page(header: none, footer: none)
+  set page(margin: auto, header: none, footer: none)
 
   pagebreak(to: "even", weak: true)
   set align(horizon)
