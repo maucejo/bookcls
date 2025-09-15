@@ -100,7 +100,10 @@
     counter(math.equation).update(0)
     counter(figure.where(kind: image)).update(0)
     counter(figure.where(kind: table)).update(0)
-    states.sidenotecounter.update(0)
+    if states.layout.get().contains("tufte"){
+      states.sidenotecounter.update(0)
+    }
+    counter(footnote).update(0)
 
     if states.theme.get().contains("fancy") {
       place(top)[

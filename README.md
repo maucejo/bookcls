@@ -5,21 +5,21 @@
 [![User Manual](https://img.shields.io/badge/doc-.pdf-mediumpurple)](https://github.com/maucejo/book_template/blob/main/docs/manual.pdf)
 
 
-The `bookcls` template is a Typst package designed for writing academic documents such as theses, French habilitations, or scientific books. It provides a structured format that adheres to academic standards, making it easier for authors to focus on content rather than formatting.
+The `bookly` template is a Typst package designed for writing academic documents such as theses, French habilitations, or scientific books. It provides a structured format that adheres to academic standards, making it easier for authors to focus on content rather than formatting.
 
 ## Basic usage
 
 This section provides the minimal amount of information to get started with the template. For more detailed information, see the [manual](https://github.com/maucejo/book_template/blob/main/docs/manual.pdf).
 
-To use the `bookcls` template, you need to include the following line at the beginning of your typ file:
+To use the `bookly` template, you need to include the following line at the beginning of your typ file:
 
 ```typ
-#import "@preview/bookcls:0.1.0": *
+#import "@preview/bookly:0.1.0": *
 ```
 
 ### Initializing the template
 
-After importing `bookcls`, you have to initialize the template by a show rule with the `#book()` command. This function takes a set of argument to customize the document.
+After importing `bookly`, you have to initialize the template by a show rule with the `#bookly()` command. This function takes a set of argument to customize the document.
 
 * `title`: Title of the book
 * `author`: Author of the book
@@ -27,7 +27,7 @@ After importing `bookcls`, you have to initialize the template by a show rule wi
 
 **Example**
 ```typ
-#show: book.with(
+#show: bookly.with(
 	author: "Author Name",
 	book-config: (
 		fonts: (
@@ -44,6 +44,7 @@ After importing `bookcls`, you have to initialize the template by a show rule wi
 ### Main features
 
 * Themes: "classic", "modern", "fancy"
+* Layout: "standard" and "tufte"
 * Language support: English and French
 * Font customization: Body and math fonts can be customized
 * Environments: `front-matter`, `main-matter`, `appendix`, `back-matter`
@@ -110,7 +111,8 @@ The template is under development. Here is the list of features that are impleme
 *Layout*
 
 - [x] Standard layout
-- [ ] Tufte layout
+- [x] Tufte layout
+- [ ] User-defined paper and margins for `standard` and `tufte` layouts
 
 *Cover pages*
 

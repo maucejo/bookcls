@@ -22,3 +22,5 @@ $
     caption: [#lorem(10)]
   )
 ]
+
+#lorem(100)#sidenote(dy: -4em)[#lorem(10)]

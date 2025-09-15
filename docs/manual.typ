@@ -602,7 +602,7 @@ The template is under development. Here is the list of features that are impleme
 
 - [x] Standard layout
 - [x] Tufte layout
-- [ ] Allow user-defined margins for `standard` and `tufte` layouts
+- [ ] User-defined paper and margins for `standard` and `tufte` layouts
 
 *Cover pages*
 
