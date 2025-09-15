@@ -1,6 +1,6 @@
 #import "@preview/hydra:0.6.2": hydra
-#import "book-defaults.typ": *
-#import "book-helper.typ": *
+#import "bookly-defaults.typ": *
+#import "bookly-helper.typ": *
 
 // Chapter
 #let chapter(title: none, abstract: none, toc: true, numbered: true, body) = context {

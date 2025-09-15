@@ -1,4 +1,4 @@
-#import "book-defaults.typ": *
+#import "bookly-defaults.typ": *
 
 #let front-matter(body) = context{
   set heading(numbering: none)

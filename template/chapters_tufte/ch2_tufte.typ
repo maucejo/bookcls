@@ -1,5 +1,5 @@
 // #import "@preview/bookcls:0.1.0": *
-#import "../../src/book.typ": *
+#import "../../src/bookly.typ": *
 
 // #show: chapter.with(title: "Second chapter")
 
@@ -8,7 +8,10 @@
 #pagebreak()
 
 == Goals
-#lorem(100)#sidenote[#lorem(10)]
+
+#fullwidth(lorem(50))
+
+#lorem(100)#sidenote(dy: -4em)[#lorem(10)]
 $
 arrow(V)(M slash R_0) = lr((d arrow(O M))/(d t)|)_(R_0) + theta
 $

@@ -1,5 +1,5 @@
 // #import "@preview/bookcls:0.1.0": *
-#import "../../src/book.typ": *
+#import "../../src/bookly.typ": *
 
 // #show: chapter.with(title: "First chapter")
 
@@ -25,12 +25,12 @@ $ <eq:2>
 
 Figure @fig:1 is a beautiful typst logo.
 
-#sidefigure[
-  #figure(
-image("../images/typst-logo.svg", width: 75%),
-caption: [#ls-caption([#lorem(10)], [#lorem(2)])],
-) <fig:1>
-]
+#sidefigure(
+  image("../images/typst-logo.svg", width: 75%),
+  caption: [#ls-caption([#lorem(10)], [#lorem(2)])],
+  label: <fig:1>,
+  dy: -4em
+)
 
 #lorem(50)
 

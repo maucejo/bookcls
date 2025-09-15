@@ -1,4 +1,4 @@
-#import "book-helper.typ": *
+#import "bookly-helper.typ": *
 
 // Table of contents
 #let tableofcontents = {

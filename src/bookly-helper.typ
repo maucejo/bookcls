@@ -1,7 +1,7 @@
 #import "@preview/subpar:0.2.2"
 #import "@preview/hydra:0.6.2": hydra
 #import "@preview/suboutline:0.3.0": *
-#import "book-defaults.typ": *
+#import "bookly-defaults.typ": *
 
 // Conditional set-show
 #let show-if(cond, func) = body => if cond { func(body) } else { body }
@@ -34,7 +34,8 @@ set align(center)
   gap: 1em,
   numbering: n => {numbering(states.num-pattern-fig.get(), counter(heading).get().first() , n)},
   numbering-sub-ref: (m, n) => {numbering(states.num-pattern-subfig.get(), counter(heading).get().first(), m, n)},
-  supplement: fig-supplement
+  supplement: fig-supplement,
+  show-sub: it => {set figure.caption(position: bottom); it}
 )
 
 // Long and short captions for figures or tables

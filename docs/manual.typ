@@ -13,12 +13,12 @@
 #let abstract = [This Typst package is a proposed template for writing thesis dissertations, French habilitations, or scientific books.]
 
 #show: mantys(
-  name: "book.typ",
-  version: "0.1.0",
+  name: "bookly.typ",
+  version: "0.2.0",
   authors: ("Mathieu Aucejo"),
   license: "MIT",
   description: "Write beautiful scientific book or thesis with Typst",
-  repository: "https://github.com/maucejo/book_template",
+  repository: "https://github.com/maucejo/bookly",
 
   title: "Book Template",
   date: datetime.today(),
@@ -29,25 +29,25 @@
 
 = Usage
 
-== Using `bookcls`
+== Using `bookly`
 
-To use the #package[bookcls] template, you need to include the following line at the beginning of your `typ` file:
+To use the #package[bookly] template, you need to include the following line at the beginning of your `typ` file:
 #codesnippet[```typ
-#import "@preview/bookcls:0.1.0": *
+#import "@preview/bookly:0.1.0": *
 ```
 ]
 
 == Initializing the template
 
-After importing #package[bookcls], you have to initialize the template by a show rule with the #cmd[book] command. This function takes an optional argument to specify the title of the document.
+After importing #package[bookly], you have to initialize the template by a show rule with the #cmd[bookly] command. This function takes an optional argument to specify the title of the document.
 #codesnippet[```typ
-#show: book.with(
+#show: bookly.with(
   ...
 )
 ```
 ]
 
-#command("book", ..args(
+#command("bookly", ..args(
 	title: "Title",
   author: "Author Name",
   book-config: "default-book-config",
@@ -64,6 +64,10 @@ After importing #package[bookcls], you have to initialize the template by a show
 				-  `"fancy"` (default)
 				- `"modern"`
 				- `"classic"`
+
+			- `layout` #dtype(str) -- Layout of the document. Possible values are:
+				- `"standard"` (default)
+				- `"tufte"`
 
 			- `logo` #dtype(image) -- Logo of the book (default #dtype(none))
 
@@ -86,7 +90,7 @@ After importing #package[bookcls], you have to initialize the template by a show
 === Initialization example
 #codesnippet[
 ```typ
-#show: book.with(
+#show: bookly.with(
 	author: "Author Name",
 	book-config: (
 		fonts: (
@@ -102,7 +106,7 @@ After importing #package[bookcls], you have to initialize the template by a show
 ]
 
 #pagebreak()
-=== Themes gallery
+=== Themes gallery <sss:themes>
 
 ==== Parts
 #subfigure(
@@ -140,6 +144,21 @@ After importing #package[bookcls], you have to initialize the template by a show
 	figure(image("manual-images/sections-fancy.png"), caption: [`"fancy"`]),
 	figure(image("manual-images/sections-modern.png"), caption: [`"modern"`]),
 	figure(image("manual-images/sections-classic.png"), caption: [`"classic"`]),
+)
+
+=== Layout
+
+The template currently supports two layouts: `standard` and `tufte`.
+
+The `standard` layout is the default layout, with symmetric margins. It is the most common layout for books and theses. Some examples of the standard layout are presented in @sss:themes "Themes gallery".
+
+The `tufte` layout is inspired by the works of Edward Tufte, which emphasizes simplicity and clarity, often using wide margins for notes and figures. It is particularly suitable for books or theses that require extensive annotations or side comments. To implement the `tufte` layout, the template comes with several helper functions, implementing side notes, side figures, full width blocks, etc. (see @ss:tufte for details). Some examples of the `tufte` layout are presented below.
+
+#subfigure(
+	columns: 3,
+	figure(image("manual-images/tufte-figures.png"), caption: [Figures and side figures]),
+	figure(image("manual-images/tufte-citations.png"), caption: [Citations]),
+	figure(image("manual-images/tufte-wide.png"), caption: [Full width elements]),
 )
 
 = Book content
@@ -508,6 +527,67 @@ A back cover of the document is automatically generated using the #cmd("back-cov
 	]
 ]
 
+== Tufte layout <ss:tufte>
+
+When the `tufte` layout is selected, several customizations are applied to adapt the appearance of various elements (figures, tables, equations, etc.) to the Tufte style.
+
+#command("sidenote", ..args(
+	dy: -1.5em,
+	numbered: true,
+	[body]
+	)
+)[
+	#argument("dy", default: -1.5em, types: "length")[Vertical adjustment of the sidenote position.]
+
+	#argument("numbered", default: true, types: "boolean")[Indicates whether the sidenote should be numbered.]
+]
+
+#info-alert[When the `layout` is set to `standard`, the #cmd("sidenote") function behaves like a standard #cmd("footnote").]
+
+#command("sidecite", ..args(
+	"key",
+	dy: -1.5em,
+	supplement: none,
+))[
+	#argument("key", types: "label")[Key of the reference to cite.]
+
+	#argument("dy", default: -1.5em, types: "length")[Vertical adjustment of the sidecite position.]
+
+	#argument("supplement", default: none, types: "string")[Supplementary text to add before the citation (e.g., "see", "e.g.", etc.).]
+]
+
+#info-alert[When the `layout` is set to `standard`, the #cmd("sidecite") function behaves like a standard #cmd("cite").]
+
+#pagebreak()
+#command("sidefigure", ..args(
+	"content",
+	dy: - 1.5em,
+	label: none,
+	caption: none,
+))[
+	#argument("content", types: "content")[Content of the figure.]
+
+	#argument("dy", default: -1.5em, types: "length")[Vertical adjustment of the sidefigure position.]
+
+	#argument("caption", default: none, types: "content")[Caption of the figure.]
+
+	#argument("label", default: none, types: "label")[Label of the figure.]
+]
+
+#command("fullfigure", ..args(
+	"content",
+	label: none,
+	caption: none,
+))[
+	#argument("content", types: "content")[Content of the figure.]
+
+	#argument("caption", default: none, types: "content")[Caption of the figure.]
+
+	#argument("label", default: none, types: "label")[Label of the figure.]
+]
+
+#info-alert[When the `layout` is set to `standard`, #cmd("sidefigure") and #cmd("fullfigure") behave like a standard #cmd("figure").]
+
 = Roadmap
 
 The template is under development. Here is the list of features that are implemented or will be in a future version.
@@ -521,7 +601,8 @@ The template is under development. Here is the list of features that are impleme
 *Layout*
 
 - [x] Standard layout
-- [ ] Tufte layout
+- [x] Tufte layout
+- [ ] Allow user-defined margins for `standard` and `tufte` layouts
 
 *Cover pages*
 

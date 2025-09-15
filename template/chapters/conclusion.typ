@@ -1,5 +1,5 @@
 // #import "@preview/bookcls:0.1.0": *
-#import "../../src/book.typ": *
+#import "../../src/bookly.typ": *
 
 // #show: chapter.with(title: "Conclusions et perspectives", toc: false)
 

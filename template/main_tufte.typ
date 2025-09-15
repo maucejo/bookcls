@@ -1,5 +1,5 @@
 // #import "@preview/bookcls:0.1.0": *
-#import "../src/book.typ": *
+#import "../src/bookly.typ": *
 
 #let committee = (
   (
@@ -35,7 +35,7 @@
   header: blue.lighten(50%),
 )
 
-#show: book.with(
+#show: bookly.with(
   author: "Author Name",
   book-config: (
     fonts: (
@@ -44,7 +44,7 @@
     ),
     theme: "modern",
     // theme: "classic",
-    layout: "tufte",
+    // layout: "tufte",
     lang: "en",
     // colors: config-colors,
     title-page: book-title-page(
@@ -72,7 +72,7 @@
 
 #include "chapters_tufte/ch_main_tufte.typ"
 
-// #bibliography("bibliography/sample.yml")
+// // #bibliography("bibliography/sample.yml")
 #bibliography("bibliography/sample.bib")
 
 #part("Second part")

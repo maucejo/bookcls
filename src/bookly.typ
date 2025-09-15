@@ -1,15 +1,15 @@
 // Exported packages
 #import "@preview/equate:0.3.2": *
 // Internals
-#import "book-environments.typ": *
-#import "book-outlines.typ": *
-#import "book-components.typ": *
-#import "book-theming.typ": *
-#import "book-helper.typ": *
-#import "book-tufte.typ": *
+#import "bookly-environments.typ": *
+#import "bookly-outlines.typ": *
+#import "bookly-components.typ": *
+#import "bookly-theming.typ": *
+#import "bookly-helper.typ": *
+#import "bookly-tufte.typ": *
 
 // Template
-#let book(
+#let bookly(
   title: "Title",
   author: "Author Name",
   book-config: default-book-config,
@@ -68,6 +68,11 @@
   set outline(depth: 3)
   show: outline-entry
 
+  // Footnotes
+  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 1pt + book-colors.secondary)) if config-book.theme.contains("fancy")
+
+  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 0.75pt + book-colors.primary)) if config-book.theme.contains("modern")
+
   // Figures
   let numbering-fig = n => {
       let h1 = counter(heading).get().first()
@@ -80,6 +85,14 @@
       gap: 1.5em
     )
 
+  set figure.caption(position: top) if config-book.layout.contains("tufte")
+  show: show-if(config-book.layout.contains("tufte"), it => {
+    show figure.caption: content => margin-note({
+        text(size: 0.9em, content)
+      }
+    )
+    it
+  })
   show figure: set figure.caption(separator: [ -- ])
 
   // Equations
@@ -114,8 +127,8 @@
   // Tables
   show figure.where(kind: table): set figure(
     numbering: numbering-fig,
-    // gap: 1em
   )
+
   show figure.where(kind: table): it => {
     set figure.caption(position: top)
     it
@@ -132,6 +145,7 @@
     default-title-page
   }
 
+  // Page properties for tufte layout
   set-page-properties()
   if config-book.layout.contains("tufte") {
     set-margin-note-defaults(
@@ -144,19 +158,20 @@
     set-margin-note-defaults(stroke: none)
   }
 
-  // Page layout
-  set page(
-    margin: (
-      left: 7%,
-      right: 33%
-    )
-  ) if config-book.layout.contains("tufte")
-
+  // Global page settings
   set page(
     paper: paper-size,
+    // margin: auto,
     header: page-header,
     footer: page-footer
   )
+
+  set page(
+    margin: (
+      left: 1.47cm,
+      right: 6.93cm
+    )
+  ) if config-book.layout.contains("tufte")
 
   body
 }

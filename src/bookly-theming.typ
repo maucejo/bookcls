@@ -1,6 +1,6 @@
 #import "@preview/showybox:2.0.4": *
-#import "book-defaults.typ": *
-#import "book-helper.typ": *
+#import "bookly-defaults.typ": *
+#import "bookly-helper.typ": *
 
 // Boxes - Utility
 #let box-title(a, b) = {
@@ -300,14 +300,15 @@
 
 // Page header and footer - add empty page if necessary
 #let page-header = context {
-  let dxl = 0%
-  let dxr = 0%
-  if states.layout.get().contains("tufte") {
-    dxl = 8.17%
-    dxr = -17%
-  }
-  show: move.with(dx: dxl)
-  show: fullwidth.with(dx: dxr)
+  // let dxl = 0%
+  // let dxr = 0%
+  // if states.layout.get().contains("tufte") {
+    // dxl = 8.17%
+    // dxr = -17%
+  // }
+  // show: move.with(dx: dxl)
+  // show: fullwidth.with(dx: dxr)
+  show: fullwidth
   if states.theme.get().contains("fancy") {
     set text(style: "italic", fill: states.colors.get().header)
     if calc.odd(here().page()) {
@@ -377,30 +378,32 @@
   let current-page = counter(page).display()
   let dx = 0%
   if states.theme.get().contains("modern") {
+    show: fullwidth
     set text(fill: white, weight: "bold")
     v(1.5em)
     if calc.odd(cp) {
-      if states.layout.get().contains("tufte") {
-        dx = 35.15%
-      }
+      // if states.layout.get().contains("tufte") {
+      //   dx = 35.15%
+      //   // dx = 44%
+      // }
       set align(right)
-      move(dx: dx)[
-        #box(outset: 6pt, fill: states.colors.get().primary, width: 1.5em, height: 100%)[
+      // move(dx: dx)[
+        box(outset: 6pt, fill: states.colors.get().primary, width: 1.5em, height: 100%)[
           #set align(center)
           #current-page
         ]
-        ]
+      // ]
     } else {
       if states.layout.get().contains("tufte") {
         dx = 8.2%
       }
       set align(left)
-      move(dx: dx)[
-        #box(outset: 6pt, fill: states.colors.get().primary, width: 1.5em, height: 100%)[
+      // move(dx: dx)[
+        box(outset: 6pt, fill: states.colors.get().primary, width: 1.5em, height: 100%)[
           #set align(center)
           #current-page
         ]
-      ]
+      // ]
     }
   } else if states.theme.get().contains("classic") {
     if states.layout.get().contains("tufte") {
