@@ -42,7 +42,7 @@
       math: "Lete Sans Math"
     ),
   // theme: "modern",
-  // theme: "classic",
+  theme: "classic",
   // layout: "tufte",
   lang: "en",
   // colors: config-colors,
