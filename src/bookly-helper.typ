@@ -92,7 +92,6 @@ set align(center)
   )
 
   let title-page = context {
-
     align(horizon)[
       #move(dx: 2em)[
         #line(stroke: 1.5pt + states.colors.get().primary, length: 90%)

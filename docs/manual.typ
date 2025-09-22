@@ -81,7 +81,7 @@ After importing #package[bookly], you have to initialize the template by a show 
 		#argument("fonts", default: "default-fonts", types: "dict")[Fonts used in the document. It contains the following keys:
 			- `body` #dtype(str) -- Font used for the body text (default: `"New Computer Modern"`)
 			- `math` #dtype(str) -- Font used for mathematical equations (default: `"New Computer Modern Math"`)
-			- `raw` #dtype(str) -- Font used for raw text (default: `"Cascadia Code"`)
+			- `raw` #dtype(str) -- Font used for raw text (default: `"DejaVu Sans Mono"`)
 		]
 
 		#argument("title-page", default: none, types: "content")[Content of the title page (default: #dtype(none)).]
@@ -297,6 +297,21 @@ The template defines several commands to facilitate the creation of tables of co
 A mini table of contents is automatically generated automatically by using the command #cmd("minitoc") in a chapter. This function is a wraper of the #cmd("suboutline") function provided by the `suboutline` package.
 
 = Helper functions
+
+== Figure captions
+
+The package include the command #cmd("ls-caption") to manage long and short captions for figures and tables. Short caption are displayed in the list of figures or tables, while long captions are used in the main text and in the table of contents.
+
+#codesnippet[
+	```typ
+	#figure(
+  	rect(),
+  	caption: ls-caption("Long caption", "Short caption")
+	)
+	```
+]
+
+#info-alert[The code of the command #cmd("ls-caption") comes from the #link("https://sitandr.github.io/typst-examples-book/book/snippets/chapters/outlines.html?highlight=long#long-and-short-captions-for-the-outline", "Typst book") by Sitandr.]
 
 == Subfigures
 

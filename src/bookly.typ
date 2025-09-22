@@ -14,8 +14,8 @@
   author: "Author Name",
   theme: "fancy",
   layout: "standard",
-  fonts: default-fonts,
-  colors: default-colors,
+  fonts: (:),
+  colors: (:),
   lang: "fr",
   title-page: none,
   body
@@ -28,12 +28,14 @@
   states.theme.update(theme)
   states.layout.update(layout)
 
-  states.colors.update(colors)
+  let book-colors = default-colors + colors
+  states.colors.update(book-colors)
 
   // Fonts
-  set text(font: fonts.body, lang: lang, size: text-size, ligatures: false)
-  show math.equation: set text(font: fonts.math, stylistic-set: 1)
-  show raw: set text(font: fonts.raw)
+  let book-fonts = default-fonts + fonts
+  set text(font: book-fonts.body, lang: lang, size: text-size, ligatures: false)
+  show math.equation: set text(font: book-fonts.math, stylistic-set: 1)
+  show raw: set text(font: book-fonts.raw)
 
   // Equations
   show: equate.with(breakable: true, sub-numbering: true)
@@ -56,7 +58,7 @@
 
   // References
   set ref(supplement: it => none)
-  show ref: set text(fill: colors.primary) if theme.contains("fancy") or theme.contains("modern")
+  show ref: set text(fill: book-colors.primary) if theme.contains("fancy") or theme.contains("modern")
 
   // Citations
   show cite: it => {
@@ -69,9 +71,9 @@
   show: outline-entry
 
   // Footnotes
-  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 1pt + colors.secondary)) if theme.contains("fancy")
+  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 1pt + book-colors.secondary)) if theme.contains("fancy")
 
-  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 0.75pt + colors.primary)) if theme.contains("modern")
+  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 0.75pt + book-colors.primary)) if theme.contains("modern")
 
   // Figures
   let numbering-fig = n => {
@@ -107,19 +109,19 @@
   show: show-if(theme.contains("fancy"), it => {
     show table.cell.where(y: 0): set text(weight: "bold", fill: white)
     set table(
-    fill: (_, y) => if y == 0 {colors.primary} else if calc.odd(y) { colors.secondary.lighten(60%)},
+    fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) {book-colors.secondary.lighten(60%)},
     stroke: (x, y) => (
-      left: if x == 0 or y > 0 { (thickness: 1pt, paint: colors.secondary) } else { (thickness: 1pt, paint: colors.primary) },
-      right: (thickness: 1pt, paint: colors.secondary),
-      top: if y <= 1 { (thickness: 1pt, paint: colors.secondary) } else { 0pt },
-      bottom: (thickness: 1pt, paint: colors.secondary),
+      left: if x == 0 or y > 0 { (thickness: 1pt, paint: book-colors.secondary) } else { (thickness: 1pt, paint: book-colors.primary) },
+      right: (thickness: 1pt, paint: book-colors.secondary),
+      top: if y <= 1 { (thickness: 1pt, paint: book-colors.secondary) } else { 0pt },
+      bottom: (thickness: 1pt, paint: book-colors.secondary),
     )
   ); it})
 
   show: show-if(theme.contains("modern"), it => {
     show table.cell.where(y: 0): set text(weight: "bold", fill: white)
     set table(
-    fill: (_, y) => if y == 0 {colors.primary} else if calc.odd(y) {colors.secondary.lighten(60%)},
+    fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) {book-colors.secondary.lighten(60%)},
     stroke: none
   ); it})
 
@@ -135,8 +137,8 @@
   }
 
   // Lists
-  set list(marker: [#text(fill:colors.primary, size: 1.75em)[#sym.bullet]])
-  set enum(numbering: n => text(fill:colors.primary)[#n.])
+  set list(marker: [#text(fill:book-colors.primary, size: 1.75em)[#sym.bullet]])
+  set enum(numbering: n => text(fill:book-colors.primary)[#n.])
 
   // Title page
   if title-page != none {

@@ -41,7 +41,7 @@
       body: "Lato",
       math: "Lete Sans Math"
     ),
-  theme: "modern",
+  // theme: "modern",
   // theme: "classic",
   // layout: "tufte",
   lang: "en",
