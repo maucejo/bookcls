@@ -12,7 +12,12 @@
 #let bookly(
   title: "Title",
   author: "Author Name",
-  book-config: default-book-config,
+  theme: "fancy",
+  layout: "standard",
+  fonts: default-fonts,
+  colors: default-colors,
+  lang: "fr",
+  title-page: none,
   body
 ) = context {
   // Document's properties
@@ -20,20 +25,15 @@
   states.author.update(author)
   states.title.update(title)
 
-  let config-book = default-book-config + book-config
-  states.theme.update(config-book.theme)
-  states.layout.update(config-book.layout)
+  states.theme.update(theme)
+  states.layout.update(layout)
 
-  let book-colors = default-book-config.colors + config-book.colors
-  states.colors.update(book-colors)
-
-  let book-fonts = default-book-config.fonts + config-book.fonts
+  states.colors.update(colors)
 
   // Fonts
-  set text(font: book-fonts.body, lang: config-book.lang, size: text-size, ligatures: false)
-
-  // Math font
-  show math.equation: set text(font: book-fonts.math, stylistic-set: 1)
+  set text(font: fonts.body, lang: lang, size: text-size, ligatures: false)
+  show math.equation: set text(font: fonts.math, stylistic-set: 1)
+  show raw: set text(font: fonts.raw)
 
   // Equations
   show: equate.with(breakable: true, sub-numbering: true)
@@ -43,7 +43,7 @@
 
   // Localization
   let localization = json("resources/i18n/fr.json")
-  if config-book.lang.contains("en") {
+  if lang.contains("en") {
     localization = json("resources/i18n/en.json")
   }
   states.localization.update(localization)
@@ -56,7 +56,7 @@
 
   // References
   set ref(supplement: it => none)
-  show ref: set text(fill: book-colors.primary) if config-book.theme.contains("fancy") or config-book.theme.contains("modern")
+  show ref: set text(fill: colors.primary) if theme.contains("fancy") or theme.contains("modern")
 
   // Citations
   show cite: it => {
@@ -69,9 +69,9 @@
   show: outline-entry
 
   // Footnotes
-  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 1pt + book-colors.secondary)) if config-book.theme.contains("fancy")
+  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 1pt + colors.secondary)) if theme.contains("fancy")
 
-  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 0.75pt + book-colors.primary)) if config-book.theme.contains("modern")
+  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 0.75pt + colors.primary)) if theme.contains("modern")
 
   // Figures
   let numbering-fig = n => {
@@ -85,8 +85,8 @@
       gap: 1.5em
     )
 
-  set figure.caption(position: top) if config-book.layout.contains("tufte")
-  show: show-if(config-book.layout.contains("tufte"), it => {
+  set figure.caption(position: top) if layout.contains("tufte")
+  show: show-if(layout.contains("tufte"), it => {
     show figure.caption: content => margin-note({
         text(size: 0.9em, content)
       }
@@ -104,22 +104,22 @@
   set math.equation(numbering: numbering-eq)
 
   // Table customizations
-  show: show-if(config-book.theme.contains("fancy"), it => {
+  show: show-if(theme.contains("fancy"), it => {
     show table.cell.where(y: 0): set text(weight: "bold", fill: white)
     set table(
-    fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) { book-colors.secondary.lighten(60%)},
+    fill: (_, y) => if y == 0 {colors.primary} else if calc.odd(y) { colors.secondary.lighten(60%)},
     stroke: (x, y) => (
-      left: if x == 0 or y > 0 { (thickness: 1pt, paint: book-colors.secondary) } else { (thickness: 1pt, paint: book-colors.primary) },
-      right: (thickness: 1pt, paint: book-colors.secondary),
-      top: if y <= 1 { (thickness: 1pt, paint: book-colors.secondary) } else { 0pt },
-      bottom: (thickness: 1pt, paint: book-colors.secondary),
+      left: if x == 0 or y > 0 { (thickness: 1pt, paint: colors.secondary) } else { (thickness: 1pt, paint: colors.primary) },
+      right: (thickness: 1pt, paint: colors.secondary),
+      top: if y <= 1 { (thickness: 1pt, paint: colors.secondary) } else { 0pt },
+      bottom: (thickness: 1pt, paint: colors.secondary),
     )
   ); it})
 
-  show: show-if(config-book.theme.contains("modern"), it => {
+  show: show-if(theme.contains("modern"), it => {
     show table.cell.where(y: 0): set text(weight: "bold", fill: white)
     set table(
-    fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) { book-colors.secondary.lighten(60%)},
+    fill: (_, y) => if y == 0 {colors.primary} else if calc.odd(y) {colors.secondary.lighten(60%)},
     stroke: none
   ); it})
 
@@ -135,19 +135,19 @@
   }
 
   // Lists
-  set list(marker: [#text(fill:book-colors.primary, size: 1.75em)[#sym.bullet]])
-  set enum(numbering: n => text(fill:book-colors.primary)[#n.])
+  set list(marker: [#text(fill:colors.primary, size: 1.75em)[#sym.bullet]])
+  set enum(numbering: n => text(fill:colors.primary)[#n.])
 
   // Title page
-  if config-book.title-page != none {
-    config-book.title-page
+  if title-page != none {
+    title-page
   } else {
     default-title-page
   }
 
   // Page properties for tufte layout
   set-page-properties()
-  if config-book.layout.contains("tufte") {
+  if layout.contains("tufte") {
     set-margin-note-defaults(
       stroke: none,
       side: right,
@@ -171,7 +171,7 @@
       left: 1.47cm,
       right: 6.93cm
     )
-  ) if config-book.layout.contains("tufte")
+  ) if layout.contains("tufte")
 
   body
 }

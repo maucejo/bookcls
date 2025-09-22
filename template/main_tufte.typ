@@ -37,22 +37,18 @@
 
 #show: bookly.with(
   author: "Author Name",
-  book-config: (
-    fonts: (
-      body: "Lato",
-      math: "Lete Sans Math"
-    ),
-    theme: "modern",
-    // theme: "classic",
-    // layout: "tufte",
-    lang: "en",
-    // colors: config-colors,
-    title-page: book-title-page(
-      series: "Typst book series",
-      institution: "Typst community",
-      logo: image("images/typst-logo.svg"),
-      cover: image("images/book-cover.jpg", width: 45%)
-    )
+  fonts: (
+    body: "Lato",
+    math: "Lete Sans Math"
+  ),
+  theme: "modern",
+  layout: "tufte",
+  lang: "en",
+  title-page: book-title-page(
+    series: "Typst book series",
+    institution: "Typst community",
+    logo: image("images/typst-logo.svg"),
+    cover: image("images/book-cover.jpg", width: 45%)
   )
 )
 

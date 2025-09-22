@@ -42,6 +42,19 @@
   title-page: none,
 )
 
+#let default-fonts = (
+  body: "New Computer Modern",
+  math: "New Computer Modern Math",
+  raw: "Cascadia Code"
+)
+
+#let default-colors = (
+  primary: rgb("#c1002a"),
+  secondary: rgb("#dddddd").darken(15%),
+  boxeq: rgb("#dddddd"),
+  header: rgb("#dddddd").darken(25%),
+)
+
 // Default Title page
 #let default-title-page = context {
   set page(

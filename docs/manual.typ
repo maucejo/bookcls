@@ -50,42 +50,49 @@ After importing #package[bookly], you have to initialize the template by a show 
 #command("bookly", ..args(
 	title: "Title",
   author: "Author Name",
-  book-config: "default-book-config",
+	theme: "fancy",
+	layout: "standard",
+	lang: "fr",
+	fonts: "default-fonts",
+	colors: "default-colors",
+	title-page: none,
 	[body]))[
 		#argument("title", default: "Title", types: "string")[Title of the book or the thesis.]
 
 		#argument("author", default: "Author Name", types: "string")[Author of the book.]
 
-		#argument("book-config", default: "default-book-config", types: "dict")[Book configuration.
+		#colbreak()
 
-			The dictionary allows you to customize various aspects of the book. It contains the following keys:
-
-			- `theme` #dtype(str) --  Theme of the document. Possible values are:
-				-  `"fancy"` (default)
-				- `"modern"`
-				- `"classic"`
-
-			- `layout` #dtype(str) -- Layout of the document. Possible values are:
-				- `"standard"` (default)
-				- `"tufte"`
-
-			- `logo` #dtype(image) -- Logo of the book (default #dtype(none))
-
-			- `lang` #dtype(str) -- Language of the document. Supported languages French (`"fr"`-- default) and English (`"en"`)
-
-			- `fonts` #dtypes(dictionary) -- Fonts used in the document. It contains the following keys:
-				- `body` #dtype(str) -- Font used for the body text (default: `"New Computer Modern"`).
-				- `math` #dtype(str) -- Font used for mathematical equations (default: `"New Computer Modern Math"`).
-
-			- `colors` #dtypes(dictionary) -- Colors used in the document. It contains the following keys:
-				- `primary` #dtype(color) -- Primary color (default: `rgb("#c1002a")`)
-				- `secondary` #dtype(color) -- Secondary color (default: `rgb("#dddddd").darken(15%)`)
-				- `boxeq` #dtype(color) -- Color of equation boxes (default: `rgb("#dddddd")`)
-				- `header` #dtype(color) -- Color used for adapting the color of the document headers (default: `rgb("#dddddd").darken(25%)`)
-
-			- title-page #dtype(content) -- Content of the title page (default: #dtype(none))
+		#argument("theme", default: "fancy", types: "string")[Theme of the document. Possible values are:
+			-  `"fancy"` (default)
+			- `"modern"`
+			- `"classic"`
 		]
-	]
+
+		#argument("layout", default: "standard", types: "string")[Layout of the document. Possible values are:
+			- `"standard"` (default)
+			- `"tufte"`
+		]
+
+		#argument("lang", default: "fr", types: "string")[Language of the document.
+
+		Supported languages French (`"fr"`-- default) and English (`"en"`)]
+
+		#argument("fonts", default: "default-fonts", types: "dict")[Fonts used in the document. It contains the following keys:
+			- `body` #dtype(str) -- Font used for the body text (default: `"New Computer Modern"`)
+			- `math` #dtype(str) -- Font used for mathematical equations (default: `"New Computer Modern Math"`)
+			- `raw` #dtype(str) -- Font used for raw text (default: `"Cascadia Code"`)
+		]
+
+		#argument("title-page", default: none, types: "content")[Content of the title page (default: #dtype(none)).]
+
+		#argument("colors", default: "default-colors", types: "dict")[Colors used in the document. It contains the following keys:
+			- `primary` #dtype(color) -- Primary color (default: `rgb("#c1002a")`)
+			- `secondary` #dtype(color) -- Secondary color (default: `rgb("#dddddd").darken(15%)`)
+			- `boxeq` #dtype(color) -- Color of equation boxes (default: `rgb("#dddddd")`)
+			- `header` #dtype(color) -- Color used for adapting the color of the document headers (default: `rgb("#dddddd").darken(25%)`)
+		]
+]
 
 === Initialization example
 #codesnippet[
@@ -105,7 +112,6 @@ After importing #package[bookly], you have to initialize the template by a show 
 ```
 ]
 
-#pagebreak()
 === Themes gallery <sss:themes>
 
 ==== Parts
@@ -126,7 +132,7 @@ After importing #package[bookly], you have to initialize the template by a show 
 	figure(image("manual-images/chapter-classic.png"), caption: [`"classic"`]),
 )
 
-#pagebreak()
+#v(1em)
 ==== Unnumbered chapters
 
 #subfigure(
@@ -597,6 +603,7 @@ The template is under development. Here is the list of features that are impleme
 - [x] `fancy`
 - [x] `modern`
 - [x] `classic`
+- [ ] User-defined themes (requires a refactoring of the theming)
 
 *Layout*
 
