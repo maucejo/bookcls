@@ -4,10 +4,9 @@
 #import "bookly-environments.typ": *
 #import "bookly-outlines.typ": *
 #import "bookly-components.typ": *
-// #import "bookly-theming.typ": *
 #import "bookly-helper.typ": *
 #import "bookly-tufte.typ": *
-#import "themes/themes.typ": *
+#import "bookly-themes.typ": *
 
 // Template
 #let bookly(
@@ -93,20 +92,6 @@
 
   set math.equation(numbering: numbering-eq)
 
-  // Table customizations
-  // show: show-if(config-book.theme.contains("fancy"), it => {
-  //   show table.cell.where(y: 0): set text(weight: "bold", fill: white)
-  //   set table(
-  //   fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) { book-colors.secondary.lighten(60%)},
-  //   stroke: (x, y) => (
-  //     left: if x == 0 or y > 0 { (thickness: 1pt, paint: book-colors.secondary) } else { (thickness: 1pt, paint: book-colors.primary) },
-  //     right: (thickness: 1pt, paint: book-colors.secondary),
-  //     top: if y <= 1 { (thickness: 1pt, paint: book-colors.secondary) } else { 0pt },
-  //     bottom: (thickness: 1pt, paint: book-colors.secondary),
-  //   )
-  // ); it})
-
-
   // Tables
   show figure.where(kind: table): set figure(
     numbering: numbering-fig,
@@ -149,17 +134,7 @@
   ) if layout.contains("tufte")
 
   // Headings
-  show heading.where(level: 1): it => {
-    counter(math.equation).update(0)
-    counter(figure.where(kind: image)).update(0)
-    counter(figure.where(kind: table)).update(0)
-    if states.layout.get().contains("tufte"){
-      states.sidenotecounter.update(0)
-    }
-    counter(footnote).update(0)
-  }
-
-  show: theme.with(colors: colors)
+  show: theme.with(colors: book-colors)
   show: headings-on-odd-page
 
   body

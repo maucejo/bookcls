@@ -6,6 +6,16 @@
 
     // Headings
     show heading.where(level: 1): it => context {
+      // Reset counters
+    counter(math.equation).update(0)
+    counter(figure.where(kind: image)).update(0)
+    counter(figure.where(kind: table)).update(0)
+    if states.layout.get().contains("tufte"){
+      states.sidenotecounter.update(0)
+    }
+    counter(footnote).update(0)
+
+    // Heading style
       let type-chapter = if states.isappendix.get() {states.localization.get().appendix} else {states.localization.get().chapter}
 
       let dxr = 0%

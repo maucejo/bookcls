@@ -6,6 +6,16 @@
 
   // Headings
   show heading.where(level: 1): it => {
+    // Reset counters
+    counter(math.equation).update(0)
+    counter(figure.where(kind: image)).update(0)
+    counter(figure.where(kind: table)).update(0)
+    if states.layout.get().contains("tufte"){
+      states.sidenotecounter.update(0)
+    }
+    counter(footnote).update(0)
+
+    // Heading style
     place(top)[
       #rect(fill: white, width: 1%, height: 1%)
     ]
@@ -186,7 +196,7 @@
   ]
 
   show heading: none
-  heading(numbering: none)[#box[#states.localization.get().part #states.counter-part.get() -- #title]]
+  heading(numbering: none)[#box[#text(fill:states.colors.get().primary)[#states.localization.get().part #states.counter-part.get() -- #title]]]
 
   pagebreak(weak: true, to:"odd")
 }

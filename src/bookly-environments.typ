@@ -7,11 +7,6 @@
   states.num-pattern.update(none)
   states.isfrontmatter.update(true)
 
-  // if states.layout.get().contains("tufte") {
-  //   counter(page).update(1)
-  // } else {
-  //   counter(page).update(0)
-  // }
   counter(page).update(1)
 
   body
@@ -22,16 +17,12 @@
   set heading(numbering: "1.1.")
 
   let numbering = "1/1"
-  // if states.theme.get().contains("classic") {
-  //   numbering = "1"
-  // }
   set page(numbering: numbering)
 
   states.isfrontmatter.update(false)
   states.page-numbering.update("1/1")
   states.num-heading.update("1")
   states.num-pattern.update("1.1.")
-  states.num-pattern-fig.update("1.1")
   states.num-pattern-fig.update("1.1a")
   states.num-pattern-eq.update("(1.1a)")
 
@@ -55,12 +46,6 @@
 // Appendix
 #let appendix(body) = context {
   set heading(numbering: "A.1.")
-
-  let numbering = "1/1"
-  if states.theme.get().contains("classic") {
-    numbering = "1"
-  }
-  set page(numbering: numbering)
 
   // Reset heading counter
   counter(heading.where(level: 1)).update(0)

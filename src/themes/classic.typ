@@ -4,11 +4,20 @@
 #import "../bookly-defaults.typ": *
 
 #let classic(colors: default-colors, it) = {
-
   states.theme.update("classic")
 
   // Headings
   show heading.where(level: 1): it => {
+    // Reset counters
+    counter(math.equation).update(0)
+    counter(figure.where(kind: image)).update(0)
+    counter(figure.where(kind: table)).update(0)
+    if states.layout.get().contains("tufte"){
+      states.sidenotecounter.update(0)
+    }
+    counter(footnote).update(0)
+
+    // Heading style
     place(top)[
       #rect(fill: white, width: 1%, height: 1%)
     ]

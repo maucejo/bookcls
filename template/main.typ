@@ -1,6 +1,6 @@
 // #import "@preview/bookly:0.2.0": *
 #import "../src/bookly.typ": *
-#import "custom-theme.typ": *
+// #import "custom-theme.typ": *
 
 #let config-colors = (
   primary: rgb("#1d90d0"),
@@ -13,9 +13,9 @@
     body: "Lato",
     math: "Lete Sans Math"
   ),
-  // theme: modern,
+  theme: fancy,
   // theme: classic,
-  theme: custom,
+  // theme: custom,
   // layout: "tufte",
   lang: "en",
   // colors: config-colors,
@@ -43,13 +43,13 @@
 
 #include "chapters/ch_main.typ"
 
-// #bibliography("bibliography/sample.yml")
-#bibliography("bibliography/sample.bib")
-
 #part("Second part")
 
 #show: appendix
 
 #include "appendix/app_main.typ"
+
+// #bibliography("bibliography/sample.yml")
+#bibliography("bibliography/sample.bib")
 
 #back-cover(resume: lorem(100), abstract: lorem(100), logo: (align(left)[#image("images/typst-logo.svg", width: 50%)], align(right)[#image("images/typst-logo.svg", width: 50%)]))
