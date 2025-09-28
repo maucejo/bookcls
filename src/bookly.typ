@@ -4,38 +4,38 @@
 #import "bookly-environments.typ": *
 #import "bookly-outlines.typ": *
 #import "bookly-components.typ": *
-#import "bookly-theming.typ": *
+// #import "bookly-theming.typ": *
 #import "bookly-helper.typ": *
 #import "bookly-tufte.typ": *
+#import "themes/themes.typ": *
 
 // Template
 #let bookly(
   title: "Title",
   author: "Author Name",
-  theme: "fancy",
+  theme: fancy,
   layout: "standard",
-  fonts: (:),
-  colors: (:),
+  logo: none,
   lang: "fr",
-  title-page: none,
+  fonts: default-fonts,
+  colors: default-colors,
+  title-page: default-title-page,
   body
 ) = context {
   // Document's properties
   set document(author: author, title: title)
   states.author.update(author)
   states.title.update(title)
-
-  states.theme.update(theme)
   states.layout.update(layout)
 
   let book-colors = default-colors + colors
   states.colors.update(book-colors)
 
   // Fonts
-  let book-fonts = default-fonts + fonts
-  set text(font: book-fonts.body, lang: lang, size: text-size, ligatures: false)
-  show math.equation: set text(font: book-fonts.math, stylistic-set: 1)
-  show raw: set text(font: book-fonts.raw)
+  set text(font: fonts.body, lang: lang, size: text-size, ligatures: false)
+
+  // Math font
+  show math.equation: set text(font: fonts.math, stylistic-set: 1)
 
   // Equations
   show: equate.with(breakable: true, sub-numbering: true)
@@ -50,15 +50,9 @@
   }
   states.localization.update(localization)
 
-  // Headings
-  show: heading-level1
-  show: heading-level2
-  show: heading-level3
-  show: headings-on-odd-page
 
   // References
   set ref(supplement: it => none)
-  show ref: set text(fill: book-colors.primary) if theme.contains("fancy") or theme.contains("modern")
 
   // Citations
   show cite: it => {
@@ -68,12 +62,6 @@
 
   // Outline entries
   set outline(depth: 3)
-  show: outline-entry
-
-  // Footnotes
-  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 1pt + book-colors.secondary)) if theme.contains("fancy")
-
-  set footnote.entry(separator: line(length: 30% + 0pt, stroke: 0.75pt + book-colors.primary)) if theme.contains("modern")
 
   // Figures
   let numbering-fig = n => {
@@ -106,24 +94,17 @@
   set math.equation(numbering: numbering-eq)
 
   // Table customizations
-  show: show-if(theme.contains("fancy"), it => {
-    show table.cell.where(y: 0): set text(weight: "bold", fill: white)
-    set table(
-    fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) {book-colors.secondary.lighten(60%)},
-    stroke: (x, y) => (
-      left: if x == 0 or y > 0 { (thickness: 1pt, paint: book-colors.secondary) } else { (thickness: 1pt, paint: book-colors.primary) },
-      right: (thickness: 1pt, paint: book-colors.secondary),
-      top: if y <= 1 { (thickness: 1pt, paint: book-colors.secondary) } else { 0pt },
-      bottom: (thickness: 1pt, paint: book-colors.secondary),
-    )
-  ); it})
-
-  show: show-if(theme.contains("modern"), it => {
-    show table.cell.where(y: 0): set text(weight: "bold", fill: white)
-    set table(
-    fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) {book-colors.secondary.lighten(60%)},
-    stroke: none
-  ); it})
+  // show: show-if(config-book.theme.contains("fancy"), it => {
+  //   show table.cell.where(y: 0): set text(weight: "bold", fill: white)
+  //   set table(
+  //   fill: (_, y) => if y == 0 {book-colors.primary} else if calc.odd(y) { book-colors.secondary.lighten(60%)},
+  //   stroke: (x, y) => (
+  //     left: if x == 0 or y > 0 { (thickness: 1pt, paint: book-colors.secondary) } else { (thickness: 1pt, paint: book-colors.primary) },
+  //     right: (thickness: 1pt, paint: book-colors.secondary),
+  //     top: if y <= 1 { (thickness: 1pt, paint: book-colors.secondary) } else { 0pt },
+  //     bottom: (thickness: 1pt, paint: book-colors.secondary),
+  //   )
+  // ); it})
 
 
   // Tables
@@ -137,7 +118,7 @@
   }
 
   // Lists
-  set list(marker: [#text(fill:book-colors.primary, size: 1.75em)[#sym.bullet]])
+  set list(marker: [#text(fill:colors.primary, size: 1.75em)[#sym.bullet]])
   set enum(numbering: n => text(fill:book-colors.primary)[#n.])
 
   // Title page
@@ -160,20 +141,26 @@
     set-margin-note-defaults(stroke: none)
   }
 
-  // Global page settings
-  set page(
-    paper: paper-size,
-    // margin: auto,
-    header: page-header,
-    footer: page-footer
-  )
-
   set page(
     margin: (
       left: 1.47cm,
       right: 6.93cm
     )
   ) if layout.contains("tufte")
+
+  // Headings
+  show heading.where(level: 1): it => {
+    counter(math.equation).update(0)
+    counter(figure.where(kind: image)).update(0)
+    counter(figure.where(kind: table)).update(0)
+    if states.layout.get().contains("tufte"){
+      states.sidenotecounter.update(0)
+    }
+    counter(footnote).update(0)
+  }
+
+  show: theme.with(colors: colors)
+  show: headings-on-odd-page
 
   body
 }

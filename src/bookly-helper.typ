@@ -13,6 +13,18 @@
   block(width: 100% + dx, body)
 }
 
+// Headings
+#let headings-on-odd-page(it) = {
+  show heading.where(level: 1): it => {
+    {
+      set page(header: none, footer: none)
+      pagebreak(to: "odd")
+    }
+    it
+  }
+  it
+}
+
 // Equations
 #let boxeq(body) = context {
 set align(center)
@@ -41,24 +53,24 @@ set align(center)
 // Long and short captions for figures or tables
 #let ls-caption(long, short) = context if states.in-outline.get() { short } else { long }
 
-// Minitoc
-#let minitoc = context {
-  let toc-header = states.localization.get().toc
-  block(above: 3.5em)[
-    #text([*#toc-header*])
-    #v(-0.5em)
-  ]
+// // Minitoc
+// #let minitoc = context {
+//   let toc-header = states.localization.get().toc
+//   block(above: 3.5em)[
+//     #text([*#toc-header*])
+//     #v(-0.5em)
+//   ]
 
-  let miniline = line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
-  if states.theme.get().contains("classic"){
-    miniline = line(stroke: 0.75pt, length: 100%)
-  }
+//   let miniline = line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
+//   if states.theme.get().contains("classic"){
+//     miniline = line(stroke: 0.75pt, length: 100%)
+//   }
 
-  miniline
-  v(0.5em)
-  suboutline(target: heading.where(outlined: true, level: 2))
-  miniline
-}
+//   miniline
+//   v(0.5em)
+//   suboutline(target: heading.where(outlined: true, level: 2))
+//   miniline
+// }
 
 // Book title page
 #let book-title-page(
@@ -92,6 +104,7 @@ set align(center)
   )
 
   let title-page = context {
+
     align(horizon)[
       #move(dx: 2em)[
         #line(stroke: 1.5pt + states.colors.get().primary, length: 90%)
@@ -360,4 +373,30 @@ set align(center)
       ]
     }
   }
+}
+
+// Boxes - Utility
+#let box-title(a, b) = {
+  grid(columns: 2, column-gutter: 0.5em, align: (horizon),
+    a,
+    b
+  )
+}
+
+#let colorize(svg, color) = {
+  let blk = black.to-hex();
+  if svg.contains(blk) {
+    svg.replace(blk, color.to-hex())
+  } else {
+    svg.replace("<svg ", "<svg fill=\""+ color.to-hex() + "\" ")
+  }
+}
+
+#let color-svg(
+  path,
+  color,
+  ..args,
+) = {
+  let data = colorize(read(path), color)
+  return image(bytes(data), ..args)
 }

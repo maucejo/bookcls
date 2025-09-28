@@ -2,8 +2,7 @@
 #import "@preview/showybox:2.0.4": *
 #import "@preview/swank-tex:0.1.0": LaTeX
 #import "@preview/cheq:0.2.2": *
-#import "@preview/bookcls:0.1.0": *
-// #import "../../src/book.typ": *
+#import "../src/bookly.typ": *
 
 #show: checklist.with(fill: eastern.lighten(95%), stroke: eastern, radius: .2em)
 
@@ -63,10 +62,10 @@ After importing #package[bookly], you have to initialize the template by a show 
 
 		#colbreak()
 
-		#argument("theme", default: "fancy", types: "string")[Theme of the document. Possible values are:
-			-  `"fancy"` (default)
-			- `"modern"`
-			- `"classic"`
+		#argument("theme", default: "fancy", types: "function")[Theme of the document. Possible values are:
+			-  `fancy` (default)
+			- `modern`
+			- `classic`
 		]
 
 		#argument("layout", default: "standard", types: "string")[Layout of the document. Possible values are:
@@ -84,13 +83,13 @@ After importing #package[bookly], you have to initialize the template by a show 
 			- `raw` #dtype(str) -- Font used for raw text (default: `"DejaVu Sans Mono"`)
 		]
 
-		#argument("title-page", default: none, types: "content")[Content of the title page (default: #dtype(none)).]
+		#argument("title-page", default: none, types: "content")[Content of the title page.]
 
 		#argument("colors", default: "default-colors", types: "dict")[Colors used in the document. It contains the following keys:
 			- `primary` #dtype(color) -- Primary color (default: `rgb("#c1002a")`)
 			- `secondary` #dtype(color) -- Secondary color (default: `rgb("#dddddd").darken(15%)`)
 			- `boxeq` #dtype(color) -- Color of equation boxes (default: `rgb("#dddddd")`)
-			- `header` #dtype(color) -- Color used for adapting the color of the document headers (default: `rgb("#dddddd").darken(25%)`)
+			- `header` #dtype(color) -- Color used for adapting the color of the document headers (default: `black`)
 		]
 ]
 
@@ -99,15 +98,13 @@ After importing #package[bookly], you have to initialize the template by a show 
 ```typ
 #show: bookly.with(
 	author: "Author Name",
-	book-config: (
-		fonts: (
-			body: "Lato",
-			math: "Lete Sans Math"
-		),
-		theme: "modern",
-		lang: "en",
-		logo: image("path_to_image/image.png")
-	)
+	fonts: (
+		body: "Lato",
+		math: "Lete Sans Math"
+	),
+	theme: modern,
+	lang: "en",
+	logo: image("path_to_image/image.png")
 )
 ```
 ]
@@ -180,11 +177,11 @@ In general, the section of the main file corresponding to the book content is st
 
 	#show: main-matter
 
-	#tableofcontents()
+	#tableofcontents
 
-	#listoffigures()
+	#listoffigures
 
-	#listoftables()
+	#listoftables
 
 	#part("Main body")
 
@@ -238,7 +235,7 @@ To structure the book content, you can define parts using the #cmd("part") funct
 
 Despite chapters can be defined using the standard #Typst markup language. This template defined a fonction #cmd("chapter") that allows to avoid boilerplate code, such as the manual inclusion of standard elements like title, abstract, and minitoc.
 
-#command("chapitre", arg[title],
+#command("chapter", arg[title],
 ..args(
 	abstract: none,
 	toc: true,
@@ -280,7 +277,7 @@ Despite chapters can be defined using the standard #Typst markup language. This 
 For unnumbered chapters, you can simply use the #cmd("chapter-nonum") function. This function assumes that you have a #sym.ast\.typ file per chapter.
 #codesnippet[
 	```typ
-	#show: chapter-nonum.with()
+	#show: chapter-nonum
 
 	// Content of the chapter
 	= Chapter title
@@ -290,9 +287,9 @@ For unnumbered chapters, you can simply use the #cmd("chapter-nonum") function. 
 == Tables of contents
 
 The template defines several commands to facilitate the creation of tables of contents:
-- #cmd("tableofcontents")\() : Table of contents
-- #cmd("listoffigures")\() : List of figures
-- #cmd("listoftables")\() : List of tables
+- #cmd("tableofcontents") : Table of contents
+- #cmd("listoffigures") : List of figures
+- #cmd("listoftables") : List of tables
 
 A mini table of contents is automatically generated automatically by using the command #cmd("minitoc") in a chapter. This function is a wraper of the #cmd("suboutline") function provided by the `suboutline` package.
 

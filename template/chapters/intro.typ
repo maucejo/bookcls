@@ -7,7 +7,7 @@
 //   numbered: false
 // )
 
-#show: chapter-nonum.with()
+#show: chapter-nonum
 = Introduction
 
 == Goals

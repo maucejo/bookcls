@@ -2,32 +2,6 @@
 #import "bookly-defaults.typ": *
 #import "bookly-helper.typ": *
 
-// Boxes - Utility
-#let box-title(a, b) = {
-  grid(columns: 2, column-gutter: 0.5em, align: (horizon),
-    a,
-    b
-  )
-}
-
-#let colorize(svg, color) = {
-  let blk = black.to-hex();
-  if svg.contains(blk) {
-    svg.replace(blk, color.to-hex())
-  } else {
-    svg.replace("<svg ", "<svg fill=\""+ color.to-hex() + "\" ")
-  }
-}
-
-#let color-svg(
-  path,
-  color,
-  ..args,
-) = {
-  let data = colorize(read(path), color)
-  return image(bytes(data), ..args)
-}
-
 // Boxes - Definition
 #let custom-box(title: none, icon: "info", color: rgb(29, 144, 208), body) =  context if states.theme.get().contains("fancy") or states.theme.get().contains("modern") {
   grid(
@@ -252,54 +226,49 @@
 
 // Outline
 #let outline-entry(it) = {
-  show outline.entry: it => context {
-    let dxl = 0%
-    let dxr = 0%
-    if states.layout.get().contains("tufte") {
-      dxl = 8.17%
-      dxr = -17%
+  show outline.entry: it => context if states.theme.get().contains("fancy") or states.theme.get().contains("modern") {
+    if it.element.func() == heading {
+      let number = it.prefix()
+      let section = it.element.body
+      let item = none
+      if it.level == 1 {
+        block(above: 1.25em, below: 0em)
+        item = [#text([*#number*], fill: states.colors.get().primary) *#it.inner()*]
+      } else if it.level == 2{
+        block(above: 1em, below: 0em)
+        item = [#h(1em) #text([#number], fill: states.colors.get().primary) #it.inner()]
+      } else {
+        block(above: 1em, below: 0em)
+        item = [#h(2em) #text([#number], fill: states.colors.get().primary) #it.inner()]
+      }
+      link(it.element.location(), item)
+    } else if it.element.func() == figure {
+      block(above: 1.25em, below: 0em)
+      link(it.element.location(), [#text([#it.prefix().], fill: states.colors.get().primary) #h(0.2em) #it.inner()])
+    } else {
+      it
     }
-    show: move.with(dx: dxl)
-    if states.theme.get().contains("fancy") or states.theme.get().contains("modern") {
-      if it.element.func() == heading {
-        block(below: 0em)
-        let number = it.prefix()
-        let section = it.element.body
-        let item = none
-        if it.level == 1 {
-          item = fullwidth(dx: dxr)[#text([*#number*], fill: states.colors.get().primary) *#it.inner()*]
-        } else if it.level == 2{
-          item = fullwidth(dx: dxr)[#h(1em) #text([#number], fill: states.colors.get().primary) #it.inner()]
-        } else {
-          item = fullwidth(dx: dxr)[#h(2em) #text([#number], fill: states.colors.get().primary) #it.inner()]
-        }
-        link(it.element.location(), item)
-      } else if it.element.func() == figure {
-        block(below: 1em)
-        link(it.element.location(), fullwidth(dx: dxr)[#text([#it.prefix().], fill: states.colors.get().primary) #h(0.2em) #it.inner()])
+  } else if states.theme.get().contains("classic") {
+    if it.element.func() == heading {
+      let number = it.prefix()
+      let section = it.element.body
+      let item = none
+      if it.level == 1 {
+        block(above: 1.25em, below: 0em)
+        item = [*#number #it.inner()*]
+      } else if it.level == 2 {
+        block(above: 1em, below: 0em)
+        item = [#h(1em) #number #it.inner()]
       } else {
-        it
+        block(above: 1em, below: 0em)
+        item = [#h(2em) #number #it.inner()]
       }
-    } else if states.theme.get().contains("classic") {
-      if it.element.func() == heading {
-        block(below: 0.5em)
-        let number = it.prefix()
-        let section = it.element.body
-        let item = none
-        if it.level == 1 {
-          item = [*#number #it.inner()*]
-        } else if it.level == 2 {
-          item = fullwidth(dx: dxr)[#h(1em) #number #it.inner()]
-        } else {
-          item = fullwidth(dx: dxr)[#h(2em) #number #it.inner()]
-        }
-        link(it.element.location(), item)
-      } else if it.element.func() == figure {
-        block(below: 0.5em)
-        link(it.element.location(), fullwidth(dx: dxr)[#text([#it.prefix().], fill: black) #h(0.2em) #it.inner()])
-      } else {
-        it
-      }
+      link(it.element.location(), item)
+    } else if it.element.func() == figure {
+      block(above: 1.25em, below: 0em)
+      link(it.element.location(), [#it.prefix(). #h(0.2em) #it.inner()])
+    } else {
+      it
     }
   }
 

@@ -1,8 +1,9 @@
 #import "bookly-defaults.typ": *
 
-#let front-matter(body) = context{
+#let front-matter(body) = context {
   set heading(numbering: none)
   set page(numbering: "i")
+  states.page-numbering.update("i")
   states.num-pattern.update(none)
   states.isfrontmatter.update(true)
 
@@ -21,12 +22,13 @@
   set heading(numbering: "1.1.")
 
   let numbering = "1/1"
-  if states.theme.get().contains("classic") {
-    numbering = "1"
-  }
+  // if states.theme.get().contains("classic") {
+  //   numbering = "1"
+  // }
   set page(numbering: numbering)
 
   states.isfrontmatter.update(false)
+  states.page-numbering.update("1/1")
   states.num-heading.update("1")
   states.num-pattern.update("1.1.")
   states.num-pattern-fig.update("1.1")

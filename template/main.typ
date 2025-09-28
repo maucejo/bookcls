@@ -1,48 +1,21 @@
-// #import "@preview/bookcls:0.1.0": *
+// #import "@preview/bookly:0.2.0": *
 #import "../src/bookly.typ": *
-
-#let committee = (
-  (
-    name: "Hari Seldon",
-    position: "Full Professor",
-    affiliation: "Streeling university",
-    role: "President",
-  ),
-  (
-    name: "Gal Dornick",
-    position: "Associate Professor",
-    affiliation: "Synnax University",
-    role: "Reviewer"
-  ),
-  (
-    name: "Ford Prefect",
-    position: "Associate Professor",
-    affiliation: "Beltegeuse University",
-    role: "Examiner"
-  ),
-  (
-    name: "Paul Atreides",
-    position: "Associate Professor",
-    affiliation: "Caladan University",
-    role: "Examiner"
-  ),
-)
-
+#import "custom-theme.typ": *
 
 #let config-colors = (
-  primary: blue,
-  secondary: blue.lighten(70%),
-  header: blue.lighten(50%),
+  primary: rgb("#1d90d0"),
+  secondary: rgb("#dddddd").darken(15%)
 )
 
 #show: bookly.with(
   author: "Author Name",
   fonts: (
-      body: "Lato",
-      math: "Lete Sans Math"
-    ),
-  // theme: "modern",
-  theme: "classic",
+    body: "Lato",
+    math: "Lete Sans Math"
+  ),
+  // theme: modern,
+  // theme: classic,
+  theme: custom,
   // layout: "tufte",
   lang: "en",
   // colors: config-colors,
