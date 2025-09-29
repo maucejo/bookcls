@@ -13,7 +13,7 @@
     body: "Lato",
     math: "Lete Sans Math"
   ),
-  theme: fancy,
+  // theme: modern,
   // theme: classic,
   // theme: custom,
   // layout: "tufte",

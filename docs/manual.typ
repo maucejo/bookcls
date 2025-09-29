@@ -398,7 +398,6 @@ The information boxes described above are built using the #cmd("custom-box") fun
 	#argument("color", default: rgb(29, 144, 208), types: "color")[Box color.]
 ]
 
-#pagebreak()
 == Title pages
 
 The template provides two functions to create title pages: one for a book and one for a thesis :
@@ -421,6 +420,7 @@ The template provides two functions to create title pages: one for a book and on
 
 	#argument("institution", default: "Institution", types: "string")[Name of the institution.]
 
+	#colbreak()
 	#argument("series", default: "Discipline", types: "string")[Name of the series.]
 
 	#argument("year", default: "2024", types: "string")[Year of publication.]
@@ -576,7 +576,6 @@ When the `tufte` layout is selected, several customizations are applied to adapt
 
 #info-alert[When the `layout` is set to `standard`, the #cmd("sidecite") function behaves like a standard #cmd("cite").]
 
-#pagebreak()
 #command("sidefigure", ..args(
 	"content",
 	dy: - 1.5em,
@@ -606,6 +605,88 @@ When the `tufte` layout is selected, several customizations are applied to adapt
 
 #info-alert[When the `layout` is set to `standard`, #cmd("sidefigure") and #cmd("fullfigure") behave like a standard #cmd("figure").]
 
+= Theming
+
+The theming system is designed to be flexible and customizable, allowing users to define their own themes.
+
+To implement a custom theme, you have to define a function that includes the `show` and `set` rules defining the style of the document (headings, footnotes, references, #sym.dots). Basically, a theme should be structured as follows:
+#codesnippet[
+```typ
+#import "bookly:0.2.0": *
+
+#let my-theme(colors: default-colors, it) = {
+	show heading.where(level: 1): it => {
+		// Heading style
+		...
+	}
+
+	show heading.where(level: 2): it => {
+		// Heading style
+		...
+	}
+
+	show heading.where(level: 3): it => {
+		// Heading style
+		...
+	}
+
+	show outline.entry: it => {
+		// Outline entry style
+		...
+	}
+
+
+	// Other show and set rules
+	...
+
+	it
+}
+```
+]
+
+You can also define your own functions such as #cmd("part"), #cmd("minitoc") and other elements of the document.
+
+`bookly` provides some states that can be useful when designing a custom theme. The states are used to store information about the current state of the document. They are collected in a #dtype(dictionary). The following states are available:
+
+#v(1em)
+- `states.localization` -- #dtype(dictionary): Dictionary of terms used in the document (e.g., "chapter", etc.) in the selected language.
+
+- `states.in-outline` -- #dtype(bool): Indicates whether the current section is in the outline.
+
+- `states.isfrontmatter` -- #dtype(bool): Indicates whether the current section is front matter.
+
+- `states.isappendix` -- #dtype(bool): Indicates whether the current section is an appendix.
+
+- `states.num-pattern` -- #dtype(str): Numbering pattern for sections.
+
+- `states.num-pattern-fig` -- #dtype(str): Numbering pattern for figures.
+
+- `states.num-pattern-subfig` -- #dtype(str): Numbering pattern for subfigures.
+
+- `states.num-pattern-eq` -- #dtype(str): Numbering pattern for equations.
+
+- `states.num-heading` -- #dtype(str): Numbering pattern for headings.
+
+- `states.page-numbering` -- #dtype(str): Numbering pattern for pages.
+
+- `states.author` -- #dtype(str): Author of the document.
+
+- `states.title` -- #dtype(str): Title of the document.
+
+- `states.counter-part` -- #dtype(str): Counter for parts.
+
+- `states.colors` -- #dtype(dictionary): Color scheme for the document.
+
+- `states.theme` -- #dtype(str): Current theme of the document.
+
+- `states.layout` -- #dtype(str): Current layout of the document.
+
+- `states.sidenotecounter` -- #dtype(int): Counter for sidenotes.
+
+#info-alert[
+	`bookly` also comes with a function #cmd("reset-counters") to reset the counters for equations, figures, tables, sidenotes, and footnotes.
+]
+
 = Roadmap
 
 The template is under development. Here is the list of features that are implemented or will be in a future version.
@@ -615,13 +696,13 @@ The template is under development. Here is the list of features that are impleme
 - [x] `fancy`
 - [x] `modern`
 - [x] `classic`
-- [ ] User-defined themes (requires a refactoring of the theming)
+- [x] User-defined themes (requires a refactoring of the theming)
 
 *Layout*
 
 - [x] Standard layout
 - [x] Tufte layout
-- [ ] User-defined paper and margins for `standard` and `tufte` layouts
+// - [ ] User-defined paper and margins for `standard` and `tufte` layouts
 
 *Cover pages*
 

@@ -7,15 +7,9 @@
     // Headings
     show heading.where(level: 1): it => context {
       // Reset counters
-    counter(math.equation).update(0)
-    counter(figure.where(kind: image)).update(0)
-    counter(figure.where(kind: table)).update(0)
-    if states.layout.get().contains("tufte"){
-      states.sidenotecounter.update(0)
-    }
-    counter(footnote).update(0)
+      reset-counters
 
-    // Heading style
+      // Heading style
       let type-chapter = if states.isappendix.get() {states.localization.get().appendix} else {states.localization.get().chapter}
 
       let dxr = 0%
@@ -93,6 +87,7 @@
 
   // Outline
   show outline.entry: it => {
+    show linebreak: none
     if it.element.func() == heading {
       let number = it.prefix()
       let section = it.element.body
@@ -118,6 +113,7 @@
 
   // Page style
   let page-header = context {
+    show linebreak: none
     show: fullwidth
     set text(style: "italic", fill: colors.header)
       if calc.odd(here().page()) {

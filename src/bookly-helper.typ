@@ -3,6 +3,17 @@
 #import "@preview/suboutline:0.3.0": *
 #import "bookly-defaults.typ": *
 
+// Reset counters
+#let reset-counters = context {
+  counter(math.equation).update(0)
+  counter(figure.where(kind: image)).update(0)
+  counter(figure.where(kind: table)).update(0)
+  if states.layout.get().contains("tufte"){
+    states.sidenotecounter.update(0)
+  }
+  counter(footnote).update(0)
+}
+
 // Conditional set-show
 #let show-if(cond, func) = body => if cond { func(body) } else { body }
 

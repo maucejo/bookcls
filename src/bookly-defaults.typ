@@ -5,23 +5,23 @@
 #let paper-size = "a4"
 
 #let states = (
-  localization: state("localization"),
+  author: state("author", none),
+  colors: state("theme-colors"),
+  counter-part: state("counter-part", 0),
   in-outline: state("in-outline", false),
-  isfrontmatter: state("isfrontmatter", false),
   isappendix: state("isappendix", false),
+  isfrontmatter: state("isfrontmatter", false),
+  layout: state("layout", "standard"),
+  localization: state("localization"),
+  num-heading: state("num-heading", "1"),
   num-pattern: state("num-pattern", "1.1."),
+  num-pattern-eq: state("num-pattern-eq", "(1.1)"),
   num-pattern-fig: state("num-pattern-fig", "1.1"),
   num-pattern-subfig: state("num-pattern-subfig", "1.1a"),
-  num-pattern-eq: state("num-pattern-eq", "(1.1)"),
-  num-heading: state("num-heading", "1"),
   page-numbering: state("page-numbering", "1/1"),
-  author: state("author", none),
-  title: state("title", none),
-  counter-part: state("counter-part", 0),
-  colors: state("theme-colors"),
+  sidenotecounter: counter("sidenotecounter"),
   theme: state("theme", "fancy"),
-  layout: state("layout", "standard"),
-  sidenotecounter: counter("sidenotecounter")
+  title: state("title", none),
 )
 
 #let default-fonts = (

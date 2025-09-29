@@ -2,12 +2,12 @@
 #import "../../src/bookly.typ": *
 // #import "../custom-theme.typ": *
 
-#show: chapter.with(title: "First chapter")
+// #show: chapter.with(title: "First chapter")
 
-// = First chapter
-// #lorem(100)
-// #minitoc
-// #pagebreak()
+= First chapter
+#lorem(100)
+#minitoc
+#pagebreak()
 
 == Goals
 #lorem(100)
