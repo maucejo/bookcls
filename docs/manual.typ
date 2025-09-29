@@ -32,7 +32,7 @@
 
 To use the #package[bookly] template, you need to include the following line at the beginning of your `typ` file:
 #codesnippet[```typ
-#import "@preview/bookly:0.1.0": *
+#import "@preview/bookly:0.2.0": *
 ```
 ]
 

@@ -1,3 +1,4 @@
+#import "@preview/showybox:2.0.4": *
 #import "../bookly-helper.typ": *
 #import "../bookly-defaults.typ": *
 
@@ -141,25 +142,30 @@
 }
 
 // Boxes - Definitions
-#let custom-box-fancy(title: none, icon: "info", color: rgb(29, 144, 208), body) = {
-  grid(
-    columns: (auto, 1fr),
-    column-gutter: 0.75em,
-    align: top + left,
-    [
-      #v(0.5em)
-      #color-svg("resources/images/icons/" + icon + ".svg", color, width: 1.5em)
-    ],
-    [
-      #box(
-      stroke: (left: 1.25pt + color),
-      fill: color.lighten(90%),
-      inset: 1em,
-      width: 100%
-      )[#body]
-    ]
-  )
-}
+#let custom-box-fancy(title: none, icon: "info", color: rgb(29, 144, 208), body) = showybox(
+  title: grid(
+    columns: 2,
+    align: (left + horizon, right + horizon),
+    column-gutter: 0.5em,
+    [#color-svg("resources/images/icons/" + icon + ".svg", white)],
+    [#title]
+  ),
+  title-style: (
+    boxed-style: (
+      anchor: (x: left, y: horizon)
+    )
+  ),
+  frame: (
+    title-color: color,
+    border-color: color,
+    body-color: color.lighten(90%),
+    thickness: 2pt
+  ),
+  align: center
+)[
+  #body
+  #v(0.5em)
+]
 
 // Part
 #let part-fancy(title) = context {

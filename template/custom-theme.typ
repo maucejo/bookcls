@@ -7,13 +7,7 @@
   // Headings
   show heading.where(level: 1): it => {
     // Reset counters
-    counter(math.equation).update(0)
-    counter(figure.where(kind: image)).update(0)
-    counter(figure.where(kind: table)).update(0)
-    if states.layout.get().contains("tufte"){
-      states.sidenotecounter.update(0)
-    }
-    counter(footnote).update(0)
+    reset-counters
 
     // Heading style
     place(top)[
