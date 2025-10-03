@@ -1,3 +1,4 @@
+#import "@preview/hydra:0.6.2": hydra
 #import "../bookly-helper.typ": *
 #import "../bookly-defaults.typ": *
 
@@ -230,7 +231,7 @@
     #fullwidth[#rect(fill: gradient.linear(states.colors.get().primary, states.colors.get().primary.transparentize(55%), dir: ttb), height: 61%, width: 135% + dxr)[
       #set align(center + horizon)
 
-      #text(size: 5em, fill: white)[*#states.localization.get().part #states.counter-part.get()*]
+      #text(size: 5em, fill: white)[*#states.localization.get().part #states.counter-part.display()*]
     ]]
   ]
 
@@ -242,7 +243,7 @@
   ]
 
   show heading: none
-  heading(numbering: none)[#box[#states.localization.get().part #states.counter-part.get() -- #title]]
+  heading(numbering: none)[#box[#states.localization.get().part #states.counter-part.display() -- #title]]
 
   pagebreak(weak: true, to:"odd")
 }

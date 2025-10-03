@@ -1,3 +1,5 @@
+
+#import "@preview/hydra:0.6.2": hydra
 #import "@preview/showybox:2.0.4": *
 #import "../bookly-helper.typ": *
 #import "../bookly-defaults.typ": *
@@ -190,7 +192,7 @@
    move(dx: dxl)[
     #fullwidth(dx: dxr)[
       #line(stroke: 1.75pt + states.colors.get().primary, length: 104%)
-      #text(size: 2.5em)[#states.localization.get().part #states.counter-part.get()]
+      #text(size: 2.5em)[#states.localization.get().part #states.counter-part.display()]
       #line(stroke: 1.75pt + states.colors.get().primary, length: 35%)
       #text(size: 3em)[*#title*]
       #line(stroke: 1.75pt + states.colors.get().primary, length: 104%)
@@ -198,7 +200,7 @@
   ]
 
   show heading: none
-  heading(numbering: none)[#box[#text(fill:states.colors.get().primary)[#states.localization.get().part #states.counter-part.get() -- #title]]]
+  heading(numbering: none)[#box[#text(fill:states.colors.get().primary)[#states.localization.get().part #states.counter-part.display() -- #title]]]
 
   pagebreak(weak: true, to:"odd")
 }

@@ -1,5 +1,4 @@
 #import "@preview/subpar:0.2.2"
-#import "@preview/hydra:0.6.2": hydra
 #import "@preview/suboutline:0.3.0": *
 #import "bookly-defaults.typ": *
 
@@ -63,25 +62,6 @@ set align(center)
 
 // Long and short captions for figures or tables
 #let ls-caption(long, short) = context if states.in-outline.get() { short } else { long }
-
-// // Minitoc
-// #let minitoc = context {
-//   let toc-header = states.localization.get().toc
-//   block(above: 3.5em)[
-//     #text([*#toc-header*])
-//     #v(-0.5em)
-//   ]
-
-//   let miniline = line(stroke: 1.5pt + states.colors.get().secondary, length: 100%)
-//   if states.theme.get().contains("classic"){
-//     miniline = line(stroke: 0.75pt, length: 100%)
-//   }
-
-//   miniline
-//   v(0.5em)
-//   suboutline(target: heading.where(outlined: true, level: 2))
-//   miniline
-// }
 
 // Book title page
 #let book-title-page(

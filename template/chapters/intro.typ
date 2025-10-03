@@ -11,7 +11,6 @@
 = Introduction
 
 == Goals
-
 #lorem(100)
 
 #lorem(25)

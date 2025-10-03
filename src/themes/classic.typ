@@ -1,4 +1,5 @@
 
+#import "@preview/hydra:0.6.2": hydra
 #import "@preview/showybox:2.0.4": *
 #import "../bookly-helper.typ": *
 #import "../bookly-defaults.typ": *
@@ -155,13 +156,13 @@
   }
 
   move(dx: dx)[
-    #text(size: 2.5em)[#states.localization.get().part #states.counter-part.get()]
+    #text(size: 2.5em)[#states.localization.get().part #states.counter-part.display()]
     #v(1em)
     #text(size: 3em)[*#title*]
   ]
 
   show heading: none
-  heading(numbering: none)[#box[#states.localization.get().part #states.counter-part.get() -- #title]]
+  heading(numbering: none)[#box[#states.localization.get().part #states.counter-part.display() -- #title]]
 
   pagebreak(weak: true, to:"odd")
 }

@@ -7,7 +7,7 @@
 #let states = (
   author: state("author", none),
   colors: state("theme-colors"),
-  counter-part: state("counter-part", 0),
+  counter-part: counter("part"),
   in-outline: state("in-outline", false),
   isappendix: state("isappendix", false),
   isfrontmatter: state("isfrontmatter", false),

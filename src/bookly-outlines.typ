@@ -2,7 +2,6 @@
 
 // Table of contents
 #let tableofcontents = {
-  // set page(margin: auto)
   set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
   show outline.entry: it => context {
     let dxl = 0%

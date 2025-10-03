@@ -1,6 +1,7 @@
 #import "themes/fancy.typ": *
 #import "themes/modern.typ": *
 #import "themes/classic.typ": *
+#import "themes/orly.typ": *
 
 // Part
 #let part = it => context if states.theme.get().contains("fancy") {
@@ -9,6 +10,8 @@
   part-modern(it)
 } else if states.theme.get().contains("classic") {
   part-classic(it)
+} else if states.theme.get().contains("orly") {
+  part-orly(it)
 } else {
   part-classic(it)
 }

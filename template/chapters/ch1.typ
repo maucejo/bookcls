@@ -5,6 +5,7 @@
 // #show: chapter.with(title: "First chapter")
 
 = First chapter
+
 #lorem(100)
 #minitoc
 #pagebreak()
