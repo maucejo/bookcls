@@ -66,6 +66,7 @@ After importing #package[bookly], you have to initialize the template by a show 
 			-  `fancy` (default)
 			- `modern`
 			- `classic`
+			- `orly`
 		]
 
 		#argument("layout", default: "standard", types: "string")[Layout of the document. Possible values are:
@@ -111,42 +112,44 @@ After importing #package[bookly], you have to initialize the template by a show 
 
 === Themes gallery <sss:themes>
 
-==== Parts
+==== Fancy
+
 #subfigure(
-	columns: 3,
-	figure(image("manual-images/part-fancy.png"), caption: [`"fancy"`]),
-	figure(image("manual-images/part-modern.png"), caption: [`"modern"`]),
-	figure(image("manual-images/part-classic.png"), caption: [`"classic"`]),
+	columns: 2,
+	figure(image("manual-images/part-fancy.png", width: 80%), caption: "Part"),
+	figure(image("manual-images/chapter-fancy.png", width: 80%), caption: "Chapter"),
+	figure(image("manual-images/chapter-nonum-fancy.png", width: 80%), caption: "Unnumbered chapter"),
+	figure(image("manual-images/sections-fancy.png", width: 80%), caption: "Section"),
 )
 
-#v(4em)
-==== Chapters
+==== Modern
 
 #subfigure(
-	columns: 3,
-	figure(image("manual-images/chapter-fancy.png"), caption: [`"fancy"`]),
-	figure(image("manual-images/chapter-modern.png"), caption: [`"modern"`]),
-	figure(image("manual-images/chapter-classic.png"), caption: [`"classic"`]),
+	columns: 2,
+	figure(image("manual-images/part-modern.png", width: 80%), caption: "Part"),
+	figure(image("manual-images/chapter-modern.png", width: 80%), caption: "Chapter"),
+	figure(image("manual-images/chapter-nonum-modern.png", width: 80%), caption: "Unnumbered chapter"),
+	figure(image("manual-images/sections-modern.png", width: 80%), caption: "Section"),
 )
 
-#v(1em)
-==== Unnumbered chapters
+==== Classic
 
 #subfigure(
-	columns: 3,
-	figure(image("manual-images/chapter-nonum-fancy.png"), caption: [`"fancy"`]),
-	figure(image("manual-images/chapter-nonum-modern.png"), caption: [`"modern"`]),
-	figure(image("manual-images/chapter-nonum-classic.png"), caption: [`"classic"`]),
+	columns: 2,
+	figure(image("manual-images/part-classic.png", width: 80%), caption: "Part"),
+	figure(image("manual-images/chapter-classic.png", width: 80%), caption: "Chapter"),
+	figure(image("manual-images/chapter-nonum-classic.png", width: 80%), caption: "Unnumbered chapter"),
+	figure(image("manual-images/sections-classic.png", width: 80%), caption: "Section"),
 )
 
-#v(4em)
-==== Sections
+==== Orly
 
 #subfigure(
-	columns: 3,
-	figure(image("manual-images/sections-fancy.png"), caption: [`"fancy"`]),
-	figure(image("manual-images/sections-modern.png"), caption: [`"modern"`]),
-	figure(image("manual-images/sections-classic.png"), caption: [`"classic"`]),
+	columns: 2,
+	figure(image("manual-images/part-orly.png", width: 80%), caption: "Part"),
+	figure(image("manual-images/chapter-orly.png", width: 80%), caption: "Chapter"),
+	figure(image("manual-images/chapter-nonum-orly.png", width: 80%), caption: "Unnumbered chapter"),
+	figure(image("manual-images/sections-orly.png", width: 80%), caption: "Section"),
 )
 
 === Layout

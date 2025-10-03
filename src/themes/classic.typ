@@ -29,7 +29,7 @@
     } else {
       v(1em)
       text(2em)[#it.body]
-      v(1em)
+      v(2em)
     }
   }
 
