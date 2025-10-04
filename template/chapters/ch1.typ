@@ -1,6 +1,5 @@
-// #import "@preview/bookcls:0.1.0": *
-#import "../../src/bookly.typ": *
-// #import "../custom-theme.typ": *
+#import "@preview/bookly:1.0.0": *
+// #import "../../src/bookly.typ": *
 
 // #show: chapter.with(title: "First chapter")
 

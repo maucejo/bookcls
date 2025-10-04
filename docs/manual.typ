@@ -50,7 +50,7 @@ After importing #package[bookly], you have to initialize the template by a show 
 	title: "Title",
   author: "Author Name",
 	theme: "fancy",
-	layout: "standard",
+	tufte: false,
 	lang: "fr",
 	fonts: "default-fonts",
 	colors: "default-colors",
@@ -63,15 +63,13 @@ After importing #package[bookly], you have to initialize the template by a show 
 		#colbreak()
 
 		#argument("theme", default: "fancy", types: "function")[Theme of the document. Possible values are:
-			-  `fancy` (default)
+			- `fancy` (default)
 			- `modern`
 			- `classic`
-			- `orly`
+			- `orly` (O'Reilly inspired)
 		]
 
-		#argument("layout", default: "standard", types: "string")[Layout of the document. Possible values are:
-			- `"standard"` (default)
-			- `"tufte"`
+		#argument("tufte", default: false, types: "bool")[If `true`, the layout of the document is inspired by the works of Edward Tufte (wide margins, sidenotes, etc.).
 		]
 
 		#argument("lang", default: "fr", types: "string")[Language of the document.

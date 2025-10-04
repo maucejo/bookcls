@@ -19,7 +19,7 @@
     set align(right)
     set underline(stroke: 2pt + colors.secondary, offset: 8pt)
     let dx = 0%
-    if states.layout.get().contains("tufte") {
+    if states.tufte.get() {
       dx = 35.2%
     }
     show: move.with(dx: dx)
@@ -123,7 +123,7 @@
     let current-page = counter(page).display()
     let dx = 0%
     let page-final = counter(page).final().first()
-    if states.layout.get().contains("tufte") {
+    if states.tufte.get() {
       dx = 21.65%
     }
     set align(center)
@@ -161,7 +161,7 @@
     title-color: color,
     border-color: color,
     body-color: color.lighten(90%),
-    thickness: 2pt
+    thickness: 1pt
   ),
   align: center
 )[
@@ -184,7 +184,7 @@
 
   let dxl = 0%
   let dxr = 0%
-  if states.layout.get().contains("tufte") {
+  if states.tufte.get() {
     dxl = 21.68%
     dxr = 3.1%
   }

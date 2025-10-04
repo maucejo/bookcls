@@ -19,19 +19,17 @@
   let numbering = "1/1"
   set page(numbering: numbering)
 
-  states.isfrontmatter.update(false)
   states.page-numbering.update("1/1")
   states.num-heading.update("1")
   states.num-pattern.update("1.1.")
   states.num-pattern-fig.update("1.1a")
   states.num-pattern-eq.update("(1.1a)")
 
-  if states.layout.get().contains("tufte") {
+  if states.tufte.get() or not states.isfrontmatter.get() {
     counter(page).update(1)
   } else {
     counter(page).update(0)
   }
-  // counter(page).update(1)
 
   body
 }

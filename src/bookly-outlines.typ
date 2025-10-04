@@ -6,7 +6,7 @@
   show outline.entry: it => context {
     let dxl = 0%
     let dxr = 0%
-    if states.layout.get().contains("tufte") {
+    if states.tufte.get() {
       dxl = 8.17%
       dxr = -17%
     }
@@ -22,7 +22,7 @@
   show outline.entry: it => context {
     let dxl = 0%
     let dxr = 0%
-    if states.layout.get().contains("tufte") {
+    if states.tufte.get() {
       dxl = 8.17%
       dxr = -17%
     }
@@ -38,7 +38,7 @@
   show outline.entry: it => context {
     let dxl = 0%
     let dxr = 0%
-    if states.layout.get().contains("tufte") {
+    if states.tufte.get() {
       dxl = 8.17%
       dxr = -17%
     }

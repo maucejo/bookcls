@@ -7,7 +7,7 @@
   counter(math.equation).update(0)
   counter(figure.where(kind: image)).update(0)
   counter(figure.where(kind: table)).update(0)
-  if states.layout.get().contains("tufte"){
+  if states.tufte.get(){
     states.sidenotecounter.update(0)
   }
   counter(footnote).update(0)
@@ -17,7 +17,7 @@
 #let show-if(cond, func) = body => if cond { func(body) } else { body }
 
 // Fullwidth block
-#let fullwidth(dx: 0%, body) = context if states.layout.get().contains("tufte") {
+#let fullwidth(dx: 0%, body) = context if states.tufte.get() {
   block(width: 144% + dx, body)
 } else {
   block(width: 100% + dx, body)

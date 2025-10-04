@@ -1,5 +1,5 @@
-// #import "@preview/bookly:0.2.0": *
-#import "../src/bookly.typ": *
+#import "@preview/bookly:1.0.0": *
+// #import "../src/bookly.typ": *
 // #import "custom-theme.typ": *
 
 #let config-colors = (
@@ -15,9 +15,8 @@
   ),
   // theme: modern,
   // theme: classic,
-  theme: orly,
-  // theme: custom,
-  // layout: "tufte",
+  // theme: orly,
+  // tufte: true,
   lang: "en",
   // colors: config-colors,
   title-page: book-title-page(

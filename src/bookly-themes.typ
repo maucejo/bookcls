@@ -23,6 +23,8 @@
   minitoc-modern
 } else if states.theme.get().contains("classic") {
   minitoc-classic
+} else if states.theme.get().contains("orly") {
+  minitoc-orly
 } else {
   minitoc-classic
 }
@@ -34,6 +36,8 @@
   custom-box-modern(title: title, icon: icon, color: color, body)
 } else if states.theme.get().contains("classic") {
   custom-box-classic(title: title, icon: icon, color: color, body)
+} else if states.theme.get().contains("orly") {
+  custom-box-orly(title: title, icon: icon, color: color, body)
 } else {
   custom-box-classic(title: title, icon: icon, color: color, body)
 }

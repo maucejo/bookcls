@@ -13,7 +13,7 @@
   title: "Title",
   author: "Author Name",
   theme: fancy,
-  layout: "standard",
+  tufte: false,
   logo: none,
   lang: "fr",
   fonts: default-fonts,
@@ -25,7 +25,7 @@
   set document(author: author, title: title)
   states.author.update(author)
   states.title.update(title)
-  states.layout.update(layout)
+  states.tufte.update(tufte)
 
   let book-colors = default-colors + colors
   states.colors.update(book-colors)
@@ -74,8 +74,8 @@
       gap: 1.5em
     )
 
-  set figure.caption(position: top) if layout.contains("tufte")
-  show: show-if(layout.contains("tufte"), it => {
+  set figure.caption(position: top) if tufte
+  show: show-if(tufte, it => {
     show figure.caption: content => margin-note({
         text(size: 0.9em, content)
       }
@@ -115,7 +115,7 @@
 
   // Page properties for tufte layout
   set-page-properties()
-  if layout.contains("tufte") {
+  if tufte {
     set-margin-note-defaults(
       stroke: none,
       side: right,
@@ -131,7 +131,7 @@
       left: 1.47cm,
       right: 6.93cm
     )
-  ) if layout.contains("tufte")
+  ) if tufte
 
   // Headings
   show: theme.with(colors: book-colors)

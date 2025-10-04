@@ -45,6 +45,15 @@
     ]
   }
 
+  // Tables
+  show table.cell.where(y: 0): set text(weight: "bold")
+  set table(
+    stroke: (_, y) => (
+      top: if y <= 1 {0.75pt} else {0pt},
+      bottom: 0.75pt
+    ),
+  )
+
   // Outline
   show outline.entry: it => {
     show linebreak: none
@@ -102,7 +111,7 @@
     let cp = counter(page).get().first()
     let current-page = counter(page).display()
     let dx = 0%
-    if states.layout.get().contains("tufte") {
+    if states.tufte.get() {
       dx = 21.65%
     }
     set align(center)
@@ -130,8 +139,8 @@
       title-color: color.lighten(85%),
       border-color: color,
       body-color: none,
-      thickness: (left: 1.25pt),
-      radius: 0pt,
+      thickness: 0.75pt,
+      radius: (top-left: 5em, bottom-right: 5em, rest: 0em),
     ),
     breakable: true
   )[#body]
@@ -151,7 +160,7 @@
   pagebreak(weak: true, to:"odd")
 
   let dx = 0%
-  if states.layout.get().contains("tufte") {
+  if states.tufte.get() {
     dx = 21.68%
   }
 

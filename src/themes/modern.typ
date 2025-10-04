@@ -16,9 +16,10 @@
       let dxr = 0%
       let dxb = 0%
       let dxc = 0%
-      if states.layout.get().contains("tufte") {
+      if states.tufte.get() {
         dxr = 12.5%
         dxb = 35.2%
+        dxc = 8.2%
       }
 
       if it.numbering != none {
@@ -26,9 +27,6 @@
           #fullwidth[#rect(fill: gradient.linear(colors.primary, colors.primary.transparentize(65%), dir: ltr), width: 132% - dxr, height: 35%)]
         ]
 
-        if states.layout.get().contains("tufte") {
-          dxc = 8.2%
-        }
         place(top, dx: dxc, dy: 10%)[
           #text(size: 2.5em, fill: white)[#type-chapter #counter(heading).display(states.num-heading.get())]
         ]
@@ -74,6 +72,7 @@
     ]
   }
 
+  // Tables
   show table.cell.where(y: 0): set text(weight: "bold", fill: white)
   set table(
     fill: (_, y) => if y == 0 {colors.primary} else if calc.odd(y) {colors.secondary.lighten(60%)},
@@ -163,7 +162,7 @@
       ]
     } else {
       let dx = 0%
-      if states.layout.get().contains("tufte") {
+      if states.tufte.get() {
         dx = 8.2%
       }
       set align(left)
@@ -218,12 +217,9 @@
   pagebreak(weak: true, to:"odd")
 
   let dxr = 0%
-  if states.layout.get().contains("tufte") {
-    dxr = 21.68%
-  }
-
   let dxb = 0%
-  if states.layout.get().contains("tufte") {
+  if states.tufte.get() {
+    dxr = 21.68%
     dxb = 36%
   }
 

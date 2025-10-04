@@ -1,3 +1,4 @@
+#import "@preview/showybox:2.0.4": *
 #import "@preview/hydra:0.6.2": hydra, anchor
 #import "../bookly-helper.typ": *
 #import "../bookly-defaults.typ": *
@@ -15,7 +16,7 @@
     set align(right)
 
     let dx = 0%
-    if states.layout.get().contains("tufte") {
+    if states.tufte.get() {
       dx = 43.5%
     }
 
@@ -38,6 +39,16 @@
     }
     v(5em)
   }
+
+  // Tables
+  show table.cell.where(y: 0): set text(weight: "bold", fill: white)
+  set table(
+    fill: (_, y) => if y == 0 {black} ,
+    stroke: (_, y) => (
+      top: 0pt,
+      bottom: 0.75pt
+    ),
+  )
 
   // Outline
   show outline.entry: it => {
@@ -88,6 +99,24 @@
   it
 }
 
+// Boxes - Definitions
+#let custom-box-orly(title: none, icon: "info", color: rgb(29, 144, 208), body) = {
+  showybox(
+    title: box-title(color-svg("resources/images/icons/" + icon + ".svg", color, width: 1em), [*#title*]),
+    title-style: (
+      color: color,
+      sep-thickness: 0pt,
+    ),
+    frame: (
+      title-color: color.lighten(85%),
+      border-color: color,
+      body-color: none,
+      thickness: (left: 1.25pt),
+      radius: 0pt,
+    ),
+    breakable: true
+  )[#body]
+}
 
 // Part
 #let part-orly(title) = context {
@@ -103,7 +132,7 @@
   pagebreak(weak: true, to:"odd")
 
   let dx = 0%
-  if states.layout.get().contains("tufte") {
+  if states.tufte.get() {
     dx = 43.5%
   }
 
@@ -126,4 +155,22 @@
   ]
 
   pagebreak(weak: true, to:"odd")
+}
+
+#let minitoc-orly = context {
+  let miniline = line(stroke: 0.5pt, length: 100%)
+  let toc-header = states.localization.get().toc
+
+  block(above: 3.5em)[
+    #set align(right)
+    #miniline
+    #v(-0.5em)
+    #text([*#toc-header*])
+    #v(0.5em)
+  ]
+
+  // miniline
+  v(0.5em)
+  suboutline(target: heading.where(outlined: true, level: 2))
+  miniline
 }
