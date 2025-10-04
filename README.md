@@ -1,6 +1,6 @@
 # Book template
 
-[![Generic badge](https://img.shields.io/badge/Version-0.1.0-cornflowerblue.svg)]()
+[![Generic badge](https://img.shields.io/badge/Version-1.0.0-cornflowerblue.svg)]()
 [![MIT License](https://img.shields.io/badge/License-MIT-forestgreen)](https://github.com/maucejo/book_template/blob/main/LICENSE)
 [![User Manual](https://img.shields.io/badge/doc-.pdf-mediumpurple)](https://github.com/maucejo/book_template/blob/main/docs/manual.pdf)
 
@@ -14,7 +14,7 @@ This section provides the minimal amount of information to get started with the 
 To use the `bookly` template, you need to include the following line at the beginning of your typ file:
 
 ```typ
-#import "@preview/bookly:0.1.0": *
+#import "@preview/bookly:1.0.0": *
 ```
 
 ### Initializing the template
@@ -43,7 +43,7 @@ After importing `bookly`, you have to initialize the template by a show rule wit
 
 ### Main features
 
-* Themes: "classic", "modern", "fancy"
+* Themes: `classic`, `modern`, `fancy`, `orly`
 * Layout: "standard" and "tufte"
 * Language support: English and French
 * Font customization: Body and math fonts can be customized
@@ -104,15 +104,15 @@ The template is under development. Here is the list of features that are impleme
 
 *Themes*
 
-- [x] `fancy`
+- [x] `fancy` (default)
 - [x] `modern`
 - [x] `classic`
+- [x] `orly` (O'Reilly style)
 
 *Layout*
 
 - [x] Standard layout
 - [x] Tufte layout
-- [ ] User-defined paper and margins for `standard` and `tufte` layouts
 
 *Cover pages*
 

@@ -2,7 +2,8 @@
 #import "@preview/showybox:2.0.4": *
 #import "@preview/swank-tex:0.1.0": LaTeX
 #import "@preview/cheq:0.2.2": *
-#import "../src/bookly.typ": *
+// #import "../src/bookly.typ": *
+#import "@preview/bookly:1.0.0": *
 
 #show: checklist.with(fill: eastern.lighten(95%), stroke: eastern, radius: .2em)
 
@@ -13,7 +14,7 @@
 
 #show: mantys(
   name: "bookly.typ",
-  version: "0.2.0",
+  version: "1.0.0",
   authors: ("Mathieu Aucejo"),
   license: "MIT",
   description: "Write beautiful scientific book or thesis with Typst",
@@ -32,7 +33,7 @@
 
 To use the #package[bookly] template, you need to include the following line at the beginning of your `typ` file:
 #codesnippet[```typ
-#import "@preview/bookly:0.2.0": *
+#import "@preview/bookly:1.0.0": *
 ```
 ]
 
@@ -613,7 +614,7 @@ The theming system is designed to be flexible and customizable, allowing users t
 To implement a custom theme, you have to define a function that includes the `show` and `set` rules defining the style of the document (headings, footnotes, references, #sym.dots). Basically, a theme should be structured as follows:
 #codesnippet[
 ```typ
-#import "bookly:0.2.0": *
+#import "@preview/bookly:1.0.0": *
 
 #let my-theme(colors: default-colors, it) = {
 	show heading.where(level: 1): it => {
@@ -647,7 +648,17 @@ To implement a custom theme, you have to define a function that includes the `sh
 
 You can also define your own functions such as #cmd("part"), #cmd("minitoc") and other elements of the document.
 
-`bookly` provides some states that can be useful when designing a custom theme. The states are used to store information about the current state of the document. They are collected in a #dtype(dictionary). The following states are available:
+Then, you can initialize the template with your custom theme as follows:
+#codesnippet[
+	```typ
+	#show: bookly.with(
+		theme: my-theme,
+		...
+	)
+	```
+]
+
+Finally, `bookly` provides some states that can be useful when designing a custom theme. The states are used to store information about the current state of the document. They are collected in a #dtype(dictionary). The following states are available:
 
 #v(1em)
 - `states.localization` -- #dtype(dictionary): Dictionary of terms used in the document (e.g., "chapter", etc.) in the selected language.
