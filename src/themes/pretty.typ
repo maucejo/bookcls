@@ -158,6 +158,25 @@
   it
 }
 
+// Boxes - Definitions
+#let custom-box-pretty(title: none, icon: "info", color: rgb(29, 144, 208), body) = {
+  showybox(
+    title: box-title(color-svg("resources/images/icons/" + icon + ".svg", color, width: 1em), [*#title*]),
+    title-style: (
+      color: color,
+      sep-thickness: 0pt,
+    ),
+    frame: (
+      title-color: color.lighten(85%),
+      border-color: color,
+      body-color: none,
+      thickness: 0.75pt,
+      radius: (top-left: 5em, bottom-right: 5em, rest: 0em),
+    ),
+    breakable: true
+  )[#body]
+}
+
 // Part
 #let part-pretty(title) = context {
   states.counter-part.update(i => i + 1)

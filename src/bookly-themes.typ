@@ -43,6 +43,8 @@
   custom-box-classic(title: title, icon: icon, color: color, body)
 } else if states.theme.get().contains("orly") {
   custom-box-orly(title: title, icon: icon, color: color, body)
+} else if states.theme.get().contains("pretty") {
+  custom-box-pretty(title: title, icon: icon, color: color, body)
 } else {
   custom-box-classic(title: title, icon: icon, color: color, body)
 }

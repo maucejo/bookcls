@@ -132,18 +132,22 @@
 // Boxes - Definitions
 #let custom-box-classic(title: none, icon: "info", color: rgb(29, 144, 208), body) = {
   showybox(
-    title: box-title(color-svg("resources/images/icons/" + icon + ".svg", color, width: 1em), [*#title*]),
+    title: box-title(color-svg("resources/images/icons/" + icon + ".svg", white, width: 1em), [*#title*]),
     title-style: (
-      color: color,
-      sep-thickness: 0pt,
+      boxed-style: (
+        anchor: (x: left, y: horizon),
+        offset: (x: -1em, y: 1.15em),
+        radius: (top-left: 0pt, top-right: 0pt, bottom-left: 0pt, bottom-right: 5pt)
+      )
     ),
     frame: (
-      title-color: color.lighten(85%),
+      title-color: color,
       border-color: color,
-      body-color: none,
-      thickness: 0.75pt,
-      radius: (top-left: 5em, bottom-right: 5em, rest: 0em),
+      body-color: color.lighten(90%),
+      thickness: 2pt,
+      body-inset: (top:2em, left: 1em, right: 1em, bottom: 1em)
     ),
+    align: center,
     breakable: true
   )[#body]
 }
