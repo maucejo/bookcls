@@ -717,6 +717,8 @@ Finally, `bookly` provides some states that can be useful when designing a custo
 
 - `states.page-numbering` -- #dtype(str): Numbering pattern for pages.
 
+- `states.part-numbering` -- #dtype(str): Numbering pattern for parts.
+
 - `states.author` -- #dtype(str): Author of the document.
 
 - `states.title` -- #dtype(str): Title of the document.
