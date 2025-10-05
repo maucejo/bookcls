@@ -223,16 +223,25 @@
 // Minitoc
 #let minitoc-pretty = context {
   let toc-header = states.localization.get().toc
-  block(above: 3.5em, below: 0.5em)[
-    #set text(fill: white)
-    #box(fill: states.colors.get().primary, inset: 0.5em, radius: (top: 0.25em))[*#toc-header*]
-    #v(-0.5em)
-  ]
 
   let miniline = line(stroke: 1pt + states.colors.get().primary, length: 100%)
 
-  miniline
-  v(0.5em)
-  suboutline(target: heading.where(outlined: true, level: 2))
-  miniline
+  let header = block[
+    #set text(fill: white)
+    #box(fill: states.colors.get().primary, inset: 0.5em, radius: (top: 0.25em))[*#toc-header*]
+  ]
+
+  let body = block[
+    #miniline
+    #v(0.5em)
+    #suboutline(target: heading.where(outlined: true, level: 2))
+    #miniline
+  ]
+
+  v(3.5em)
+  stack(
+    dir: ttb,
+    header,
+    body
+  )
 }
