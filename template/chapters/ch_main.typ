@@ -1,4 +1,4 @@
-// #include "intro.typ"
+#include "intro.typ"
 #include "ch1.typ"
-// #include "ch2.typ"
-// #include "conclusion.typ"
+#include "ch2.typ"
+#include "conclusion.typ"

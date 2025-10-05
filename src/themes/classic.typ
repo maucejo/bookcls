@@ -63,6 +63,7 @@
       let item = none
       if it.level == 1 {
         block(above: 1.25em, below: 0em)
+        v(0.5em)
         item = [*#number #it.inner()*]
       } else if it.level == 2 {
         block(above: 1em, below: 0em)
@@ -74,6 +75,7 @@
       link(it.element.location(), item)
     } else if it.element.func() == figure {
       block(above: 1.25em, below: 0em)
+      v(0.25em)
       link(it.element.location(), [#it.prefix(). #h(0.2em) #it.inner()])
     } else {
       it
@@ -165,13 +167,16 @@
   }
 
   move(dx: dx)[
-    #text(size: 2.5em)[#states.localization.get().part #states.counter-part.display()]
+    #text(size: 2.5em)[#states.localization.get().part #states.counter-part.display(states.part-numbering.get())]
     #v(1em)
     #text(size: 3em)[*#title*]
   ]
 
   show heading: none
-  heading(numbering: none)[#box[#states.localization.get().part #states.counter-part.display() -- #title]]
+  heading(numbering: none)[
+    #v(1em)
+    #box[#states.localization.get().part #states.counter-part.display(states.part-numbering.get()) -- #title]
+  ]
 
   pagebreak(weak: true, to:"odd")
 }
