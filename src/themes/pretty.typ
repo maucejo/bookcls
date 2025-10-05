@@ -24,13 +24,13 @@
       block[
         #text(size: 1.25em)[#type-chapter]
         #v(-1em)
-        #box(stroke: (top: 1.5pt + states.colors.get().primary))[
+        #box(stroke: (top: 1.5pt + colors.primary))[
           #set text(1.6em)
           #grid(
             columns: (auto, 1fr),
             align: (center, left),
             inset: (0em, 0.5em),
-            [#box(fill: states.colors.get().primary, width: 1em, radius: (bottom: 0.4em), inset: 0.5em)[#text(fill: white)[#counter(heading).display(states.num-heading.get())]]],
+            [#box(fill: colors.primary, width: 1em, radius: (bottom: 0.4em), inset: 0.5em)[#text(fill: white)[#counter(heading).display(states.num-heading.get())]]],
             [#it.body]
           )
         ]
@@ -43,13 +43,25 @@
           columns: (1em, 1fr),
           align: (center, left),
           inset: (0em, 0.5em),
-          [#box(fill: states.colors.get().primary, width: 1em, radius: (bottom: 0.4em), inset: 0.5em)[#text(fill: white)[#text(fill: states.colors.get().primary, "1")]]],
+          [#box(fill: colors.primary, width: 1em, radius: (bottom: 0.4em), inset: 0.5em)[#text(fill: white)[#counter(heading).display(states.num-heading.get())]]],
           [#it.body]
         )
       ]
       v(1em)
     }
   }
+
+  // Tables
+  show table.cell.where(y: 0): set text(weight: "bold", fill: white)
+  set table(
+    fill: (_, y) => if y == 0 {colors.primary} ,
+    stroke: (_, y) => if y == 0 {(bottom: 0pt)} else {(bottom: 01pt + colors.secondary)}
+  )
+  show table: it => block(
+    stroke: 01pt + colors.primary,
+    radius: 1em,
+    clip: true
+  )[#it]
 
   // Outline
   show outline.entry: it => {
