@@ -43,12 +43,36 @@
           columns: (1em, 1fr),
           align: (center, left),
           inset: (0em, 0.5em),
-          [#box(fill: colors.primary, width: 1em, radius: (bottom: 0.4em), inset: 0.5em)[#text(fill: white)[#counter(heading).display(states.num-heading.get())]]],
+          [#box(fill: colors.primary, width: 1em, radius: (bottom: 0.4em), inset: 0.5em)[#text(fill: colors.primary)[#counter(heading).display(states.num-heading.get())]]],
           [#it.body]
         )
       ]
       v(1em)
     }
+  }
+
+  show heading.where(level: 2): it => {
+    block(above: 1.5em)[
+      #if it.numbering != none {
+        text(counter(heading).display(), fill: colors.primary)
+        h(0.25em)
+      }
+      #text(it.body)
+      #v(-0.75em)
+      #line(stroke: 0.75pt + colors.primary, length: 100%)
+      #v(0.75em)
+    ]
+  }
+
+  show heading.where(level: 3): it => {
+    block[
+      #if it.numbering != none {
+        text(counter(heading).display(), fill: colors.primary)
+        h(0.25em)
+      }
+      #text(it.body)
+      #v(1em)
+    ]
   }
 
   // Tables
@@ -160,7 +184,7 @@
         #set text(size: 4.5em, fill: white, weight: "bold")
         #states.localization.get().part #states.counter-part.display(states.part-numbering.get())
       ],
-      fullwidth(dx: -dxr, box(width: 90%, inset: 5em, stroke: 2pt + states.colors.get().primary, radius: (bottom: 2em))[
+      fullwidth(dx: -dxr, box(width: 90%, inset: 5em, stroke: 2pt + states.colors.get().primary, radius: 2em)[
       #set text(size: 3em)
 
       *#title*

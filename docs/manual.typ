@@ -69,6 +69,7 @@ After importing #package[bookly], you have to initialize the template by a show 
 			- `modern`
 			- `classic`
 			- `orly` (O'Reilly inspired)
+			- `pretty`
 		]
 
 		#argument("tufte", default: false, types: "bool")[If `true`, the layout of the document is inspired by the works of Edward Tufte (wide margins, sidenotes, etc.).
@@ -155,6 +156,16 @@ After importing #package[bookly], you have to initialize the template by a show 
 	figure(image("manual-images/chapter-orly.png", width: 80%), caption: "Chapter"),
 	figure(image("manual-images/chapter-nonum-orly.png", width: 80%), caption: "Unnumbered chapter"),
 	figure(image("manual-images/sections-orly.png", width: 80%), caption: "Section"),
+)
+
+==== Pretty
+
+#subfigure(
+	columns: 2,
+	figure(image("manual-images/part-pretty.png", width: 80%), caption: "Part"),
+	figure(image("manual-images/chapter-pretty.png", width: 80%), caption: "Chapter"),
+	figure(image("manual-images/chapter-nonum-pretty.png", width: 80%), caption: "Unnumbered chapter"),
+	figure(image("manual-images/sections-pretty.png", width: 80%), caption: "Section"),
 )
 
 === Layout
