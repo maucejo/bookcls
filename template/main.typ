@@ -14,7 +14,7 @@
     math: "Lete Sans Math"
   ),
   // theme: modern,
-  theme: classic,
+  // theme: classic,
   // theme: orly,
   // theme: pretty,
   // tufte: true,
