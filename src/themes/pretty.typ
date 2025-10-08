@@ -75,6 +75,15 @@
     ]
   }
 
+  // Footnotes
+  set footnote.entry(separator: none)
+  show footnote.entry: it => {
+    box(width: 100%, stroke: (top: 0.5pt + colors.primary, left: 0.5pt + colors.primary), inset: 0.5em, radius: (top-left: 0.5em))[#it]
+  }
+
+  // References
+  show ref: set text(fill: colors.primary)
+
   // Tables
   show table.cell.where(y: 0): set text(weight: "bold", fill: white)
   set table(

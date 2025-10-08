@@ -88,4 +88,4 @@ label: <fig:subfig>,
   #lorem(10)
 ]
 
-#lorem(1000)
+#lorem(1000)#footnote("This is a footnote")
