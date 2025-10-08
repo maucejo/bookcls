@@ -15,7 +15,7 @@
   theme: fancy,
   tufte: false,
   logo: none,
-  lang: "fr",
+  lang: "en",
   fonts: default-fonts,
   colors: default-colors,
   title-page: default-title-page,
@@ -51,10 +51,7 @@
   set par(justify: true)
 
   // Localization
-  let localization = json("resources/i18n/fr.json")
-  if lang.contains("en") {
-    localization = json("resources/i18n/en.json")
-  }
+  let localization = json("resources/i18n/" + lang + ".json")
   states.localization.update(localization)
 
 

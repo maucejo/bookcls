@@ -18,7 +18,7 @@
   // theme: orly,
   theme: pretty,
   // tufte: true,
-  lang: "en",
+  // lang: "fr",
   // colors: config-colors,
   title-page: book-title-page(
     series: "Typst book series",
