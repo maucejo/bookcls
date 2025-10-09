@@ -75,9 +75,16 @@ After importing #package[bookly], you have to initialize the template by a show 
 		#argument("tufte", default: false, types: "bool")[If `true`, the layout of the document is inspired by the works of Edward Tufte (wide margins, sidenotes, etc.).
 		]
 
-		#argument("lang", default: "fr", types: "string")[Language of the document.
+		#argument("lang", default: "en", types: "string")[Language of the document.
 
-		Supported languages French (`"fr"`-- default) and English (`"en"`)]
+		Supported languages:
+		- English -- `"en"` (default)
+		- French -- `"fr"`
+		- German -- `"de"`
+		- Italian -- `"it"`
+		- Portuguese -- `"pt"`
+		- Spanish -- `"es"`
+		]
 
 		#argument("fonts", default: "default-fonts", types: "dict")[Fonts used in the document. It contains the following keys:
 			- `body` #dtype(str) -- Font used for the body text (default: `"New Computer Modern"`)
