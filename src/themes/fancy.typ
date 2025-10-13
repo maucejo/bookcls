@@ -81,6 +81,7 @@
   )
 
   // Outline
+  set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
   show outline.entry: it => {
     show linebreak: none
     if it.element.func() == heading {

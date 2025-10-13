@@ -97,6 +97,7 @@
   )[#it]
 
   // Outline
+  set outline.entry(fill: none)
   show outline.entry: it => {
     show linebreak: none
     if it.element.func() == heading {
@@ -223,7 +224,7 @@
   show heading: none
   heading(numbering: none)[
     #v(1em)
-    #box[#text(fill:states.colors.get().primary)[#states.localization.get().part #states.counter-part.display(states.part-numbering.get()) -- #title]]
+    #box(width: 95%, stroke: (top: 0.5pt + states.colors.get().primary, left: 0.5pt + states.colors.get().primary), inset: 00.5em, radius: (top-left: 0.5em))[#text(fill:states.colors.get().primary)[#states.localization.get().part #states.counter-part.display(states.part-numbering.get()) -- #title]]
   ]
 
   pagebreak(weak: true, to:"odd")
