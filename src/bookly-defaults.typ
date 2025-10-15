@@ -25,6 +25,8 @@
   title: state("title", none),
 )
 
+#let default-language = ("en", "de", "fr",  "es", "it", "pt")
+
 #let default-config-options = (
   part-numbering: "1",
 )

@@ -16,7 +16,7 @@
   // theme: modern,
   // theme: classic,
   // theme: orly,
-  theme: pretty,
+  // theme: pretty,
   // tufte: true,
   // lang: "fr",
   // colors: config-colors,

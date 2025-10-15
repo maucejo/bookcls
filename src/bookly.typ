@@ -51,8 +51,12 @@
   set par(justify: true)
 
   // Localization
-  let localization = json("resources/i18n/" + lang + ".json")
-  states.localization.update(localization)
+  let bookly-lang = if default-language.contains(lang) {
+    lang
+  } else {
+    "en"
+  }
+  states.localization.update(json("resources/i18n/" + bookly-lang + ".json"))
 
 
   // References

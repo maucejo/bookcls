@@ -706,6 +706,41 @@ Finally, `bookly` provides some states that can be useful when designing a custo
 #v(1em)
 - `states.localization` -- #dtype(dictionary): Dictionary of terms used in the document (e.g., "chapter", etc.) in the selected language.
 
+#info-alert[If you need to use a language that is not supported by default, you can modify the `states.localization` dictionary when initializing the template.
+
+For example, to add support for Dutch, you can do the following `#states.localization.update(json("path_to_file/dutch.json"))`. The JSON file should contain the translations of the terms used in the document. For the english version, the JSON  file is as follows:
+```json
+{
+    "and": " and ",
+    "appendix": "Appendix",
+    "authored": "authored by",
+    "chapter": "Chapter",
+    "committee": "Defense committee",
+    "cosupervisor": "Co-supervisor:",
+    "cosupervisors": "Co-supervisors:",
+    "defended": "defended on",
+    "discipline": "Discipline:",
+    "doctoral-school": "DOCTORAL SCHOOL",
+    "habiliation": "French Habilitation to supervise research",
+    "lof": "List of figures",
+    "lot": "List of tables",
+    "note": "Note",
+    "part": "Part",
+    "phd": "Doctoral thesis",
+    "proof": "Proof",
+    "specialty": "Specialty:",
+    "sponsor": "Sponsor:",
+    "sponsors": "Sponsors:",
+    "supervisor": "Supervisor:",
+    "supervisors": "Supervisors:",
+    "tip": "Tip",
+    "toc": "Table of contents",
+    "version-usage": "This version of  can be viewed and downloaded free of charge for personal use only. It must not be redistributed, sold, or used in derivative works.",
+    "warning": "Warning"
+}
+```
+]
+
 - `states.in-outline` -- #dtype(bool): Indicates whether the current section is in the outline.
 
 - `states.isfrontmatter` -- #dtype(bool): Indicates whether the current section is front matter.
