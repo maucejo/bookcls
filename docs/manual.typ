@@ -788,6 +788,8 @@ The template is under development. Here is the list of features that are impleme
 - [x] `fancy`
 - [x] `modern`
 - [x] `classic`
+- [x] `orly` (O'Reilly inspired)
+- [x] `pretty`
 - [x] User-defined themes (requires a refactoring of the theming)
 
 *Layout*
