@@ -2,8 +2,8 @@
 #import "@preview/showybox:2.0.4": *
 #import "@preview/swank-tex:0.1.0": LaTeX
 #import "@preview/cheq:0.2.2": *
-// #import "../src/bookly.typ": *
-#import "@preview/bookly:1.0.0": *
+#import "../src/bookly.typ": *
+// #import "@preview/bookly:1.1.0": *
 
 #show: checklist.with(fill: eastern.lighten(95%), stroke: eastern, radius: .2em)
 
@@ -14,7 +14,7 @@
 
 #show: mantys(
   name: "bookly.typ",
-  version: "1.0.0",
+  version: "1.1.0",
   authors: ("Mathieu Aucejo"),
   license: "MIT",
   description: "Write beautiful scientific book or thesis with Typst",
@@ -33,7 +33,7 @@
 
 To use the #package[bookly] template, you need to include the following line at the beginning of your `typ` file:
 #codesnippet[```typ
-#import "@preview/bookly:1.0.0": *
+#import "@preview/bookly:1.1.0": *
 ```
 ]
 
@@ -56,6 +56,7 @@ After importing #package[bookly], you have to initialize the template by a show 
 	fonts: "default-fonts",
 	colors: "default-colors",
 	title-page: none,
+	config-options: "default-config-options",
 	[body]))[
 		#argument("title", default: "Title", types: "string")[Title of the book or the thesis.]
 
@@ -68,14 +69,22 @@ After importing #package[bookly], you have to initialize the template by a show 
 			- `modern`
 			- `classic`
 			- `orly` (O'Reilly inspired)
+			- `pretty`
 		]
 
 		#argument("tufte", default: false, types: "bool")[If `true`, the layout of the document is inspired by the works of Edward Tufte (wide margins, sidenotes, etc.).
 		]
 
-		#argument("lang", default: "fr", types: "string")[Language of the document.
+		#argument("lang", default: "en", types: "string")[Language of the document.
 
-		Supported languages French (`"fr"`-- default) and English (`"en"`)]
+		Supported languages:
+		- English -- `"en"` (default)
+		- French -- `"fr"`
+		- German -- `"de"`
+		- Italian -- `"it"`
+		- Portuguese -- `"pt"`
+		- Spanish -- `"es"`
+		]
 
 		#argument("fonts", default: "default-fonts", types: "dict")[Fonts used in the document. It contains the following keys:
 			- `body` #dtype(str) -- Font used for the body text (default: `"New Computer Modern"`)
@@ -83,13 +92,18 @@ After importing #package[bookly], you have to initialize the template by a show 
 			- `raw` #dtype(str) -- Font used for raw text (default: `"DejaVu Sans Mono"`)
 		]
 
-		#argument("title-page", default: none, types: "content")[Content of the title page.]
-
 		#argument("colors", default: "default-colors", types: "dict")[Colors used in the document. It contains the following keys:
 			- `primary` #dtype(color) -- Primary color (default: `rgb("#c1002a")`)
 			- `secondary` #dtype(color) -- Secondary color (default: `rgb("#dddddd").darken(15%)`)
 			- `boxeq` #dtype(color) -- Color of equation boxes (default: `rgb("#dddddd")`)
 			- `header` #dtype(color) -- Color used for adapting the color of the document headers (default: `black`)
+		]
+
+		#argument("title-page", default: none, types: "content")[Content of the title page.]
+
+		#colbreak()
+		#argument("config-options", default: "default-config-options", types: "dict")[Configuration options of the document. It allows a more fine-grained control of some aspects of the template. It contains the following keys:
+			- `part-numbering` #dtype(str) -- Numbering pattern (default: "1")
 		]
 ]
 
@@ -149,6 +163,16 @@ After importing #package[bookly], you have to initialize the template by a show 
 	figure(image("manual-images/chapter-orly.png", width: 80%), caption: "Chapter"),
 	figure(image("manual-images/chapter-nonum-orly.png", width: 80%), caption: "Unnumbered chapter"),
 	figure(image("manual-images/sections-orly.png", width: 80%), caption: "Section"),
+)
+
+==== Pretty
+
+#subfigure(
+	columns: 2,
+	figure(image("manual-images/part-pretty.png", width: 80%), caption: "Part"),
+	figure(image("manual-images/chapter-pretty.png", width: 80%), caption: "Chapter"),
+	figure(image("manual-images/chapter-nonum-pretty.png", width: 80%), caption: "Unnumbered chapter"),
+	figure(image("manual-images/sections-pretty.png", width: 80%), caption: "Section"),
 )
 
 === Layout
@@ -286,6 +310,14 @@ For unnumbered chapters, you can simply use the #cmd("chapter-nonum") function. 
 	```
 ]
 
+`bookly` also provides the #dtype("label") `<nonum-sec>` to create unnumbered sections. To use it, simply add the label `<nonum-sec>` after the title of the considered section.
+#codesnippet[
+```typ
+== Section title <nonum-sec>
+```
+]
+#warning-alert[The `<nonum-sec>` label only works for sections and not for chapters. When applied to chapters, it breakes the global numbering of the document. For unnumbered chapters, use the #cmd("chapter-nonum") function. instead]
+
 == Tables of contents
 
 The template defines several commands to facilitate the creation of tables of contents:
@@ -349,6 +381,17 @@ To create an equation without numbering, use the #cmd("nonumeq") function.
 	#nonumeq[$integral_0^1 f(x) dif x = F(1) - F(0)$]
 	```
 ]
+
+`bookly` also provides the #dtype("label") `<nonum-eq>` to create unnumbered equations. To use it, simply add the label `<nonum-eq>` after the equation.
+#codesnippet[
+```typ
+$
+	integral_0^1 f(x) dif x = F(1) - F(0)
+$ <nonum-eq>
+```
+]
+
+#info-alert[The command #cmd("nonumeq") will be deprecated in a future version in favor of the label `<nonum-eq>`.]
 
 == Information boxes
 
@@ -614,7 +657,7 @@ The theming system is designed to be flexible and customizable, allowing users t
 To implement a custom theme, you have to define a function that includes the `show` and `set` rules defining the style of the document (headings, footnotes, references, #sym.dots). Basically, a theme should be structured as follows:
 #codesnippet[
 ```typ
-#import "@preview/bookly:1.0.0": *
+#import "@preview/bookly:1.1.0": *
 
 #let my-theme(colors: default-colors, it) = {
 	show heading.where(level: 1): it => {
@@ -663,6 +706,41 @@ Finally, `bookly` provides some states that can be useful when designing a custo
 #v(1em)
 - `states.localization` -- #dtype(dictionary): Dictionary of terms used in the document (e.g., "chapter", etc.) in the selected language.
 
+#info-alert[If you need to use a language that is not supported by default, you can modify the `states.localization` dictionary when initializing the template.
+
+For example, to add support for Dutch, you can do the following `#states.localization.update(json("path_to_file/dutch.json"))`. The JSON file should contain the translations of the terms used in the document. For the english version, the JSON  file is as follows:
+```json
+{
+    "and": " and ",
+    "appendix": "Appendix",
+    "authored": "authored by",
+    "chapter": "Chapter",
+    "committee": "Defense committee",
+    "cosupervisor": "Co-supervisor:",
+    "cosupervisors": "Co-supervisors:",
+    "defended": "defended on",
+    "discipline": "Discipline:",
+    "doctoral-school": "DOCTORAL SCHOOL",
+    "habiliation": "French Habilitation to supervise research",
+    "lof": "List of figures",
+    "lot": "List of tables",
+    "note": "Note",
+    "part": "Part",
+    "phd": "Doctoral thesis",
+    "proof": "Proof",
+    "specialty": "Specialty:",
+    "sponsor": "Sponsor:",
+    "sponsors": "Sponsors:",
+    "supervisor": "Supervisor:",
+    "supervisors": "Supervisors:",
+    "tip": "Tip",
+    "toc": "Table of contents",
+    "version-usage": "This version of  can be viewed and downloaded free of charge for personal use only. It must not be redistributed, sold, or used in derivative works.",
+    "warning": "Warning"
+}
+```
+]
+
 - `states.in-outline` -- #dtype(bool): Indicates whether the current section is in the outline.
 
 - `states.isfrontmatter` -- #dtype(bool): Indicates whether the current section is front matter.
@@ -680,6 +758,8 @@ Finally, `bookly` provides some states that can be useful when designing a custo
 - `states.num-heading` -- #dtype(str): Numbering pattern for headings.
 
 - `states.page-numbering` -- #dtype(str): Numbering pattern for pages.
+
+- `states.part-numbering` -- #dtype(str): Numbering pattern for parts.
 
 - `states.author` -- #dtype(str): Author of the document.
 
@@ -708,6 +788,8 @@ The template is under development. Here is the list of features that are impleme
 - [x] `fancy`
 - [x] `modern`
 - [x] `classic`
+- [x] `orly` (O'Reilly inspired)
+- [x] `pretty`
 - [x] User-defined themes (requires a refactoring of the theming)
 
 *Layout*

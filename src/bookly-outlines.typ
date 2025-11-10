@@ -2,7 +2,6 @@
 
 // Table of contents
 #let tableofcontents = {
-  set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
   show outline.entry: it => context {
     let dxl = 0%
     let dxr = 0%
@@ -18,7 +17,6 @@
 
 // List of figures
 #let listoffigures = {
-  set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
   show outline.entry: it => context {
     let dxl = 0%
     let dxr = 0%
@@ -34,7 +32,6 @@
 
 // List of tables
 #let listoftables = {
-  set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
   show outline.entry: it => context {
     let dxl = 0%
     let dxr = 0%

@@ -15,10 +15,11 @@
   theme: fancy,
   tufte: false,
   logo: none,
-  lang: "fr",
+  lang: "en",
   fonts: default-fonts,
   colors: default-colors,
   title-page: default-title-page,
+  config-options: default-config-options,
   body
 ) = context {
   // Document's properties
@@ -27,14 +28,21 @@
   states.title.update(title)
   states.tufte.update(tufte)
 
+  // Book colors
   let book-colors = default-colors + colors
   states.colors.update(book-colors)
+
+  // Configuration options
+  let book-options = default-config-options + config-options
+  states.part-numbering.update(book-options.part-numbering)
 
   // Fonts
   set text(font: fonts.body, lang: lang, size: text-size, ligatures: false)
 
   // Math font
   show math.equation: set text(font: fonts.math, stylistic-set: 1)
+  // Unnumbered equations
+  show selector(<nonum-eq>): set math.equation(numbering: none)
 
   // Equations
   show: equate.with(breakable: true, sub-numbering: true)
@@ -43,11 +51,12 @@
   set par(justify: true)
 
   // Localization
-  let localization = json("resources/i18n/fr.json")
-  if lang.contains("en") {
-    localization = json("resources/i18n/en.json")
+  let bookly-lang = if default-language.contains(lang) {
+    lang
+  } else {
+    "en"
   }
-  states.localization.update(localization)
+  states.localization.update(json("resources/i18n/" + bookly-lang + ".json"))
 
 
   // References
@@ -136,6 +145,8 @@
   // Headings
   show: theme.with(colors: book-colors)
   show: headings-on-odd-page
+  // Unnumbered sections - Thanks to @bluss (Typst universe: How to have headings without numbers in a fluent way?)
+  show selector(<nonum-sec>): set heading(numbering: none)
 
   body
 }

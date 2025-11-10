@@ -81,6 +81,7 @@
   )
 
   // Outline
+  set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
   show outline.entry: it => {
     show linebreak: none
     if it.element.func() == heading {
@@ -89,6 +90,7 @@
       let item = none
       if it.level == 1 {
         block(above: 1.25em, below: 0em)
+        v(0.5em)
         item = [#text([*#number*], fill: colors.primary) *#it.inner()*]
       } else if it.level == 2{
         block(above: 1em, below: 0em)
@@ -100,6 +102,7 @@
       link(it.element.location(), item)
     } else if it.element.func() == figure {
       block(above: 1.25em, below: 0em)
+      v(0.25em)
       link(it.element.location(), [#text([#it.prefix().], fill: colors.primary) #h(0.2em) #it.inner()])
     } else {
       it
@@ -192,7 +195,7 @@
    move(dx: dxl)[
     #fullwidth(dx: dxr)[
       #line(stroke: 1.75pt + states.colors.get().primary, length: 104%)
-      #text(size: 2.5em)[#states.localization.get().part #states.counter-part.display()]
+      #text(size: 2.5em)[#states.localization.get().part #states.counter-part.display(states.part-numbering.get())]
       #line(stroke: 1.75pt + states.colors.get().primary, length: 35%)
       #text(size: 3em)[*#title*]
       #line(stroke: 1.75pt + states.colors.get().primary, length: 104%)
@@ -200,11 +203,15 @@
   ]
 
   show heading: none
-  heading(numbering: none)[#box[#text(fill:states.colors.get().primary)[#states.localization.get().part #states.counter-part.display() -- #title]]]
+  heading(numbering: none)[
+    #v(1em)
+    #box[#text(fill:states.colors.get().primary)[#states.localization.get().part #states.counter-part.display(states.part-numbering.get()) -- #title]]
+  ]
 
   pagebreak(weak: true, to:"odd")
 }
 
+// Minitoc
 #let minitoc-fancy = context {
   let toc-header = states.localization.get().toc
   block(above: 3.5em)[

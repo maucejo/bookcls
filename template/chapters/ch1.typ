@@ -1,5 +1,5 @@
-#import "@preview/bookly:1.0.0": *
-// #import "../../src/bookly.typ": *
+// #import "@preview/bookly:1.0.0": *
+#import "../../src/bookly.typ": *
 
 // #show: chapter.with(title: "First chapter")
 
@@ -88,4 +88,4 @@ label: <fig:subfig>,
   #lorem(10)
 ]
 
-#lorem(1000)
+#lorem(1000)#footnote("This is a footnote")

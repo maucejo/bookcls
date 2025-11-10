@@ -51,6 +51,7 @@
   )
 
   // Outline
+  set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
   show outline.entry: it => {
     show linebreak: none
     if it.element.func() == heading {
@@ -138,7 +139,7 @@
 
   move(dx: dx)[
   #fullwidth[
-    #text(size: 1.75em)[*#upper[#states.localization.get().part] #states.counter-part.display("I")*]
+    #text(size: 1.75em)[*#upper[#states.localization.get().part] #states.counter-part.display(states.part-numbering.get())*]
     #v(-0.75em)
     #line(length: 100%, stroke: 0.5pt)
     #v(-2.5em)
@@ -151,7 +152,7 @@
     #v(1em)
     #line(length: 100%, stroke: 0.5pt)
     #v(-0.5em)
-    #box[*#upper[#states.localization.get().part] #states.counter-part.display("I") -- #title*]
+    #box[*#upper[#states.localization.get().part] #states.counter-part.display(states.part-numbering.get()) -- #title*]
   ]
 
   pagebreak(weak: true, to:"odd")

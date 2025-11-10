@@ -2,6 +2,7 @@
 #import "themes/modern.typ": *
 #import "themes/classic.typ": *
 #import "themes/orly.typ": *
+#import "themes/pretty.typ": *
 
 // Part
 #let part = it => context if states.theme.get().contains("fancy") {
@@ -12,6 +13,8 @@
   part-classic(it)
 } else if states.theme.get().contains("orly") {
   part-orly(it)
+} else if states.theme.get().contains("pretty") {
+  part-pretty(it)
 } else {
   part-classic(it)
 }
@@ -25,6 +28,8 @@
   minitoc-classic
 } else if states.theme.get().contains("orly") {
   minitoc-orly
+} else if states.theme.get().contains("pretty") {
+  minitoc-pretty
 } else {
   minitoc-classic
 }
@@ -38,6 +43,8 @@
   custom-box-classic(title: title, icon: icon, color: color, body)
 } else if states.theme.get().contains("orly") {
   custom-box-orly(title: title, icon: icon, color: color, body)
+} else if states.theme.get().contains("pretty") {
+  custom-box-pretty(title: title, icon: icon, color: color, body)
 } else {
   custom-box-classic(title: title, icon: icon, color: color, body)
 }

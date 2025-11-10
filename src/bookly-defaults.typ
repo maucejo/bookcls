@@ -19,9 +19,16 @@
   num-pattern-fig: state("num-pattern-fig", "1.1"),
   num-pattern-subfig: state("num-pattern-subfig", "1.1a"),
   page-numbering: state("page-numbering", "1/1"),
+  part-numbering: state("part-numbering", "1"),
   sidenotecounter: counter("sidenotecounter"),
   theme: state("theme", "fancy"),
   title: state("title", none),
+)
+
+#let default-language = ("en", "de", "fr",  "es", "it", "pt")
+
+#let default-config-options = (
+  part-numbering: "1",
 )
 
 #let default-fonts = (

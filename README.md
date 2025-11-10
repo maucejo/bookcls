@@ -1,6 +1,6 @@
 # Book template
 
-[![Generic badge](https://img.shields.io/badge/Version-1.0.0-cornflowerblue.svg)]()
+[![Generic badge](https://img.shields.io/badge/Version-1.1.0-cornflowerblue.svg)]()
 [![MIT License](https://img.shields.io/badge/License-MIT-forestgreen)](https://github.com/maucejo/book_template/blob/main/LICENSE)
 [![User Manual](https://img.shields.io/badge/doc-.pdf-mediumpurple)](https://github.com/maucejo/book_template/blob/main/docs/manual.pdf)
 
@@ -14,7 +14,7 @@ This section provides the minimal amount of information to get started with the 
 To use the `bookly` template, you need to include the following line at the beginning of your typ file:
 
 ```typ
-#import "@preview/bookly:1.0.0": *
+#import "@preview/bookly:1.1.0": *
 ```
 
 ### Initializing the template
@@ -28,16 +28,19 @@ After importing `bookly`, you have to initialize the template by a show rule wit
 **Example**
 ```typ
 #show: bookly.with(
-	author: "Author Name",
-	book-config: (
-		fonts: (
-			body: "Lato",
-			math: "Lete Sans Math"
-		),
-		theme: "modern",
-		lang: "en",
-		logo: image("path_to_image/image.png")
-	)
+  author: "Author Name",
+  fonts: (
+    body: "Lato",
+    math: "Lete Sans Math"
+  ),
+  theme: modern,
+  lang: "en",
+  title-page: book-title-page(
+    series: "Typst book series",
+    institution: "Typst community",
+    logo: image("images/typst-logo.svg"),
+    cover: image("images/book-cover.jpg", width: 45%)
+  )
 )
 ```
 

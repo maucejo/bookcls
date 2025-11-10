@@ -86,6 +86,7 @@
   show ref: set text(fill: colors.primary)
 
   // Outline
+  set outline.entry(fill: box(width: 1fr, repeat(gap: 0.25em)[.]))
   show outline.entry: it => {
     show linebreak: none
     if it.element.func() == heading {
@@ -94,6 +95,7 @@
       let item = none
       if it.level == 1 {
         block(above: 1.25em, below: 0em)
+        v(0.5em)
         item = [#text([*#number*], fill: colors.primary) *#it.inner()*]
       } else if it.level == 2{
         block(above: 1em, below: 0em)
@@ -105,6 +107,7 @@
       link(it.element.location(), item)
     } else if it.element.func() == figure {
       block(above: 1.25em, below: 0em)
+      v(0.25em)
       link(it.element.location(), [#text([#it.prefix().], fill: colors.primary) #h(0.2em) #it.inner()])
     } else {
       it
@@ -227,7 +230,7 @@
     #fullwidth[#rect(fill: gradient.linear(states.colors.get().primary, states.colors.get().primary.transparentize(55%), dir: ttb), height: 61%, width: 135% + dxr)[
       #set align(center + horizon)
 
-      #text(size: 5em, fill: white)[*#states.localization.get().part #states.counter-part.display()*]
+      #text(size: 5em, fill: white)[*#states.localization.get().part #states.counter-part.display(states.part-numbering.get())*]
     ]]
   ]
 
@@ -239,7 +242,10 @@
   ]
 
   show heading: none
-  heading(numbering: none)[#box[#states.localization.get().part #states.counter-part.display() -- #title]]
+  heading(numbering: none)[
+    #v(1em)
+    #box[#states.localization.get().part #states.counter-part.display(states.part-numbering.get()) -- #title]
+  ]
 
   pagebreak(weak: true, to:"odd")
 }
