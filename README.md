@@ -28,16 +28,19 @@ After importing `bookly`, you have to initialize the template by a show rule wit
 **Example**
 ```typ
 #show: bookly.with(
-	author: "Author Name",
-	book-config: (
-		fonts: (
-			body: "Lato",
-			math: "Lete Sans Math"
-		),
-		theme: "modern",
-		lang: "en",
-		logo: image("path_to_image/image.png")
-	)
+  author: "Author Name",
+  fonts: (
+    body: "Lato",
+    math: "Lete Sans Math"
+  ),
+  theme: modern,
+  lang: "en",
+  title-page: book-title-page(
+    series: "Typst book series",
+    institution: "Typst community",
+    logo: image("images/typst-logo.svg"),
+    cover: image("images/book-cover.jpg", width: 45%)
+  )
 )
 ```
 
